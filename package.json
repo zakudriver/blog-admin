@@ -1,0 +1,9 @@
+{
+  "name": "react-cli",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "tsconfig-paths-webpack-plugin": "^3.2.0"
+  }
+}
