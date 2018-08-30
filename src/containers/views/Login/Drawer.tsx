@@ -1,47 +1,72 @@
-import * as React from 'react';
-import { Form, Icon, Input, Button } from 'antd';
-import styled from '@/styles';
+import * as React from 'react'
+import { Form, Icon, Input, Button } from 'antd'
+import { FormComponentProps } from 'antd/lib/form'
+import styled from '@/styles'
 
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 interface IDrawerProps {
-  className?: string;
-  isDrawer: boolean;
-  drawerWidth: number;
+  className?: string
+  isDrawer: boolean
+  drawerWidth: number
 }
 
 class Drawer extends React.Component<IDrawerProps> {
+  public state = {
+    username: '',
+    password: ''
+  }
+
+  onLogin = (form: IForm) => {
+    console.log(form)
+  }
+
   public render() {
+    const WrappedLoginForm = Form.create()(LoginForm)
     return (
       <div className={this.props.className}>
         <main>
-          <h6>登录</h6>
+          <h6>Sign in</h6>
 
-          <WrappedNormalLoginForm />
+          <WrappedLoginForm {...this.state} onLogin={this.onLogin} />
         </main>
       </div>
-    );
+    )
   }
 }
 
-class NormalLoginForm extends React.Component<any> {
-  handleSubmit = (e: any) => {
-    e.preventDefault();
-    this.props.form.validateFields((err: any, values: any) => {
+interface IForm {
+  username: string
+  password: string
+}
+
+interface ILoginFormProps extends FormComponentProps, IForm {
+  onLogin: (form: IForm) => void
+}
+
+class LoginForm extends React.Component<ILoginFormProps> {
+  handleSubmit = (e: React.FormEvent<ILoginFormProps>) => {
+    e.preventDefault()
+    this.props.form.validateFields((err, value) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        this.props.onLogin(value)
       }
-    });
-  };
+    })
+  }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const { getFieldDecorator } = this.props.form
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem>
-          {getFieldDecorator('userName', {
-            rules: [{ required: true, message: 'Please input your username!' }]
-          })(<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />)}
+          {getFieldDecorator('username', {
+            rules: [{ required: true, message: 'username is required' }]
+          })(<Input prefix={<Icon type="user" />} placeholder="Username" />)}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator('password', {
+            rules: [{ required: true, message: 'password is required' }]
+          })(<Input prefix={<Icon type="user" />} placeholder="Password" />)}
         </FormItem>
         <FormItem>
           <Button type="primary" htmlType="submit">
@@ -49,18 +74,21 @@ class NormalLoginForm extends React.Component<any> {
           </Button>
         </FormItem>
       </Form>
-    );
+    )
   }
 }
 
-const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
-
 export default styled(Drawer)`
   height: 100vh;
-  background-color: #ccc;
+  background-color: #4dd0e1;
   width: 30%;
   float: left;
   margin-left: ${props => (props.isDrawer ? 0 : `-${props.drawerWidth}%`)};
   transition: margin-left 0.8s;
   padding: 40px 80px;
-`;
+  & > main {
+    & > h6 {
+      font-size: 30px;
+    }
+  }
+`
