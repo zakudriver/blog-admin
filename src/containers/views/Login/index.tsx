@@ -5,8 +5,7 @@ import styled from '@/styles';
 import Drawer from './Drawer';
 import Main from './Main';
 
-interface ILoginProps {
-  className?: string;
+interface ILoginProps extends IClassName {
   // isDrawer: boolean;
   // onDrawer: () => void;
   webConfig: IGlobalStore.webConfig;

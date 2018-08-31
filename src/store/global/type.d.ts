@@ -12,3 +12,4 @@ export interface webConfig {
   title: string;
   drawerWidth: number;
 }
+

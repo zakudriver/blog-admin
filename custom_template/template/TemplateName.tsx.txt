@@ -1,0 +1,19 @@
+import * as React from 'react'
+import styled from '@/styles'
+
+interface I${ComponentName}Props extends IClassName {}
+
+class ${ComponentName} extends React.Component<I${ComponentName}Props> {
+  constructor(props: I${ComponentName}Props) {
+    super(props)
+  }
+
+  public render() {
+    return (
+      <div className={this.props.className}>${ComponentName}</div>
+    )
+  }
+}
+
+
+export default styled(${ComponentName})``

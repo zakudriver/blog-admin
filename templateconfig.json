@@ -1,0 +1,5 @@
+{
+  "templatepath": "custom_template",
+  "componentPlacementPath": "src",
+  "filterPath": ["src/containers", "src/store"]
+}

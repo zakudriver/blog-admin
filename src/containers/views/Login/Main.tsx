@@ -1,8 +1,7 @@
 import * as React from 'react';
 import styled from '@/styles';
 
-interface IStoreProps {
-  className?: string;
+interface IStoreProps extends IClassName {
   onDrawer: () => void;
   isDrawer: boolean;
   closeDrawer: () => void;

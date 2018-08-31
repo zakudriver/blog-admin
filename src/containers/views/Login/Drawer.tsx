@@ -5,8 +5,7 @@ import styled from '@/styles'
 
 const FormItem = Form.Item
 
-interface IDrawerProps {
-  className?: string
+interface IDrawerProps extends IClassName {
   isDrawer: boolean
   drawerWidth: number
 }

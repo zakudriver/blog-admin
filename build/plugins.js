@@ -1,17 +1,27 @@
+const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 // const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 
 const constants = require('./constants');
 const config = require('./config');
 const { assetsPath } = require('./utils');
+const env = require('./env');
 
 const basePlugins = [
-  // new webpack.DefinePlugin(defineEnv),
+  new webpack.DefinePlugin(env),
   // new MomentLocalesPlugin({
   //     localesToKeep: ['es-us', 'zh-cn']
   // })
+  new CopyWebpackPlugin([
+    {
+      from: path.resolve(__dirname, '../public'),
+      to: config.assetsDirectory,
+      ignore: ['.*']
+    }
+  ])
 ];
 
 const devPlugins = [
