@@ -2,8 +2,8 @@ import * as React from 'react';
 import { inject } from 'mobx-react';
 import styled from '@/styles';
 
-import Drawer from './Drawer';
-import Main from './Main';
+import LoginDrawer from './Drawer';
+import LoginMain from './Main';
 
 interface ILoginProps extends IClassName {
   // isDrawer: boolean;
@@ -69,8 +69,8 @@ class Login extends React.Component<ILoginProps, ILoginState> {
   public render() {
     return (
       <div className={this.props.className}>
-        <Drawer isDrawer={this.state.isDrawer} drawerWidth={this.props.webConfig.drawerWidth} />
-        <Main
+        <LoginDrawer isDrawer={this.state.isDrawer} drawerWidth={this.props.webConfig.drawerWidth} />
+        <LoginMain
           webConfig={this.props.webConfig}
           onDrawer={this.onDrawer}
           closeDrawer={this.closeDrawer}

@@ -9,7 +9,7 @@ interface IStoreProps extends IClassName {
   webConfig: IGlobalStore.webConfig;
 }
 
-class Main extends React.Component<IStoreProps> {
+class LoginMain extends React.Component<IStoreProps> {
   public render() {
     return (
       <div className={this.props.className} onClick={this.props.closeDrawer}>
@@ -54,7 +54,7 @@ const LinkGroup = styled.ul`
   justify-content: space-around;
 `;
 
-export default styled(Main)`
+export default styled(LoginMain)`
   height: 100vh;
   background-color: ${props => props.theme.primaryColor};
   width: ${props => `${props.clientWidth}px`};

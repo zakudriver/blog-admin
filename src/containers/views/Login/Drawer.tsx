@@ -10,7 +10,7 @@ interface IDrawerProps extends IClassName {
   drawerWidth: number
 }
 
-class Drawer extends React.Component<IDrawerProps> {
+class LoginDrawer extends React.Component<IDrawerProps> {
   public state = {
     username: '',
     password: ''
@@ -77,7 +77,7 @@ class LoginForm extends React.Component<ILoginFormProps> {
   }
 }
 
-export default styled(Drawer)`
+export default styled(LoginDrawer)`
   height: 100vh;
   background-color: #4dd0e1;
   width: 30%;
