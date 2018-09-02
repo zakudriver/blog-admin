@@ -43,7 +43,7 @@ export const menu: IMenu[] = [
   {
     key: '2',
     title: 'Setting',
-    icon: 'home',
+    icon: 'setting',
     children: [
       {
         key: '21',

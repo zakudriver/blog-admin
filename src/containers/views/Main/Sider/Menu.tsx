@@ -1,13 +1,16 @@
 import * as React from 'react'
 import styled from '@/styles'
 import { Menu, Icon } from 'antd'
+import { Link } from 'react-router-dom'
 
 import { menu, IMenu } from '../menu'
 
 const MenuItem = Menu.Item
 const SubMenu = Menu.SubMenu
 
-class SiderMenu extends React.Component {
+interface ISiderMenuProps extends IClassName {}
+
+class SiderMenu extends React.Component<ISiderMenuProps> {
   public createMenu = (menuTree: IMenu[]) => {
     return menuTree.map(i => {
       if (i.children) {
@@ -28,7 +31,7 @@ class SiderMenu extends React.Component {
         return (
           <MenuItem key={i.key}>
             <Icon type={i.icon} />
-            <span>{i.title}</span>
+            <Link to={i.path!}>{i.title}</Link>
           </MenuItem>
         )
       }
@@ -38,11 +41,15 @@ class SiderMenu extends React.Component {
   public render() {
     const menuList = this.createMenu(menu)
     return (
-      <Menu defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode="inline">
+      <Menu className={this.props.className} defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode="inline">
         {menuList}
       </Menu>
     )
   }
 }
 
-export default styled(SiderMenu)``
+export default styled(SiderMenu)`
+  .ant-menu-item > a {
+    display: inline;
+  }
+`

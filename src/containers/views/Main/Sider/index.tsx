@@ -23,9 +23,13 @@ class Sider extends React.Component<ISiderProps> {
     super(props)
   }
 
+  public handleClick=(e:React.MouseEvent<HTMLDivElement>)=>{
+    console.log(e)
+  }
+
   public render() {
     return (
-      <Layout.Sider theme={'light'} collapsed={this.props.isCollapsed}>
+      <Layout.Sider theme={'light'} onClick={this.handleClick} collapsed={this.props.isCollapsed}>
         <Logo />
         <SiderMenu />
       </Layout.Sider>
