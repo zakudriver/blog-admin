@@ -1,39 +1,37 @@
-import * as React from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import { Layout } from 'antd'
-import styled from '@/styles'
+import * as React from 'react';
+import { BrowserRouter as Router, Switch, Route, withRouter } from 'react-router-dom';
+import { Layout } from 'antd';
+import styled from '@/styles';
 
-import {menu,loadableComponents} from './menu'
+import { menu, loadableComponents } from './menu';
 
-import Sidber from './Sider'
-import Header from './Header'
+import Sidber from './Sider';
+import Header from './Header';
 
-interface IHomeProps extends IClassName {}
+interface IMainProps extends IClassName {}
 
-const Main = (props: IHomeProps) => (
+const Main = (props: IMainProps) => (
   <Layout className={props.className}>
     <Sidber />
     <Layout>
       <Header />
       <Layout.Content>
-        <BrowserRouter>
+        <Router>
           <Switch>
-            {
-              menu.map(i=>{
-                if(!i.children){
-                  return <Route key={i.key} path={i.path} component={loadableComponents[i.component!]}></Route>
-                }else{
-                  
-                }
-              })
-            }
+            {menu.map(i => {
+              if (i.path) {
+                return <Route key={i.key} exact={i.exact} path={i.path} component={loadableComponents[i.component!]} />;
+              } else {
+                return null;
+              }
+            })}
           </Switch>
-        </BrowserRouter>
+        </Router>
       </Layout.Content>
     </Layout>
   </Layout>
-)
+);
 
-export default styled(Main)`
+export default styled(withRouter(Main))`
   height: 100%;
-`
+`;

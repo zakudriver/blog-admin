@@ -1,17 +1,47 @@
-import * as React from 'react'
-import styled from '@/styles'
-import { Menu, Icon } from 'antd'
-import { Link } from 'react-router-dom'
+import * as React from 'react';
+import { inject, observer } from 'mobx-react';
+import { computed } from 'mobx';
+import styled from '@/styles';
+import { Menu, Icon } from 'antd';
+import { ClickParam } from 'antd/lib/menu';
+import { menu, IMenu, IMenuTree } from '../menu';
+import { buildTree } from '@/unit';
 
-import { menu, IMenu } from '../menu'
+const MenuItem = Menu.Item;
+const SubMenu = Menu.SubMenu;
 
-const MenuItem = Menu.Item
-const SubMenu = Menu.SubMenu
+interface ISiderMenuProps extends IClassName {
+  routerStore?: RouterStore;
+  isCollapsed?: boolean;
+}
 
-interface ISiderMenuProps extends IClassName {}
-
+@inject(
+  (store: IStore): ISiderMenuProps => {
+    const { routerStore } = store;
+    const { isCollapsed } = store.globalStore;
+    return { routerStore, isCollapsed };
+  }
+)
+@observer
 class SiderMenu extends React.Component<ISiderMenuProps> {
-  public createMenu = (menuTree: IMenu[]) => {
+  @computed
+  get currentRoute() {
+    return this.props.routerStore!.location.pathname;
+  }
+  @computed
+  get menuTree() {
+    return buildTree<IMenu, IMenuTree>(menu);
+  }
+
+  public onRedirect = ({ key }: ClickParam) => {
+    const selectedMenu = menu.find(val => key === val.key);
+    if (selectedMenu && selectedMenu.path && selectedMenu.path !== this.currentRoute) {
+      this.props.routerStore!.history.push(selectedMenu.path);
+      // location.href = selectedMenu.path;
+    }
+  };
+
+  public createMenu = (menuTree: IMenuTree[]) => {
     return menuTree.map(i => {
       if (i.children) {
         return (
@@ -26,30 +56,33 @@ class SiderMenu extends React.Component<ISiderMenuProps> {
           >
             {this.createMenu(i.children)}
           </SubMenu>
-        )
+        );
       } else {
         return (
           <MenuItem key={i.key}>
             <Icon type={i.icon} />
-            <Link to={i.path!}>{i.title}</Link>
+            <span>{i.title}</span>
           </MenuItem>
-        )
+        );
       }
-    })
-  }
+    });
+  };
 
   public render() {
-    const menuList = this.createMenu(menu)
+    const menuList = this.createMenu(this.menuTree);
+
     return (
-      <Menu className={this.props.className} defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode="inline">
+      <Menu
+        className={this.props.className}
+        onClick={this.onRedirect}
+        defaultSelectedKeys={['1']}
+        inlineCollapsed={this.props.isCollapsed}
+        mode="inline"
+      >
         {menuList}
       </Menu>
-    )
+    );
   }
 }
 
-export default styled(SiderMenu)`
-  .ant-menu-item > a {
-    display: inline;
-  }
-`
+export default styled(SiderMenu)``;

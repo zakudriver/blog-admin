@@ -1,4 +1,7 @@
 import userStore from './user';
 import globalStore from './global';
+import { RouterStore } from 'mobx-react-router';
 
-export { userStore, globalStore };
+const routerStore = new RouterStore();
+
+export { userStore, globalStore, routerStore };

@@ -1,13 +1,11 @@
-import * as _ from 'lodash'
-
-import * as Loadable from 'react-loadable'
-import { Loading } from '@/components'
+import * as Loadable from 'react-loadable';
+import { Loading } from '@/components';
 
 const handleloadableComponent = (component: () => Promise<any>) =>
   Loadable({
     loader: component,
     loading: Loading
-  })
+  });
 
 export const loadableComponents = {
   Home: handleloadableComponent(() => import(/* webpackChunkName: "home" */ '@/containers/views/Home')),
@@ -17,18 +15,22 @@ export const loadableComponents = {
   SettingAdmin: handleloadableComponent(() =>
     import(/* webpackChunkName: "settingAdmin" */ '@/containers/views/Setting/Admin')
   )
-}
+};
 
-export type loadableComponentsTypeKeys = keyof typeof loadableComponents
+export type loadableComponentsTypeKeys = keyof typeof loadableComponents;
 
 export interface IMenu {
-  key: string
-  title: string
-  icon: string
-  path?: string
-  component?: loadableComponentsTypeKeys
-  exact?: boolean
-  children?: IMenu[]
+  key: string;
+  parentKey?: string;
+  title: string;
+  icon: string;
+  path?: string;
+  component?: loadableComponentsTypeKeys;
+  exact?: boolean;
+}
+
+export interface IMenuTree extends IMenu {
+  children?: IMenu[];
 }
 
 export const menu: IMenu[] = [
@@ -43,24 +45,24 @@ export const menu: IMenu[] = [
   {
     key: '2',
     title: 'Setting',
-    icon: 'setting',
-    children: [
-      {
-        key: '21',
-        title: 'Blog',
-        icon: 'home',
-        path: '/setting/blog',
-        component: 'SettingBlog',
-        exact: true
-      },
-      {
-        key: '22',
-        title: 'Admin',
-        icon: 'home',
-        path: '/setting/admin',
-        component: 'SettingAdmin',
-        exact: true
-      }
-    ]
+    icon: 'setting'
+  },
+  {
+    key: '21',
+    parentKey: '2',
+    title: 'Blog',
+    icon: 'home',
+    path: '/setting/blog',
+    component: 'SettingBlog',
+    exact: true
+  },
+  {
+    key: '22',
+    parentKey: '2',
+    title: 'Admin',
+    icon: 'home',
+    path: '/setting/admin',
+    component: 'SettingAdmin',
+    exact: true
   }
-]
+];

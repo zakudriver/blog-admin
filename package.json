@@ -64,6 +64,7 @@
     "lodash": "^4.17.10",
     "mobx": "^5.1.0",
     "mobx-react": "^5.2.5",
+    "mobx-react-router": "^4.0.4",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-loadable": "^5.5.0",
