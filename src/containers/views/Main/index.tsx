@@ -32,6 +32,6 @@ const Main = (props: IMainProps) => (
   </Layout>
 );
 
-export default styled(withRouter(Main))`
+export default styled(Main)`
   height: 100%;
 `;
