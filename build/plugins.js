@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 // const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const constants = require('./constants');
 const config = require('./config');
@@ -53,7 +54,8 @@ const prodPlugins = [
     // both options are optional
     filename: assetsPath('css/[name].[hash].css'),
     chunkFilename: assetsPath('css/[name].[id].[hash].css')
-  })
+  }),
+  new LodashModuleReplacementPlugin()
 ];
 
 if (config.bundleAnalyzerReport) {
