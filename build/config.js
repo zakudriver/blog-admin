@@ -7,7 +7,7 @@ const constants = require('./constants');
 module.exports = {
   index: path.resolve(__dirname, `./../dist/index.html`),
   outputPath: path.resolve(__dirname, `./../dist`),
-  outputPublicPath: constants.APP_ENV === 'dev' ? '/' : `./`,
+  outputPublicPath: '/',
 
   assetsDirectory: 'static',
   sourceMap: false,

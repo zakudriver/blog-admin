@@ -10,7 +10,7 @@ import { ThemeProvider, styleVar } from '@/styles';
 import '@/styles/global';
 import registerServiceWorker from './registerServiceWorker';
 import '@/assets/css/reset.scss';
-import { createBrowserHistory, createHashHistory } from 'history';
+import { createBrowserHistory } from 'history';
 
 const history = syncHistoryWithStore(createBrowserHistory(), store.routerStore);
 
