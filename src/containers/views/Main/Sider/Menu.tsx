@@ -104,6 +104,7 @@ class SiderMenu extends React.Component<ISiderMenuProps, ISiderMenuState> {
         mode="inline"
       >
         {this.createMenu(this.menuTree)}
+        
       </Menu>
     );
   }
