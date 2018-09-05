@@ -12,6 +12,10 @@ const Main = Loadable({
   loader: () => import(/* webpackChunkName: "main" */ '@/containers/views/Main'),
   loading: Loading
 })
+const NotFound = Loadable({
+  loader: () => import(/* webpackChunkName: "notFound" */ '@/containers/shared/NotFound'),
+  loading: Loading
+})
 
 class App extends React.Component {
   public render() {
@@ -20,6 +24,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route path="/" component={Main} />
+          <Route component={NotFound} />
         </Switch>
       </Router>
     )
