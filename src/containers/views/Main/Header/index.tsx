@@ -2,21 +2,30 @@ import * as React from 'react';
 import styled from '@/styles';
 import { observer, inject } from 'mobx-react';
 import { Layout, Icon, Button, Avatar } from 'antd';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 interface IHeaderProps extends IClassName {
   isCollapsed?: boolean;
   onCollapsed?: () => void;
 }
 
-const Header = ({ className, isCollapsed, onCollapsed }: IHeaderProps) => (
-  <Layout.Header className={className} style={{ background: '#fff', padding: '0 24px' }}>
-    <CollapsedSwitch isCollapsed={isCollapsed} onCollapsed={onCollapsed} />
-    <div className="group">
-      <Avatar className={'avatar'} shape="square" size={32} icon="user" />
-      <Button>logout</Button>
-    </div>
-  </Layout.Header>
-);
+interface IHeaderRouteProps extends IHeaderProps, RouteComponentProps<any> {}
+
+const Header = ({ className, isCollapsed, onCollapsed, history }: IHeaderRouteProps) => {
+  function signOut() {
+    history.push('/login');
+  }
+
+  return (
+    <Layout.Header className={className} style={{ background: '#fff', padding: '0 24px' }}>
+      <CollapsedSwitch isCollapsed={isCollapsed} onCollapsed={onCollapsed} />
+      <div className="group">
+        <Avatar className={'avatar'} shape="square" size={32} icon="user" />
+        <Button onClick={signOut}>sign out</Button>
+      </div>
+    </Layout.Header>
+  );
+};
 
 const InjectHeader = inject((store: IStore) => {
   const { isCollapsed, onCollapsed } = store.globalStore;
@@ -24,7 +33,7 @@ const InjectHeader = inject((store: IStore) => {
     isCollapsed,
     onCollapsed
   };
-})(observer(Header));
+})(observer(withRouter(Header)));
 
 interface ICollapsedSwitch extends IClassName, IHeaderProps {}
 

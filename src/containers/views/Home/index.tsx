@@ -10,18 +10,9 @@ class Home extends React.Component<IHomeProps> {
   }
 
   public render() {
-    const T= withRouter((props:any)=>{
-      function aaa(){
-        props.history.push('/login')
-        console.log(props)
-      }
-
-      return(<div onClick={aaa}>111</div>)
-    })
     return (
       <div className={this.props.className}>
         Home1
-        <T></T>
       </div>
     )
   }
