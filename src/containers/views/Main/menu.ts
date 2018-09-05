@@ -1,5 +1,5 @@
 import * as Loadable from 'react-loadable';
-import { Loading } from '@/components';
+import { Loading } from '@/components/common';
 
 const handleloadableComponent = (component: () => Promise<any>) =>
   Loadable({
@@ -14,6 +14,9 @@ export const loadableComponents = {
   ),
   SettingAdmin: handleloadableComponent(() =>
     import(/* webpackChunkName: "settingAdmin" */ '@/containers/views/Setting/Admin')
+  ),
+  Message: handleloadableComponent(() =>
+    import(/* webpackChunkName: "message" */ '@/containers/views/Message')
   )
 };
 
@@ -63,6 +66,14 @@ export const menu: IMenu[] = [
     icon: 'home',
     path: '/setting/admin',
     component: 'SettingAdmin',
+    exact: true
+  },
+  {
+    key: '3',
+    title: 'Message',
+    icon: 'message',
+    path: '/message',
+    component: 'Message',
     exact: true
   }
 ];

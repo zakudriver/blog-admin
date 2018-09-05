@@ -6,7 +6,7 @@ import { Menu, Icon } from 'antd';
 import { ClickParam } from 'antd/lib/menu';
 import { menu, IMenu, IMenuTree } from '../menu';
 import { buildTree } from '@/unit';
-import { withRouterProps } from '@/unit/withComponents';
+import { withRouterProps } from '@/components/unit/withComponents';
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;

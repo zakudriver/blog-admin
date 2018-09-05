@@ -2,7 +2,7 @@ import * as React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import * as Loadable from 'react-loadable'
 
-import { Loading } from '@/components'
+import { Loading } from '@/components/common'
 
 const Login = Loadable({
   loader: () => import(/* webpackChunkName: "login" */ '@/containers/views/Login'),
