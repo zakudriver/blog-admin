@@ -1,11 +1,11 @@
-import * as Loadable from 'react-loadable';
-import { Loading } from '@/components/common';
+import * as Loadable from 'react-loadable'
+import { Loading } from '@/components/common'
 
 const handleloadableComponent = (component: () => Promise<any>) =>
   Loadable({
     loader: component,
     loading: Loading
-  });
+  })
 
 export const loadableComponents = {
   Home: handleloadableComponent(() => import(/* webpackChunkName: "home" */ '@/containers/views/Home')),
@@ -15,25 +15,24 @@ export const loadableComponents = {
   SettingAdmin: handleloadableComponent(() =>
     import(/* webpackChunkName: "settingAdmin" */ '@/containers/views/Setting/Admin')
   ),
-  Message: handleloadableComponent(() =>
-    import(/* webpackChunkName: "message" */ '@/containers/views/Message')
-  )
-};
+  Editor: handleloadableComponent(() => import(/* webpackChunkName: "editor" */ '@/containers/views/Editor')),
+  Message: handleloadableComponent(() => import(/* webpackChunkName: "message" */ '@/containers/views/Message'))
+}
 
-export type loadableComponentsTypeKeys = keyof typeof loadableComponents;
+export type loadableComponentsTypeKeys = keyof typeof loadableComponents
 
 export interface IMenu {
-  key: string;
-  parentKey?: string;
-  title: string;
-  icon: string;
-  path?: string;
-  component?: loadableComponentsTypeKeys;
-  exact?: boolean;
+  key: string
+  parentKey?: string
+  title: string
+  icon: string
+  path?: string
+  component?: loadableComponentsTypeKeys
+  exact?: boolean
 }
 
 export interface IMenuTree extends IMenu {
-  children?: IMenu[];
+  children?: IMenu[]
 }
 
 export const menu: IMenu[] = [
@@ -70,10 +69,18 @@ export const menu: IMenu[] = [
   },
   {
     key: '3',
+    title: 'Editor',
+    icon: 'edit',
+    path: '/editor',
+    component: 'Editor',
+    exact: true
+  },
+  {
+    key: '4',
     title: 'Message',
     icon: 'message',
     path: '/message',
     component: 'Message',
     exact: true
   }
-];
+]
