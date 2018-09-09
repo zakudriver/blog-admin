@@ -1,12 +1,12 @@
-import * as React from 'react';
-import styled from '@/styles';
+import * as React from 'react'
+import styled from '@/styles'
 
 interface IStoreProps extends IClassName {
-  onDrawer: () => void;
-  isDrawer: boolean;
-  closeDrawer: () => void;
-  clientWidth: number;
-  webConfig: IGlobalStore.webConfig;
+  onDrawer: () => void
+  isDrawer: boolean
+  closeDrawer: () => void
+  clientWidth: number
+  webConfig: IGlobalStore.webConfig
 }
 
 class LoginMain extends React.Component<IStoreProps> {
@@ -35,7 +35,7 @@ class LoginMain extends React.Component<IStoreProps> {
           </LinkGroup>
         </main>
       </div>
-    );
+    )
   }
 }
 
@@ -47,12 +47,12 @@ const HeadPic = styled.div`
     width: 100%;
     height: 100%;
   }
-`;
+`
 
 const LinkGroup = styled.ul`
   display: flex;
   justify-content: space-around;
-`;
+`
 
 export default styled(LoginMain)`
   height: 100vh;
@@ -60,6 +60,7 @@ export default styled(LoginMain)`
   width: ${props => `${props.clientWidth}px`};
   margin-left: ${props => props.isDrawer && `${props.webConfig.drawerWidth}%`};
   transition: margin-left 0.8s;
+
   & > main {
     width: 400px;
     margin: 0 auto;
@@ -78,4 +79,4 @@ export default styled(LoginMain)`
     width: 100%;
     background-color: rgba(0, 0, 0, 0.2);
   }
-`;
+`
