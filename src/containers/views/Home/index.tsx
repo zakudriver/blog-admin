@@ -1,6 +1,5 @@
 import * as React from 'react'
 import styled from '@/styles'
-import { withRouter } from 'react-router';
 
 interface IHomeProps extends IClassName {}
 
