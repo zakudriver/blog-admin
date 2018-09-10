@@ -9,7 +9,7 @@ import * as store from '@/store';
 import { ThemeProvider, styleVar } from '@/styles';
 import '@/styles/global';
 import registerServiceWorker from './registerServiceWorker';
-import '@/assets/css/reset.scss';
+// import '@/assets/css/reset.scss';
 import { createBrowserHistory } from 'history';
 
 const history = syncHistoryWithStore(createBrowserHistory(), store.routerStore);

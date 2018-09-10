@@ -22,16 +22,12 @@ class LoginMain extends React.Component<IStoreProps> {
           <h1>{this.props.webConfig.title}</h1>
 
           <LinkGroup>
-            <li>
-              <a href="https://zyhua.cn">
-                <i className="fa fa-home fa-3x fa-fw" />
-              </a>
-            </li>
-            <li>
-              <a onClick={this.props.onDrawer}>
-                <i className="fa fa-user-circle fa-3x fa-fw" />
-              </a>
-            </li>
+            <a href="https://zyhua.cn">
+              <i className="fa fa-home fa-3x fa-fw" />
+            </a>
+            <a onClick={this.props.onDrawer}>
+              <i className="fa fa-user-circle fa-3x fa-fw" />
+            </a>
           </LinkGroup>
         </main>
       </div>
@@ -49,7 +45,7 @@ const HeadPic = styled.div`
   }
 `
 
-const LinkGroup = styled.ul`
+const LinkGroup = styled.div`
   display: flex;
   justify-content: space-around;
 `

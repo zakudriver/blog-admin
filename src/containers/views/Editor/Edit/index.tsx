@@ -6,42 +6,67 @@ import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/monokai.css'
 import 'codemirror/mode/markdown/markdown'
 
-interface IEditProps extends IClassName {}
-
-interface IEditState {
-  code: string
+interface IEditProps extends IClassName {
+  value: string
+  onChange: (val: string) => void
 }
 
-class Edit extends React.Component<IEditProps, IEditState> {
-  constructor(props: IEditProps) {
-    super(props)
-    this.state = {
-      code: '// Code'
-    }
-  }
+// interface IEditState {
+//   text: string
+// }
 
-  public updateCode = (code: string) => (event: React.ChangeEvent) => {
-    this.setState({
-      code
-    })
-  }
+// class Edit extends React.Component<IEditProps, IEditState> {
+//   constructor(props: IEditProps) {
+//     super(props)
+//     this.state = {
+//       code: '// Code'
+//     }
+//   }
 
-  public render() {
-    const options = {
-      lineNumbers: true,
-      theme: 'monokai',
-      mode: 'markdown',
-      tabSize: 2,
-      extraKeys: { Ctrl: 'autocomplete' }
-    }
+//   public updateCode = (code: string) => {
+//     this.setState({
+//       code
+//     })
+//   }
 
-    console.log(<CodeMirror value={this.state.code} autoFocus={true} onChange={this.updateCode} options={options} />)
-    return (
-      <div className={this.props.className}>
-        <CodeMirror value={this.state.code} autoFocus={true} onChange={this.updateCode} options={options}/>
-      </div>
-    )
-  }
+//   public render() {
+//     const options = {
+//       lineNumbers: true,
+//       theme: 'monokai',
+//       mode: 'markdown',
+//       tabSize: 2,
+//       extraKeys: { Ctrl: 'autocomplete' }
+//     }
+
+//     return (
+//       <div className={this.props.className}>
+//         <CodeMirror value={this.state.code} autoFocus={true} onChange={this.onChange} options={options} />
+//       </div>
+//     )
+//   }
+// }
+
+const options = {
+  lineNumbers: true,
+  theme: 'monokai',
+  mode: 'markdown',
+  tabSize: 2,
+  extraKeys: { Ctrl: 'autocomplete' }
 }
 
-export default styled(Edit)``
+const Edit = (props: IEditProps) => {
+  return (
+    <div className={props.className}>
+      <CodeMirror value={props.value} autoFocus={true} onChange={props.onChange} options={options} />
+    </div>
+  )
+}
+
+export default styled(Edit)`
+  .ReactCodeMirror {
+    height: 100%;
+    & > .CodeMirror.cm-s-monokai {
+      height: 100%;
+    }
+  }
+`

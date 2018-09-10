@@ -15,7 +15,7 @@ const Main = (props: IMainProps) => {
   return (
     <Layout className={props.className}>
       <Sidber />
-      <Layout>
+      <Layout className="layout__right">
         <Header />
         <Layout.Content className="layout__content">
           <Switch>
@@ -34,10 +34,11 @@ const Main = (props: IMainProps) => {
 }
 
 export default styled(Main)`
-  height: 100%;
+  height: 100vh;
   .layout__content {
     padding: 24px;
     height: 100%;
+    overflow: hidden;
     background-color: #f0f2f5;
   }
 `

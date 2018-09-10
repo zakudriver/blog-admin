@@ -6,19 +6,30 @@ import Preview from './Preview'
 
 interface IEditorProps extends IClassName {}
 
-class Editor extends React.Component<IEditorProps> {
+interface IEditorState {
+  value: string
+}
+
+class Editor extends React.Component<IEditorProps, IEditorState> {
   constructor(props: IEditorProps) {
     super(props)
     this.state = {
-      code: '// Code'
+      value: 'test'
     }
+  }
+
+  onInput = (val: string) => {
+    console.log(val)
+    this.setState({
+      value: val
+    })
   }
 
   public render() {
     return (
       <div className={this.props.className}>
-        <Edit />
-        <Preview />
+        <Edit value={this.state.value} onChange={this.onInput} />
+        <Preview value={this.state.value} />
       </div>
     )
   }
