@@ -1,15 +1,25 @@
 import * as React from 'react'
+import { inject, observer } from 'mobx-react'
 import styled from '@/styles'
 
 import Edit from './Edit'
 import Preview from './Preview'
 
-interface IEditorProps extends IClassName {}
+interface IEditorProps extends IClassName {
+  isCollapsed?: boolean
+}
 
 interface IEditorState {
   value: string
 }
 
+@inject(
+  (store: IStore): IEditorProps => {
+    const { isCollapsed } = store.globalStore
+    return { isCollapsed }
+  }
+)
+@observer
 class Editor extends React.Component<IEditorProps, IEditorState> {
   constructor(props: IEditorProps) {
     super(props)
@@ -28,7 +38,7 @@ class Editor extends React.Component<IEditorProps, IEditorState> {
   public render() {
     return (
       <div className={this.props.className}>
-        <Edit value={this.state.value} onChange={this.onInput} />
+        <Edit value={this.state.value} onChange={this.onInput} isCollapsed={this.props.isCollapsed!} />
         <Preview value={this.state.value} />
       </div>
     )
@@ -37,8 +47,8 @@ class Editor extends React.Component<IEditorProps, IEditorState> {
 
 export default styled(Editor)`
   height: 100%;
+  width: 100%;
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 100%;
-  grid-column-gap: 10px;
+  grid-template-rows: auto;
 `

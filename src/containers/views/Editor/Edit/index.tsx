@@ -1,23 +1,21 @@
 import * as React from 'react'
-// import * as CodeMirror from 'react-codemirror'
 import * as monacoEditor from 'monaco-editor'
 
 import styled from '@/styles'
-
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/theme/monokai.css'
-import 'codemirror/mode/markdown/markdown'
 
 import Monaco from './Monaco'
 
 interface IEditProps extends IClassName {
   value: string
   onChange: (val: string, event?: monacoEditor.editor.IModelContentChangedEvent) => void
+  isCollapsed: boolean
 }
 
-class Edit extends React.Component<IEditProps> {
+class Edit extends React.Component<IEditProps, any> {
+  setRef: HTMLElement | null
   constructor(props: IEditProps) {
     super(props)
+    this.setRef = null
   }
 
   public monacoDidMount = (editor: monacoEditor.editor.IStandaloneCodeEditor, monaco: typeof monacoEditor) => {
@@ -31,16 +29,17 @@ class Edit extends React.Component<IEditProps> {
       parameterHints: true
     }
     return (
-      <div className={this.props.className}>
+      <div id="id" className={this.props.className} ref={ref => (this.setRef = ref)}>
         {/* <CodeMirror value={props.value} autoFocus={true} onChange={props.onChange} options={options} /> */}
         <Monaco
-          width="100%"
-          height="100%"
+          width={'100%'}
+          height={'100%'}
           value={this.props.value}
           theme="vs-dark"
           language="typescript"
           options={options}
           onChange={this.props.onChange}
+          monacoDidMount={this.monacoDidMount}
         />
       </div>
     )
@@ -82,32 +81,10 @@ class Edit extends React.Component<IEditProps> {
 // }
 
 export default styled(Edit)`
-  .ReactCodeMirror {
-    height: 100%;
-    & > .CodeMirror.cm-s-monokai {
-      height: 100%;
-
-      .CodeMirror-vscrollbar {
-        /*滚动条整体部分,必须要设置*/
-        ::-webkit-scrollbar {
-          width: 4px;
-          height: 0;
-          background-color: #f7f7f7;
-        }
-        /*滚动条的轨道*/
-        ::-webkit-scrollbar-track {
-          background-color: #f7f7f7;
-        }
-        /*滚动条的滑块按钮*/
-        ::-webkit-scrollbar-thumb {
-          background-color: rgba(215, 215, 215, 1);
-        }
-        /*滚动条的上下两端的按钮*/
-        ::-webkit-scrollbar-button {
-          height: 0;
-          background-color: #f7f7f7;
-        }
-      }
+  height: 100%;
+  /* .monaco__container {
+    & > div {
+      padding: 10px 0;
     }
-  }
+  } */
 `

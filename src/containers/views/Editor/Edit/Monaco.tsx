@@ -18,18 +18,16 @@ interface IMonacoEditorProps extends IClassName {
 
 type theme = 'vs' | 'vs-dark' | 'hc-black'
 
-class MonacoEditor extends React.Component<IMonacoEditorProps> {
+export default class MonacoEditor extends React.Component<IMonacoEditorProps> {
   containerEle: HTMLElement | null
   __current_value: string
   editor: monaco.editor.IStandaloneCodeEditor | undefined
-  // __prevent_trigger_change_event: boolean | undefined
 
   constructor(props: IMonacoEditorProps) {
     super(props)
     this.containerEle = null
     this.__current_value = ''
     this.editor = undefined
-    // this.__prevent_trigger_change_event = undefined
   }
 
   monacoWillMount = () => {
@@ -47,9 +45,7 @@ class MonacoEditor extends React.Component<IMonacoEditorProps> {
       const value = editor.getValue()
       this.__current_value = value
 
-      // if (!this.__prevent_trigger_change_event) {
       this.props.onChange(value, event)
-      // }
     })
   }
 
@@ -86,9 +82,7 @@ class MonacoEditor extends React.Component<IMonacoEditorProps> {
     if (this.props.value !== this.__current_value) {
       this.__current_value = this.props.value
       if (this.editor) {
-        // this.__prevent_trigger_change_event = true
         this.editor.setValue(this.__current_value)
-        // this.__prevent_trigger_change_event = false
       }
     }
     if (prevProps.language !== this.props.language) {
@@ -114,9 +108,6 @@ class MonacoEditor extends React.Component<IMonacoEditorProps> {
       width: fixedWidth,
       height: fixedHeight
     }
-
-    return <div ref={ref => (this.containerEle = ref)} style={style} />
+    return <div ref={ref => (this.containerEle = ref)} style={style} className="monaco__container"/>
   }
 }
-
-export default MonacoEditor
