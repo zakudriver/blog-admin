@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^2.2.1",
+    "@types/highlight.js": "^9.12.3",
     "@types/lodash": "^4.14.116",
     "@types/react": "^16.4.13",
     "@types/react-codemirror": "^1.0.2",
@@ -45,6 +46,7 @@
     "less-loader": "^4.1.0",
     "lodash-webpack-plugin": "^0.11.5",
     "mini-css-extract-plugin": "^0.4.2",
+    "monaco-editor-webpack-plugin": "^1.5.2",
     "node-sass": "^4.9.3",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
@@ -65,10 +67,12 @@
   },
   "dependencies": {
     "antd": "^3.8.4",
+    "highlight.js": "^9.12.0",
     "lodash": "^4.17.10",
     "mobx": "^5.1.0",
     "mobx-react": "^5.2.5",
     "mobx-react-router": "^4.0.4",
+    "monaco-editor": "^0.14.3",
     "react": "^16.4.2",
     "react-codemirror": "^1.0.0",
     "react-dom": "^16.4.2",

@@ -1,15 +1,16 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 // const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 
-const constants = require('./constants');
-const config = require('./config');
-const { assetsPath } = require('./utils');
-const env = require('./env');
+const constants = require('./constants')
+const config = require('./config')
+const { assetsPath } = require('./utils')
+const env = require('./env')
 
 const basePlugins = [
   new webpack.DefinePlugin(env),
@@ -22,8 +23,9 @@ const basePlugins = [
       to: config.assetsDirectory,
       ignore: ['.*']
     }
-  ])
-];
+  ]),
+  new MonacoWebpackPlugin()
+]
 
 const devPlugins = [
   new HtmlWebpackPlugin({
@@ -31,7 +33,7 @@ const devPlugins = [
     template: 'public/index.html',
     inject: true
   })
-];
+]
 
 const prodPlugins = [
   new webpack.WatchIgnorePlugin([/css\.d\.ts$/]),
@@ -56,11 +58,11 @@ const prodPlugins = [
     chunkFilename: assetsPath('css/[name].[id].[hash].css')
   }),
   new LodashModuleReplacementPlugin()
-];
+]
 
 if (config.bundleAnalyzerReport) {
-  const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-  prodPlugins.push(new BundleAnalyzerPlugin());
+  const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+  prodPlugins.push(new BundleAnalyzerPlugin())
 }
 
-module.exports = basePlugins.concat(constants.APP_ENV === 'dev' ? devPlugins : prodPlugins);
+module.exports = basePlugins.concat(constants.APP_ENV === 'dev' ? devPlugins : prodPlugins)
