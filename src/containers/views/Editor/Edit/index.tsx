@@ -1,8 +1,7 @@
 import * as React from 'react'
 import * as monacoEditor from 'monaco-editor'
-
+import { computed } from 'mobx'
 import styled from '@/styles'
-
 import Monaco from './Monaco'
 
 interface IEditProps extends IClassName {
@@ -18,6 +17,11 @@ class Edit extends React.Component<IEditProps, any> {
     this.setRef = null
   }
 
+  @computed
+  get containerWidth() {
+    return this.setRef && this.setRef.clientWidth
+  }
+
   public monacoDidMount = (editor: monacoEditor.editor.IStandaloneCodeEditor, monaco: typeof monacoEditor) => {
     console.log('editorDidMount', editor)
     editor.focus()
@@ -29,10 +33,9 @@ class Edit extends React.Component<IEditProps, any> {
       parameterHints: true
     }
     return (
-      <div id="id" className={this.props.className} ref={ref => (this.setRef = ref)}>
-        {/* <CodeMirror value={props.value} autoFocus={true} onChange={props.onChange} options={options} /> */}
+      <div className={this.props.className} ref={ref => (this.setRef = ref)}>
         <Monaco
-          width={'100%'}
+          width={this.containerWidth || '100%'}
           height={'100%'}
           value={this.props.value}
           theme="vs-dark"
@@ -82,9 +85,9 @@ class Edit extends React.Component<IEditProps, any> {
 
 export default styled(Edit)`
   height: 100%;
-  /* .monaco__container {
+  .monaco__container {
     & > div {
       padding: 10px 0;
     }
-  } */
+  }
 `

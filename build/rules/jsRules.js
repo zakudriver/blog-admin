@@ -1,6 +1,6 @@
-const tsImportPluginFactory = require('ts-import-plugin');
+const tsImportPluginFactory = require('ts-import-plugin')
 
-const { resolve } = require('./../utils');
+const { resolve } = require('./../utils')
 
 module.exports = [
   {
@@ -31,4 +31,4 @@ module.exports = [
     ],
     exclude: /node_modules/
   }
-];
+]

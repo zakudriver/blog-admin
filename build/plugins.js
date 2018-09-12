@@ -6,6 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 // const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 const constants = require('./constants')
 const config = require('./config')
@@ -32,6 +33,10 @@ const devPlugins = [
     filename: 'index.html',
     template: 'public/index.html',
     inject: true
+  }),
+  new ForkTsCheckerWebpackPlugin({
+    async: false,
+    tslint: config.tsLintPath
   })
 ]
 

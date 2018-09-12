@@ -21,6 +21,7 @@ interface IEditorState {
 )
 @observer
 class Editor extends React.Component<IEditorProps, IEditorState> {
+  autoCollapsed: any
   constructor(props: IEditorProps) {
     super(props)
     this.state = {
@@ -48,7 +49,9 @@ class Editor extends React.Component<IEditorProps, IEditorState> {
 export default styled(Editor)`
   height: 100%;
   width: 100%;
+  overflow: hidden;
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
+  grid-gap: 10px;
 `

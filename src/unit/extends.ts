@@ -1,5 +1,3 @@
-import * as React from 'react';
+import * as React from 'react'
 
-export class ComponentExtends extends React.Component {
-  
-}
+export class ComponentExtends extends React.Component {}

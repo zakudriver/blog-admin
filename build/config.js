@@ -1,5 +1,5 @@
-const path = require('path');
-const constants = require('./constants');
+const path = require('path')
+const constants = require('./constants')
 
 // 静态资源访问域名（CDN）
 // const STATICDOMAIN = constants.APP_ENV === 'prod' ? '.' : '';
@@ -13,6 +13,8 @@ module.exports = {
   sourceMap: false,
   extractCss: constants.APP_ENV !== 'dev',
   bundleAnalyzerReport: process.env.npm_config_report,
+
+  tsLintPath: path.resolve(__dirname, './../tslint.json'),
 
   devServer: {
     contentBase: './', //本地服务器所加载的页面所在的目录
@@ -33,4 +35,4 @@ module.exports = {
     //   }
     // }
   }
-};
+}

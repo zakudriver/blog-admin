@@ -103,8 +103,7 @@ class SiderMenu extends React.Component<ISiderMenuProps, ISiderMenuState> {
         inlineCollapsed={this.props.isCollapsed}
         mode="inline"
       >
-        {this.createMenu(this.menuTree)}
-        
+        {this.createMenu(this.menuTree)}        
       </Menu>
     );
   }

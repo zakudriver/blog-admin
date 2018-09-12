@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action } from 'mobx'
 
 export class GlobalStore {
   @observable
@@ -9,15 +9,15 @@ export class GlobalStore {
     },
     title: `Welcome, Zyhua's Admin`,
     drawerWidth: 30
-  };
+  }
 
   @observable
-  isCollapsed: boolean = false;
+  isCollapsed: boolean = false
 
   @action
   onCollapsed = () => {
-    this.isCollapsed = !this.isCollapsed;
-  };
+    this.isCollapsed = !this.isCollapsed
+  }
 }
 
-export default new GlobalStore();
+export default new GlobalStore()

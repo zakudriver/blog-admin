@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as monaco from 'monaco-editor'
-import styled from '@/styles'
 import 'monaco-editor/esm/vs/language/typescript/monaco.contribution'
 
 interface IMonacoEditorProps extends IClassName {
@@ -8,7 +7,7 @@ interface IMonacoEditorProps extends IClassName {
   height: string | number
   value: string
   defaultValue?: string
-  theme?: theme
+  theme?: 'vs' | 'vs-dark' | 'hc-black'
   language: string
   options: monaco.editor.IEditorOptions
   monacoWillMount?: (params: typeof monaco) => void
@@ -16,18 +15,22 @@ interface IMonacoEditorProps extends IClassName {
   onChange: (value: string, event: monaco.editor.IModelContentChangedEvent) => void
 }
 
-type theme = 'vs' | 'vs-dark' | 'hc-black'
+// type theme = 'vs' | 'vs-dark' | 'hc-black'
 
 export default class MonacoEditor extends React.Component<IMonacoEditorProps> {
   containerEle: HTMLElement | null
-  __current_value: string
+  CURRENT_VALUE: string
   editor: monaco.editor.IStandaloneCodeEditor | undefined
 
   constructor(props: IMonacoEditorProps) {
     super(props)
     this.containerEle = null
-    this.__current_value = ''
+    this.CURRENT_VALUE = ''
     this.editor = undefined
+    this.state = {
+      width: 0,
+      height: 0
+    }
   }
 
   monacoWillMount = () => {
@@ -43,8 +46,7 @@ export default class MonacoEditor extends React.Component<IMonacoEditorProps> {
     }
     editor.onDidChangeModelContent(event => {
       const value = editor.getValue()
-      this.__current_value = value
-
+      this.CURRENT_VALUE = value
       this.props.onChange(value, event)
     })
   }
@@ -79,10 +81,10 @@ export default class MonacoEditor extends React.Component<IMonacoEditorProps> {
   }
 
   componentDidUpdate(prevProps: IMonacoEditorProps) {
-    if (this.props.value !== this.__current_value) {
-      this.__current_value = this.props.value
+    if (this.props.value !== this.CURRENT_VALUE) {
+      this.CURRENT_VALUE = this.props.value
       if (this.editor) {
-        this.editor.setValue(this.__current_value)
+        this.editor.setValue(this.CURRENT_VALUE)
       }
     }
     if (prevProps.language !== this.props.language) {
@@ -91,6 +93,9 @@ export default class MonacoEditor extends React.Component<IMonacoEditorProps> {
     if (prevProps.theme !== this.props.theme) {
       monaco.editor.setTheme(this.props.theme!)
     }
+    console.log(prevProps)
+    console.log('-----------')
+    console.log(this.props)
     if (this.editor && (this.props.width !== prevProps.width || this.props.height !== prevProps.height)) {
       this.editor.layout()
     }
@@ -108,6 +113,6 @@ export default class MonacoEditor extends React.Component<IMonacoEditorProps> {
       width: fixedWidth,
       height: fixedHeight
     }
-    return <div ref={ref => (this.containerEle = ref)} style={style} className="monaco__container"/>
+    return <div ref={ref => (this.containerEle = ref)} style={style} className="monaco__container" />
   }
 }

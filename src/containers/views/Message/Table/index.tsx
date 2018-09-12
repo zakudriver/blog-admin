@@ -17,7 +17,7 @@ class MessageTable extends React.Component<IMessageTableProps> {
       { title: 'Action', dataIndex: '', key: 'x', render: () => <a href="javascript:;">Delete</a> }
     ]
 
-    let data = [
+    const data = [
       {
         key: 1,
         name: 'John Brown',

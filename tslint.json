@@ -1,7 +1,13 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "linterOptions": {
-    "exclude": ["config/**/*.js", "node_modules/**/*.ts", "coverage/lcov-report/*.js"]
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts",
+      "coverage/lcov-report/*.js",
+      ".cache-loader/*.js",
+      "dist/static/**/*.js"
+    ]
   },
   "rules": {
     "arrow-parens": false,
@@ -36,7 +42,7 @@
         "allow-destructuring": true
       }
     ],
-    "no-trailing-whitespace": true,
+    "no-trailing-whitespace": false,
     "object-literal-sort-keys": false,
     "object-literal-shorthand": false,
     "one-variable-per-declaration": false,
