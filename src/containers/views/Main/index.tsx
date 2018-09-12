@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import { Layout } from 'antd'
 import styled from '@/styles'
 
-import { menu, loadableComponents } from './menu'
+import { menu, loadableComponents, loadableToolbarComponents } from './menu'
 
 import Sidber from './Sider'
 import Header from './Header'
@@ -16,7 +16,24 @@ const Main = (props: IMainProps) => {
     <Layout className={props.className}>
       <Sidber />
       <Layout className="layout__right">
-        <Header />
+        <Header>
+          <Switch>
+            {menu.map(i => {
+              if (i.toolbarComponent) {
+                return (
+                  <Route
+                    key={i.key}
+                    exact={i.exact}
+                    path={i.path}
+                    component={loadableToolbarComponents[i.toolbarComponent]}
+                  />
+                )
+              } else {
+                return null
+              }
+            })}
+          </Switch>
+        </Header>
         <Layout.Content className="layout__content">
           <Switch>
             {menu.map(i => {

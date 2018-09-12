@@ -93,9 +93,7 @@ export default class MonacoEditor extends React.Component<IMonacoEditorProps> {
     if (prevProps.theme !== this.props.theme) {
       monaco.editor.setTheme(this.props.theme!)
     }
-    console.log(prevProps)
-    console.log('-----------')
-    console.log(this.props)
+
     if (this.editor && (this.props.width !== prevProps.width || this.props.height !== prevProps.height)) {
       this.editor.layout()
     }

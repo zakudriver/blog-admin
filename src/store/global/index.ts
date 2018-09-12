@@ -2,7 +2,7 @@ import { observable, action } from 'mobx'
 
 export class GlobalStore {
   @observable
-  webConfig: IGlobalStore.webConfig = {
+  webConfig: IGlobalStore.IWebConfig = {
     headPic: '',
     theme: {
       primaryColor: '#00acc1'

@@ -19,7 +19,16 @@ export const loadableComponents = {
   Message: handleloadableComponent(() => import(/* webpackChunkName: "message" */ '@/containers/views/Message'))
 }
 
+// import EditorToolbar from '@/containers/views/Editor/Toolbar'
+
+export const loadableToolbarComponents = {
+  EditorToolbar: handleloadableComponent(() =>
+    import(/* webpackChunkName: "editorToolbar" */ '@/containers/views/Editor/Toolbar')
+  )
+}
+
 export type loadableComponentsTypeKeys = keyof typeof loadableComponents
+export type loadableToolbarComponentsTypeKeys = keyof typeof loadableToolbarComponents
 
 export interface IMenu {
   key: string
@@ -28,6 +37,7 @@ export interface IMenu {
   icon: string
   path?: string
   component?: loadableComponentsTypeKeys
+  toolbarComponent?: loadableToolbarComponentsTypeKeys
   exact?: boolean
 }
 
@@ -73,6 +83,7 @@ export const menu: IMenu[] = [
     icon: 'edit',
     path: '/editor',
     component: 'Editor',
+    toolbarComponent: 'EditorToolbar',
     exact: true
   },
   {

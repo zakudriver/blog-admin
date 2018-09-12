@@ -8,7 +8,7 @@ import LoginMain from '@/containers/views/Login/Main'
 interface ILoginProps extends IClassName {
   // isDrawer: boolean;
   // onDrawer: () => void;
-  webConfig: IGlobalStore.webConfig
+  webConfig: IGlobalStore.IWebConfig
 }
 
 interface ILoginState {

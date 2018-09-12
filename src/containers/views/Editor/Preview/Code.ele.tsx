@@ -27,6 +27,7 @@ export default class CodeElement extends React.PureComponent<ICodeElementProps> 
   }
 
   public render() {
+    console.log(this.props.value)
     return (
       <CodeContainer>
         <code ref={ref => (this.setRef = ref)}>{this.props.value}</code>

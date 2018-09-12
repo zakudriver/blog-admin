@@ -3,8 +3,8 @@ import styled from '@/styles'
 
 interface I${ComponentName}Props extends IClassName {}
 
-const ${ComponentName} = () => (
-    <div className={this.props.className}>${ComponentName}</div>
+const ${ComponentName} = (props: I${ComponentName}Props) => (
+    <div className={props.className}>${ComponentName}</div>
   )
 
 export default styled(${ComponentName})``

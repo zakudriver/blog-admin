@@ -6,7 +6,7 @@ interface IStoreProps extends IClassName {
   isDrawer: boolean
   closeDrawer: () => void
   clientWidth: number
-  webConfig: IGlobalStore.webConfig
+  webConfig: IGlobalStore.IWebConfig
 }
 
 class LoginMain extends React.Component<IStoreProps> {
