@@ -48,6 +48,9 @@ const HeadPic = styled.div`
 const LinkGroup = styled.div`
   display: flex;
   justify-content: space-around;
+  a {
+    color: #eee;
+  }
 `
 
 export default styled(LoginMain)`

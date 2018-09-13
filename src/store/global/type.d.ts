@@ -12,4 +12,13 @@ export interface IWebConfig {
   }
   title: string
   drawerWidth: number
+  editorLanguages: string[]
+}
+
+export interface IOnChangeEdit {
+  (value: string): void
+}
+
+export interface IOnChangeLanguages {
+  (value: string): void
 }

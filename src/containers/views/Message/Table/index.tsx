@@ -1,8 +1,16 @@
 import * as React from 'react'
 import styled from '@/styles'
-import { Table } from 'antd'
+import { Table, Button } from 'antd'
+import { ColumnProps } from 'antd/lib/table'
 
 interface IMessageTableProps extends IClassName {}
+
+interface IColumn {
+  key: number
+  email: string
+  time: string
+  text: string
+}
 
 class MessageTable extends React.Component<IMessageTableProps> {
   constructor(props: IMessageTableProps) {
@@ -10,105 +18,32 @@ class MessageTable extends React.Component<IMessageTableProps> {
   }
 
   public render() {
-    const columns = [
-      { title: 'Name', dataIndex: 'name', key: 'name' },
-      { title: 'Age', dataIndex: 'age', key: 'age' },
-      { title: 'Address', dataIndex: 'address', key: 'address' },
-      { title: 'Action', dataIndex: '', key: 'x', render: () => <a href="javascript:;">Delete</a> }
+    const columns: Array<ColumnProps<IColumn>> = [
+      { title: 'Email', dataIndex: 'email', key: 'email' },
+      { title: 'Time', dataIndex: 'time', key: 'time' },
+      { title: 'Text', dataIndex: 'text', key: 'text' },
+      {
+        title: 'Action',
+        dataIndex: '',
+        key: 'x',
+        render: () => <Button type="danger">Delete</Button>
+      }
     ]
 
     const data = [
       {
         key: 1,
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.'
-      },
-      {
-        key: 2,
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.'
-      },
-      {
-        key: 3,
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.'
-      },
-      {
-        key: 1,
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.'
-      },
-      {
-        key: 2,
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.'
-      },
-      {
-        key: 3,
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.'
-      },
-      {
-        key: 2,
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.'
-      },
-      {
-        key: 3,
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.'
-      },
-      {
-        key: 2,
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.'
-      },
-      {
-        key: 3,
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.'
-      },
-      {
-        key: 2,
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.'
-      },
-      {
-        key: 3,
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.'
-      },
+        email: 'John Brown',
+        time: '32',
+        text: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.'
+      }
     ]
 
     return (
       <div className={this.props.className}>
         <Table
           columns={columns}
-          expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
+          expandedRowRender={record => <p style={{ margin: 0 }}>{record.text}</p>}
           dataSource={data}
         />
       </div>

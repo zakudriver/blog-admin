@@ -11,7 +11,6 @@ const MenuItem = Menu.Item
 const SubMenu = Menu.SubMenu
 
 interface ISiderMenuProps extends IClassName, IRouteComponentProps {
-  routerStore?: RouterStore
   isCollapsed?: boolean
 }
 

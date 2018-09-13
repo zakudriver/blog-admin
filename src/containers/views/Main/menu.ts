@@ -16,7 +16,8 @@ export const loadableComponents = {
     import(/* webpackChunkName: "settingAdmin" */ '@/containers/views/Setting/Admin')
   ),
   Editor: handleloadableComponent(() => import(/* webpackChunkName: "editor" */ '@/containers/views/Editor')),
-  Message: handleloadableComponent(() => import(/* webpackChunkName: "message" */ '@/containers/views/Message'))
+  Message: handleloadableComponent(() => import(/* webpackChunkName: "message" */ '@/containers/views/Message')),
+  Article: handleloadableComponent(() => import(/* webpackChunkName: "article" */ '@/containers/views/Article'))
 }
 
 // import EditorToolbar from '@/containers/views/Editor/Toolbar'
@@ -56,29 +57,6 @@ export const menu: IMenu[] = [
   },
   {
     key: '2',
-    title: 'Setting',
-    icon: 'setting'
-  },
-  {
-    key: '21',
-    parentKey: '2',
-    title: 'Blog',
-    icon: 'home',
-    path: '/setting/blog',
-    component: 'SettingBlog',
-    exact: true
-  },
-  {
-    key: '22',
-    parentKey: '2',
-    title: 'Admin',
-    icon: 'home',
-    path: '/setting/admin',
-    component: 'SettingAdmin',
-    exact: true
-  },
-  {
-    key: '3',
     title: 'Editor',
     icon: 'edit',
     path: '/editor',
@@ -87,11 +65,42 @@ export const menu: IMenu[] = [
     exact: true
   },
   {
-    key: '4',
+    key: '3',
     title: 'Message',
     icon: 'message',
     path: '/message',
     component: 'Message',
+    exact: true
+  },
+  {
+    key: '4',
+    title: 'Article',
+    icon: 'home',
+    path: '/article',
+    component: 'Article',
+    exact: true
+  },
+  {
+    key: '5',
+    title: 'Setting',
+    icon: 'setting'
+  },
+  {
+    key: '51',
+    parentKey: '5',
+    title: 'Blog',
+    icon: 'home',
+    path: '/setting/blog',
+    component: 'SettingBlog',
+    exact: true
+  },
+  {
+    key: '52',
+    parentKey: '5',
+    title: 'Admin',
+    icon: 'home',
+    path: '/setting/admin',
+    component: 'SettingAdmin',
     exact: true
   }
 ]

@@ -7,6 +7,8 @@ import Preview from './Preview'
 
 interface IEditorProps extends IClassName {
   isCollapsed?: boolean
+  selectionEdit?: string
+  selectionLanguage?: string
 }
 
 interface IEditorState {
@@ -15,8 +17,8 @@ interface IEditorState {
 
 @inject(
   (store: IStore): IEditorProps => {
-    const { isCollapsed } = store.globalStore
-    return { isCollapsed }
+    const { isCollapsed, selectionEdit, selectionLanguage } = store.globalStore
+    return { isCollapsed, selectionEdit, selectionLanguage }
   }
 )
 @observer
@@ -36,10 +38,22 @@ class Editor extends React.Component<IEditorProps, IEditorState> {
     })
   }
 
+  public updateCode = (value: string) => (event: React.ChangeEvent) => {
+    this.setState({
+      value
+    })
+  }
+
   public render() {
+    // const options = {
+    //   lineNumbers: true,
+    //   theme: 'monokai',
+    //   mode: 'markdown',
+    //   extraKeys: { Ctrl: 'autocomplete' }
+    // }
     return (
       <div className={this.props.className}>
-        <Edit value={this.state.value} onChange={this.onInput} isCollapsed={this.props.isCollapsed!} />
+        <Edit value={this.state.value} onChange={this.onInput} type={this.props.selectionEdit!} language={this.props.selectionLanguage!}/>
         <Preview value={this.state.value} />
       </div>
     )
@@ -52,6 +66,6 @@ export default styled(Editor)`
   overflow: hidden;
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: auto;
+  grid-template-rows: 100%;
   grid-gap: 10px;
 `
