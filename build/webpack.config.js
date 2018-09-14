@@ -22,9 +22,9 @@ module.exports = {
   resolve: {
     extensions: constants.FILE_EXTENSIONS,
     modules: [resolve('src'), resolve('node_modules')],
-    alias: {
-      mobx: resolve('node_modules/mobx/lib/mobx.es6.js')
-    },
+    // alias: {
+    //   mobx: resolve('node_modules/mobx/lib/mobx.es6.js')
+    // },
     plugins: [
       new TsconfigPathsPlugin({
         configFile: resolve('tsconfig.webpack.json'),
