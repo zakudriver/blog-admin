@@ -1,27 +1,27 @@
-import * as React from 'react'
-import { Form, Icon, Input, Button } from 'antd'
-import { FormComponentProps } from 'antd/lib/form'
-import styled from '@/styles'
+import * as React from 'react';
+import { Form, Icon, Input, Button } from 'antd';
+import { FormComponentProps } from 'antd/lib/form';
+import styled from '@/styles';
 
-const FormItem = Form.Item
+const FormItem = Form.Item;
 
 interface IDrawerProps extends IClassName {
-  isDrawer: boolean
-  drawerWidth: number
+  isDrawer: boolean;
+  drawerWidth: number;
 }
 
 class LoginDrawer extends React.Component<IDrawerProps> {
   public state = {
     username: '',
     password: ''
-  }
+  };
 
   onLogin = (form: IForm) => {
-    console.log(form)
-  }
+    console.log(form);
+  };
 
   public render() {
-    const WrappedLoginForm = Form.create()(LoginForm)
+    const WrappedLoginForm = Form.create()(LoginForm);
     return (
       <div className={this.props.className}>
         <main>
@@ -30,31 +30,31 @@ class LoginDrawer extends React.Component<IDrawerProps> {
           <WrappedLoginForm {...this.state} onLogin={this.onLogin} />
         </main>
       </div>
-    )
+    );
   }
 }
 
 interface IForm {
-  username: string
-  password: string
+  username: string;
+  password: string;
 }
 
 interface ILoginFormProps extends FormComponentProps, IForm {
-  onLogin: (form: IForm) => void
+  onLogin: (form: IForm) => void;
 }
 
 class LoginForm extends React.Component<ILoginFormProps> {
   handleSubmit = (e: React.FormEvent<ILoginFormProps>) => {
-    e.preventDefault()
+    e.preventDefault();
     this.props.form.validateFields((err, value) => {
       if (!err) {
-        this.props.onLogin(value)
+        this.props.onLogin(value);
       }
-    })
-  }
+    });
+  };
 
   render() {
-    const { getFieldDecorator } = this.props.form
+    const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem>
@@ -73,7 +73,7 @@ class LoginForm extends React.Component<ILoginFormProps> {
           </Button>
         </FormItem>
       </Form>
-    )
+    );
   }
 }
 
@@ -90,4 +90,4 @@ export default styled(LoginDrawer)`
       font-size: 30px;
     }
   }
-`
+`;
