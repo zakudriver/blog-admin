@@ -1,11 +1,11 @@
-import * as React from 'react'
-import styled from '@/styles'
+import * as React from 'react';
+import styled from '@/styles';
 
 interface IHomeProps extends IClassName {}
 
 class Home extends React.Component<IHomeProps> {
   constructor(props: IHomeProps) {
-    super(props)
+    super(props);
   }
 
   public render() {
@@ -13,8 +13,8 @@ class Home extends React.Component<IHomeProps> {
       <div className={this.props.className}>
         Home1
       </div>
-    )
+    );
   }
 }
 
-export default styled(Home)``
+export default styled(Home)``;

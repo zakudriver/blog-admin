@@ -4,7 +4,7 @@ import { computed } from 'mobx'
 import { Menu, Icon } from 'antd'
 import { ClickParam } from 'antd/lib/menu'
 import { menu, IMenu, IMenuTree } from '../menu'
-import { buildTree } from '@/unit'
+import { buildTree } from '@/utils'
 import { withRouterProps } from '@/components/unit/WithComponents'
 
 const MenuItem = Menu.Item

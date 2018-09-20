@@ -22,7 +22,7 @@ const Header = ({ className, isCollapsed, onCollapsed, history, children }: IHea
       <div className="header__center">{children}</div>
       <div className="header__right">
         <Avatar className={'avatar'} shape="square" size={32} icon="user" />
-        <IconBtn type="logout" size="18" color={false} onClick={() => history.push('/login')} />
+        <IconBtn type="logout" size="18" color={false} onClick={()=>{}} />
       </div>
     </Layout.Header>
   )

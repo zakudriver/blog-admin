@@ -1,16 +1,14 @@
-import Axios from './index';
-// import { http } from './decorators';
+import axios, { IAxiosResponse } from './index';
+import { GET } from './decorators';
 
-class UserServer extends Axios {
-  constructor(config = {}) {
-    super(config);
-  }
-  // @http({
-  //   method: 'get',
-  //   url: '/meassage'
-  // })
-  async login(data: any) {
-    const res = await this.http.post('/user/login', data);
+class UserServer {
+
+  @GET({
+    url: '/message'
+  })
+  async login(data?: any) {
+    const res: IAxiosResponse = await axios(data);
+    console.log(11)
     return Promise.resolve(res.data);
   }
 }

@@ -1,24 +1,57 @@
-interface IHtttpDecoratorParams {
-  method: string;
+import axios from './index';
+
+interface IHtttpDecoratorOptions {
   url: string;
+  headers?: any;
 }
 
-export const http = (params: IHtttpDecoratorParams): MethodDecorator => (target, propertyKey, descriptor) => {
+export const httpDecorator = (method: string, options: IHtttpDecoratorOptions): MethodDecorator => (
+  target,
+  propertyKey,
+  descriptor
+) => {
   const oldVal: any = descriptor.value;
-  (descriptor as any).value = (data: any) => {
-    const config = {
-      method: params.method,
-      url: params.url,
-      params: data
+  (descriptor as any).value = (...args: any[]) => {
+    const axiosOpt = {
+      method,
+      url: options.url,
+      data: method === 'get' || 'delete' ? {} : args[0],
+      params: method === 'get' || 'delete' ? args[0] : {}
     };
-    const axios: Promise<any> = (target as any).http(config);
 
-    axios
+    axios(axiosOpt)
       .then(res => {
-        oldVal.call(target, data, res);
+        args[0] = res;
+        oldVal.apply(target, args);
       })
       .catch(err => {
-        oldVal.call(target, data, err);
+        args[0] = err;
+        oldVal.apply(target, args);
       });
   };
 };
+
+const buildDecorator = (method: string, options: IHtttpDecoratorOptions): MethodDecorator => (
+  target,
+  propertyKey,
+  descriptor
+) => {
+  const oldVal: any = descriptor.value;
+  (descriptor as any).value = (...args: any[]) => {
+    const axiosOpt = {
+      method,
+      data: method === 'get' || 'delete' ? {} : args[0],
+      params: method === 'get' || 'delete' ? args[0] : {}
+    };
+
+    const arg = Object.assign(axiosOpt, options);
+
+    return oldVal.apply(target, [arg, target]);
+  };
+};
+
+
+export function GET(options: IHtttpDecoratorOptions) {
+  const method = 'get';
+  return buildDecorator(method, options);
+}
