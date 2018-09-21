@@ -69,7 +69,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
   public render() {
     return (
       <div className={this.props.className}>
-        <LoginDrawer isDrawer={this.state.isDrawer} drawerWidth={this.props.webConfig.drawerWidth} />
+        <LoginDrawer isDrawer={this.state.isDrawer} width={this.props.webConfig.drawerWidth} />
         <LoginMain
           webConfig={this.props.webConfig}
           onDrawer={this.onDrawer}

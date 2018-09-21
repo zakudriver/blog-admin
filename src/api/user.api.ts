@@ -1,14 +1,12 @@
 import axios, { IAxiosResponse } from './index';
-import { GET } from './decorators';
+import { POST } from './decorators';
 
 class UserServer {
-
-  @GET({
-    url: '/message'
+  @POST({
+    url: '/user/login'
   })
-  async login(data?: any) {
-    const res: IAxiosResponse = await axios(data);
-    console.log(11)
+  async login(opt?: any) {
+    const res: IAxiosResponse = await axios(opt);
     return Promise.resolve(res.data);
   }
 }

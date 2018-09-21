@@ -6,7 +6,8 @@
       "node_modules/**/*.ts",
       "coverage/lcov-report/*.js",
       ".cache-loader/*.js",
-      "dist/static/**/*.js"
+      "dist/static/**/*.js",
+      "dist/*.js"
     ]
   },
   "rules": {

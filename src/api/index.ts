@@ -1,10 +1,10 @@
-import http, { AxiosResponse } from 'axios';
+import http, { AxiosInstance, AxiosResponse } from 'axios';
 
 const API = APP_ENV === 'dev' ? 'http://127.0.0.1:8999' : '';
 
 const config = {};
 
-const axios = http.create(Object.assign(config, { baseURL: API }));
+const axios: AxiosInstance = http.create(Object.assign(config, { baseURL: API }));
 
 axios.interceptors.request.use(
   conf => {
@@ -35,7 +35,7 @@ interface IResponse {
   code: number;
   msg: string;
   data: any;
-  time: number;
+  token?: string;
 }
 
 export interface IAxiosResponse extends AxiosResponse<IResponse> {}

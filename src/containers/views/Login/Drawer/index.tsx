@@ -2,38 +2,76 @@ import * as React from 'react';
 import { Form, Icon, Input, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import styled from '@/styles';
+import { ComponentExtends } from '@/utils/extends';
+import { withRouterProps } from '@/components/utils/withComponents';
 
 const FormItem = Form.Item;
 
-interface IDrawerProps extends IClassName {
+interface IDrawerProps extends IClassName, IRouteComponentProps {
   isDrawer: boolean;
-  drawerWidth: number;
+  width: number;
 }
 
-class LoginDrawer extends React.Component<IDrawerProps> {
+class LoginDrawer extends ComponentExtends<IDrawerProps> {
   public state = {
     username: '',
-    password: ''
+    password: '',
+    isLoginBtn: false
   };
 
-  onLogin = (form: IForm) => {
+  onLogin = async (form: IForm) => {
     console.log(form);
+    this.onBtnState(true);
+    const res = await this.userApi$$.login(form);
+    this.onBtnState(false);
+    if (res.code === 0) {
+      this.$message.success(res.msg);
+      localStorage.setItem('access_Token', res.token!);
+      this.props.history!.push('/');
+    } else {
+      this.$message.error(res.msg);
+    }
+  };
+
+  onBtnState = (state: boolean) => {
+    this.setState({
+      isLoginBtn: state
+    });
   };
 
   public render() {
     const WrappedLoginForm = Form.create()(LoginForm);
     return (
-      <div className={this.props.className}>
+      <LoginDrawerWrapper {...this.props}>
         <main>
           <h6>Sign in</h6>
 
           <WrappedLoginForm {...this.state} onLogin={this.onLogin} />
         </main>
-      </div>
+      </LoginDrawerWrapper>
     );
   }
 }
 
+// 抽屉包装
+interface LoginDrawerWrapperProps extends IDrawerProps {}
+
+const LoginDrawerWrapper = styled<LoginDrawerWrapperProps, 'div'>('div')`
+  height: 100vh;
+  background-color: #4dd0e1;
+  width: 30%;
+  float: left;
+  margin-left: ${props => (props.isDrawer ? 0 : `-${props.width}%`)};
+  transition: margin-left 0.8s;
+  padding: 40px 100px;
+  & > main {
+    & > h6 {
+      font-size: 30px;
+    }
+  }
+`;
+
+// 表单
 interface IForm {
   username: string;
   password: string;
@@ -41,6 +79,7 @@ interface IForm {
 
 interface ILoginFormProps extends FormComponentProps, IForm {
   onLogin: (form: IForm) => void;
+  isLoginBtn: boolean;
 }
 
 class LoginForm extends React.Component<ILoginFormProps> {
@@ -64,11 +103,11 @@ class LoginForm extends React.Component<ILoginFormProps> {
         </FormItem>
         <FormItem>
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'password is required' }]
-          })(<Input prefix={<Icon type="user" />} placeholder="Password" />)}
+            rules: [{ required: false, message: 'password is required' }]
+          })(<Input prefix={<Icon type="lock" />} type="password" placeholder="Password" />)}
         </FormItem>
         <FormItem>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" disabled={this.props.isLoginBtn}>
             Log in
           </Button>
         </FormItem>
@@ -77,17 +116,4 @@ class LoginForm extends React.Component<ILoginFormProps> {
   }
 }
 
-export default styled(LoginDrawer)`
-  height: 100vh;
-  background-color: #4dd0e1;
-  width: 30%;
-  float: left;
-  margin-left: ${props => (props.isDrawer ? 0 : `-${props.drawerWidth}%`)};
-  transition: margin-left 0.8s;
-  padding: 40px 80px;
-  & > main {
-    & > h6 {
-      font-size: 30px;
-    }
-  }
-`;
+export default withRouterProps<IDrawerProps>(LoginDrawer);
