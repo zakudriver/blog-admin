@@ -63,7 +63,7 @@ const LoginDrawerWrapper = styled<LoginDrawerWrapperProps, 'div'>('div')`
   float: left;
   margin-left: ${props => (props.isDrawer ? 0 : `-${props.width}%`)};
   transition: margin-left 0.8s;
-  padding: 40px 100px;
+  padding: 40px 5% 40px;
   & > main {
     & > h6 {
       font-size: 30px;
