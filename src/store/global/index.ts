@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, reaction, autorun } from 'mobx';
 
 export class GlobalStore {
   @observable
@@ -10,31 +10,46 @@ export class GlobalStore {
     title: `Welcome, Zyhua's Admin`,
     drawerWidth: 30,
     editorLanguages: ['typescript', 'javascript', 'markdown']
+  };
+
+  @observable
+  isCollapsed: boolean = false;
+
+  @observable
+  selectionEdit: string = 'Monaco';
+
+  @observable
+  selectionLanguage: string = 'javascript';
+
+  constructor() {
+    reaction(
+      () => this.isCollapsed,
+      (val, val1) => {
+        console.log('change');
+        console.log(val);
+        console.log(val1);
+      }
+    );
+
+    autorun(() => {
+      console.log(this.isCollapsed);
+    });
   }
-
-  @observable
-  isCollapsed: boolean = false
-
-  @observable
-  selectionEdit: string = 'Monaco'
-
-  @observable
-  selectionLanguage: string = 'javascript'
 
   @action
   onCollapsed = () => {
-    this.isCollapsed = !this.isCollapsed
-  }
+    this.isCollapsed = !this.isCollapsed;
+  };
 
   @action
   onChangeEdit: IGlobalStore.IOnChangeEdit = value => {
-    this.selectionEdit = value
-  }
+    this.selectionEdit = value;
+  };
 
   @action
   onChangeLanguages: IGlobalStore.IOnChangeLanguages = value => {
-    this.selectionLanguage = value
-  }
+    this.selectionLanguage = value;
+  };
 }
 
-export default new GlobalStore()
+export default new GlobalStore();
