@@ -1,5 +1,5 @@
 import { UserStore as userStore } from './index';
 
-export as namespace IUserStore;
+export as namespace UserStore;
 
-export interface UserStore extends userStore {}
+export interface IUserStore extends userStore {}

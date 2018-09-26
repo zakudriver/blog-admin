@@ -11,10 +11,10 @@ const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
 interface IToolbarProps extends IClassName {
-  onChangeEdit?: IGlobalStore.IOnChangeEdit
+  onChangeEdit?: GlobalStore.IOnChangeEdit
   selectionEdit?: string
-  webConfig?: IGlobalStore.IWebConfig
-  onChangeLanguages?: IGlobalStore.IOnChangeLanguages
+  webConfig?: GlobalStore.IWebConfig
+  onChangeLanguages?: GlobalStore.IOnChangeLanguages
   selectionLanguage?: string
 }
 

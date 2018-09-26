@@ -1,7 +1,5 @@
 import userStore from './user';
 import globalStore from './global';
-// import { RouterStore } from 'mobx-react-router';
+import dataStore from './data';
 
-// const routerStore = new RouterStore();
-
-export { userStore, globalStore };
+export { userStore, globalStore, dataStore };

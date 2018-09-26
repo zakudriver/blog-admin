@@ -2,7 +2,7 @@ import { observable, action, reaction, autorun } from 'mobx';
 
 export class GlobalStore {
   @observable
-  webConfig: IGlobalStore.IWebConfig = {
+  webConfig: GlobalStore.IWebConfig = {
     headPic: '',
     theme: {
       primaryColor: '#1DA57A'
@@ -42,12 +42,12 @@ export class GlobalStore {
   };
 
   @action
-  onChangeEdit: IGlobalStore.IOnChangeEdit = value => {
+  onChangeEdit: GlobalStore.IOnChangeEdit = value => {
     this.selectionEdit = value;
   };
 
   @action
-  onChangeLanguages: IGlobalStore.IOnChangeLanguages = value => {
+  onChangeLanguages: GlobalStore.IOnChangeLanguages = value => {
     this.selectionLanguage = value;
   };
 }

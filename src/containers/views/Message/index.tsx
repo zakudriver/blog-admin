@@ -1,19 +1,25 @@
 import * as React from 'react';
 import styled from '@/styles';
+import { inject, observer } from 'mobx-react';
 import MessageTable from '@/containers/views/Message/Table';
 
-import messageServer from '@/api/message.api';
+interface IMessageProps extends IClassName {
+  message?: DataStore.IMessage[];
+  getMessage: DataStore.IGetMessage;
+}
 
-interface IMessageProps extends IClassName {}
-
+@inject((store: IStore) => {
+  const { message, getMessage } = store.dataStore;
+  return { message, getMessage };
+})
+@observer
 class Message extends React.Component<IMessageProps> {
   constructor(props: IMessageProps) {
     super(props);
   }
 
   async componentDidMount() {
-    const a = await messageServer.getMessage();
-    console.log(a);
+    this.props.getMessage()
   }
 
   public render() {

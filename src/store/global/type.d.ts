@@ -1,24 +1,23 @@
-import { GlobalStore as globalStore } from './index'
-import { StyledComponentClass } from 'styled-components'
+import { GlobalStore as globalStore } from './index';
 
-export as namespace IGlobalStore
+export as namespace GlobalStore;
 
-export interface GlobalStore extends globalStore {}
+export interface IGlobalStore extends globalStore {}
 
 export interface IWebConfig {
-  headPic: string
+  headPic: string;
   theme: {
-    primaryColor: string
-  }
-  title: string
-  drawerWidth: number
-  editorLanguages: string[]
+    primaryColor: string;
+  };
+  title: string;
+  drawerWidth: number;
+  editorLanguages: string[];
 }
 
 export interface IOnChangeEdit {
-  (value: string): void
+  (value: string): void;
 }
 
 export interface IOnChangeLanguages {
-  (value: string): void
+  (value: string): void;
 }
