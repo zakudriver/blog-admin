@@ -19,6 +19,7 @@ interface ISiderMenuState {
   defaultOpenKeys: string[]
 }
 
+@withRouterProps
 @inject(
   (store: IStore): ISiderMenuProps => {
     const { isCollapsed } = store.globalStore
@@ -108,4 +109,4 @@ class SiderMenu extends React.Component<ISiderMenuProps, ISiderMenuState> {
   }
 }
 
-export default withRouterProps<ISiderMenuProps>(SiderMenu)
+export default (SiderMenu)

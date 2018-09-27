@@ -3,12 +3,18 @@ import messageApi from '@/api/message.api';
 
 export class DataStore {
   @observable
-  message: DataStore.IMessage[] = [];
+  message: DataStore.IMessageResponse = { count: 0, rows: [] };
+  @observable
+  isMessageLoading: boolean = false;
 
   @action
-  getMessage: DataStore.IGetMessage = async (params = { index: 1, limit: 10 }) => {
-    const result = await messageApi.getMessage(params);
-    console.log(result);
+  getMessage: DataStore.IGetMessage = async (index = 1, limit = 10) => {
+    this.isMessageLoading = true;
+    const results = await messageApi.getMessage({ index, limit });
+    this.isMessageLoading = false;
+    if (results.code === 0) {
+      this.message = results.data;
+    }
   };
 }
 

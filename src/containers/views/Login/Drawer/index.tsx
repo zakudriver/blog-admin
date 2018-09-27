@@ -12,6 +12,7 @@ interface IDrawerProps extends IClassName, IRouteComponentProps {
   width: number;
 }
 
+@withRouterProps
 class LoginDrawer extends ComponentExtends<IDrawerProps> {
   public state = {
     username: '',
@@ -116,4 +117,4 @@ class LoginForm extends React.Component<ILoginFormProps> {
   }
 }
 
-export default withRouterProps<IDrawerProps>(LoginDrawer);
+export default (LoginDrawer);

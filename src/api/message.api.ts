@@ -13,7 +13,7 @@ class MessageServer {
   @DELETE({
     url: '/message'
   })
-  async delMessage(opt?: any) {
+  async rmMessage(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
     return Promise.resolve(res.data);
   }

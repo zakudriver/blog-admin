@@ -1,11 +1,14 @@
 import * as React from 'react';
-import styled from '@/styles';
 import { inject, observer } from 'mobx-react';
-import MessageTable from '@/containers/views/Message/Table';
+import { Table, Button } from 'antd';
+import { ColumnProps } from 'antd/lib/table';
+import { ComponentExtends } from '@/utils/extends';
+import styled from '@/styles';
 
 interface IMessageProps extends IClassName {
-  message?: DataStore.IMessage[];
+  message: DataStore.IMessageResponse;
   getMessage: DataStore.IGetMessage;
+  isMessageLoading: boolean;
 }
 
 @inject((store: IStore) => {
@@ -13,22 +16,71 @@ interface IMessageProps extends IClassName {
   return { message, getMessage };
 })
 @observer
-class Message extends React.Component<IMessageProps> {
-  constructor(props: IMessageProps) {
-    super(props);
-  }
+class Message extends ComponentExtends<IMessageProps> {
+  public state = {
+    index: 1
+  };
 
-  async componentDidMount() {
-    this.props.getMessage()
+  public rmMessage = (row: DataStore.IMessage) => async (e: React.MouseEvent<HTMLButtonElement>) => {
+    await this.messageApi$$.rmMessage({ _id: row._id });
+    await this.props.getMessage(this.state.index);
+  };
+
+  public onChangePage = (page: number) => {
+    this.setState({
+      index: page
+    });
+    this.props.getMessage(page);
+  };
+
+  public async componentDidMount() {
+    this.props.getMessage();
   }
 
   public render() {
+    const columns: Array<ColumnProps<DataStore.IMessage>> = [
+      { title: 'Email', dataIndex: 'email', key: 'email' },
+      { title: 'Time', dataIndex: 'time', key: 'time' },
+      { title: 'Text', dataIndex: 'text', key: 'text' },
+      {
+        title: 'Action',
+        dataIndex: '',
+        key: 'x',
+        render: (text, record, index) => (
+          <Button type="danger" onClick={this.rmMessage(text)}>
+            Delete
+          </Button>
+        )
+      }
+    ];
+
+    const dataSource = this.props.message.rows.map((i, idx) => {
+      i.key = idx;
+      return i;
+    });
     return (
       <div className={this.props.className}>
-        <MessageTable />
+        <Table
+          className="message__table"
+          columns={columns}
+          loading={this.props.isMessageLoading}
+          expandedRowRender={record => <p style={{ margin: 0 }}>{record.text}</p>}
+          dataSource={dataSource}
+          pagination={{
+            current: this.state.index,
+            pageSize: 10,
+            total: this.props.message.count,
+            onChange: this.onChangePage
+          }}
+        />
       </div>
     );
   }
 }
 
-export default styled(Message)``;
+export default styled(Message)`
+  .message__table {
+    padding: 24px;
+    background-color: #fff;
+  }
+`;

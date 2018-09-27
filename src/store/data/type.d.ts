@@ -5,11 +5,18 @@ export as namespace DataStore;
 export interface IDataStore extends dataStore {}
 
 export interface IMessage {
+  key?: number;
+  _id: string;
   email: string;
   time: string;
   text: string;
 }
 
+export interface IMessageResponse {
+  count: number;
+  rows: IMessage[];
+}
+
 export interface IGetMessage {
-  (params?: { index: number; limit: number }): void;
+  (index?: number, limit?: number): void;
 }
