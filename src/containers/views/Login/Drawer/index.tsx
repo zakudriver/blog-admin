@@ -7,7 +7,7 @@ import { withRouterProps } from '@/components/utils/withComponents';
 
 const FormItem = Form.Item;
 
-interface IDrawerProps extends IClassName, IRouteComponentProps {
+interface IDrawerProps extends IClassName, IRouterProps {
   isDrawer: boolean;
   width: number;
 }

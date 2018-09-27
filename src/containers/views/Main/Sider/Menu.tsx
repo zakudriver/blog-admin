@@ -10,7 +10,7 @@ import { withRouterProps } from '@/components/utils/withComponents'
 const MenuItem = Menu.Item
 const SubMenu = Menu.SubMenu
 
-interface ISiderMenuProps extends IClassName, IRouteComponentProps {
+interface ISiderMenuProps extends IClassName, IRouterProps {
   isCollapsed?: boolean
 }
 
