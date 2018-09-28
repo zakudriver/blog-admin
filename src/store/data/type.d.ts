@@ -5,7 +5,7 @@ export as namespace DataStore;
 export interface IDataStore extends dataStore {}
 
 export interface IMessage {
-  key?: number;
+  key?: string;
   _id: string;
   email: string;
   time: string;

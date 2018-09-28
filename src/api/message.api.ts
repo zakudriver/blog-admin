@@ -1,7 +1,7 @@
 import axios, { IAxiosResponse } from '@/api';
 import { GET, DELETE } from '@/api/decorators';
 
-class MessageServer {
+class MessageApi {
   @GET({
     url: '/message'
   })
@@ -19,4 +19,4 @@ class MessageServer {
   }
 }
 
-export default new MessageServer();
+export default new MessageApi();

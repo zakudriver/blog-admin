@@ -1,7 +1,7 @@
 import axios, { IAxiosResponse } from './index';
 import { POST } from './decorators';
 
-class UserServer {
+class UserApi {
   @POST({
     url: '/user/login'
   })
@@ -11,4 +11,4 @@ class UserServer {
   }
 }
 
-export default new UserServer();
+export default new UserApi();

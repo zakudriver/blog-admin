@@ -55,7 +55,7 @@ class Message extends ComponentExtends<IMessageProps> {
     ];
 
     const dataSource = this.props.message.rows.map((i, idx) => {
-      i.key = idx;
+      i.key = i._id;
       return i;
     });
     return (

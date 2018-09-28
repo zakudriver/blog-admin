@@ -2,8 +2,8 @@ import * as React from 'react'
 import { inject } from 'mobx-react'
 import styled from '@/styles'
 
-import LoginDrawer from '@/containers/views/Login/Drawer'
-import LoginMain from '@/containers/views/Login/Main'
+import LoginDrawer from '@/containers/shared/Login/Drawer'
+import LoginMain from '@/containers/shared/Login/Main'
 
 interface ILoginProps extends IClassName {
   // isDrawer: boolean;
