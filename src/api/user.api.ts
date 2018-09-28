@@ -9,6 +9,14 @@ class UserApi {
     const res: IAxiosResponse = await axios(opt);
     return Promise.resolve(res.data);
   }
+
+  @POST({
+    url: '/user/auth'
+  })
+  async auth(opt?: any) {
+    const res: IAxiosResponse = await axios(opt);
+    return Promise.resolve(res.data);
+  }
 }
 
 export default new UserApi();

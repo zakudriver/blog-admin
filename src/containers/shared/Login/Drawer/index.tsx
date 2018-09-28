@@ -27,7 +27,7 @@ class LoginDrawer extends ComponentExtends<IDrawerProps> {
     this.onBtnState(false);
     if (res.code === 0) {
       this.$message.success(res.msg);
-      localStorage.setItem('access_Token', res.token!);
+      localStorage.setItem('authToken', res.token!);
       this.props.history!.push('/');
     } else {
       this.$message.error(res.msg);

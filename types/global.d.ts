@@ -16,6 +16,5 @@ declare global {
     userStore: UserStore.IUserStore;
     globalStore: GlobalStore.IGlobalStore;
     dataStore: DataStore.IDataStore;
-    // routerStore: RouterStore;
   }
 }

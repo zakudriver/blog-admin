@@ -9,9 +9,10 @@ console.log(localStorage.getItem('access_Token'));
 axios.interceptors.request.use(
   conf => {
     conf.headers.Authorization =
-      'Bearer ' + (localStorage.getItem('access_Token') === 'null' || !localStorage.getItem('access_Token')
+      'Bearer ' +
+      (localStorage.getItem('authToken') === 'null' || !localStorage.getItem('access_Token')
         ? ''
-        : localStorage.getItem('access_Token'));
+        : localStorage.getItem('authToken'));
     return conf;
   },
   err => {

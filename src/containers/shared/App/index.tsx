@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import * as Loadable from 'react-loadable';
+import PrivateRoute from '@/containers/shared/PrivateRoute'
 
 import { Loading } from '@/components/common';
 
@@ -23,7 +24,7 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route exact path="/login" component={Login} />
-          <Route path="/" component={Main} />
+          <PrivateRoute path="/" component={Main} />
           <Route component={NotFound} />
         </Switch>
       </Router>

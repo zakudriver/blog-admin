@@ -7,5 +7,4 @@ export class ComponentExtends<T = {}, S = {}, SS = any> extends React.Component<
   readonly $message = message;
   readonly userApi$$ = userApi;
   readonly messageApi$$ = messageApi;
-
 }

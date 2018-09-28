@@ -1,19 +1,37 @@
-import * as React from 'react'
-import styled from '@/styles'
+import * as React from 'react';
+import { Route } from 'react-router-dom';
+import { ComponentExtends } from '@/utils/extends';
+import { withRouterProps } from '@/components/utils/withComponents';
 
-interface IPrivateRouteProps extends IClassName {}
+interface IPrivateRouteProps extends IClassName, IRouterProps {
+  component: any;
+  path: string;
+}
 
-class PrivateRoute extends React.Component<IPrivateRouteProps> {
-  constructor(props: IPrivateRouteProps) {
-    super(props)
+@withRouterProps
+export default class PrivateRoute extends ComponentExtends<IPrivateRouteProps> {
+  public backLogin = () => {
+    this.$message.error('logon failure');
+    this.props.history!.push('/login');
+  };
+
+  public async componentDidMount() {
+    const token = localStorage.getItem('authToken');
+    console.log('token')
+
+    console.log(token)
+    if (token) {
+      const res = await this.userApi$$.auth();
+      if (res.code !== 0) {
+        this.backLogin();
+      }
+    } else {
+      this.backLogin();
+    }
   }
 
   public render() {
-    return (
-      <div className={this.props.className}>PrivateRoute</div>
-    )
+    const { component: Component, ...rest } = this.props;
+    return <Route {...rest} render={props => <Component />} />;
   }
 }
-
-
-export default styled(PrivateRoute)``
