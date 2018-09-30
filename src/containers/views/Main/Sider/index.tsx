@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react'
 import styled from '@/styles'
 import { Layout, Icon } from 'antd'
 
-import SiderMenu from './Menu'
+import SiderMenu from '@/containers/views/Main/Sider/Menu'
 
 interface ISiderProps extends IClassName {
   isCollapsed?: boolean

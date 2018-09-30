@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react'
 import { computed } from 'mobx'
 import { Menu, Icon } from 'antd'
 import { ClickParam } from 'antd/lib/menu'
-import { menu, IMenu, IMenuTree } from '../menu'
+import { menu, IMenu, IMenuTree } from '@/containers/views/Main/menu'
 import { buildTree } from '@/utils'
 import { withRouterProps } from '@/components/utils/withComponents'
 

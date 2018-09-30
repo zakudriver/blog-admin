@@ -17,9 +17,7 @@ export default class PrivateRoute extends ComponentExtends<IPrivateRouteProps> {
 
   public async componentDidMount() {
     const token = localStorage.getItem('authToken');
-    console.log('token')
 
-    console.log(token)
     if (token) {
       const res = await this.userApi$$.auth();
       if (res.code !== 0) {

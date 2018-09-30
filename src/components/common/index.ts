@@ -1,5 +1,5 @@
-import Loading from '@/components/common/Loading'
-import IconBtn from '@/components/common/IconBtn'
-import ActionGroup from '@/components/common/ActionGroup'
+import Loading from '@/components/common/Loading';
+import IconBtn from '@/components/common/IconBtn';
+import ActionModel from '@/components/common/ActionModel';
 
-export { Loading, IconBtn, ActionGroup }
+export { Loading, IconBtn, ActionModel };
