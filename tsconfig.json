@@ -19,6 +19,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "experimentalDecorators": true,
+    "removeComments": true,
     "paths": {
       "@/*": ["src/*"]
     }

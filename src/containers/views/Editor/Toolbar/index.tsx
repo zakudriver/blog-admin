@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Select, Radio, Button } from 'antd';
+import { Select, Radio, Button, DatePicker } from 'antd';
 import { inject, observer } from 'mobx-react';
 import styled from '@/styles';
-import { BtnGroup } from '@/components/common';
+import { ActionGroup } from '@/components/common';
 import { SelectValue } from 'antd/lib/select';
 import { RadioChangeEvent } from 'antd/lib/radio';
 
@@ -41,7 +41,7 @@ class Toolbar extends React.Component<IToolbarProps> {
   public render() {
     return (
       <div className={this.props.className}>
-        <BtnGroup direction="right" ele="div">
+        <ActionGroup direction="right" ele="div">
           <RadioGroup onChange={this.onChange} defaultValue={this.props.selectionEdit}>
             <RadioButton value="Monaco">Monaco</RadioButton>
             <RadioButton value="CodeMirror">CodeMirror</RadioButton>
@@ -61,12 +61,35 @@ class Toolbar extends React.Component<IToolbarProps> {
               </Option>
             ))}
           </Select>
-        </BtnGroup>
+        </ActionGroup>
 
-        <BtnGroup direction="left" ele="button">
+        <ActionGroup
+          direction="right"
+          ele="span"
+          border={{ style: '1px solid #eee', direction: 'left' }}
+          className="max__grow"
+        >
+          <Select
+            showSearch
+            defaultValue={this.props.selectionLanguage}
+            style={{ width: 120 }}
+            placeholder="Select a person"
+            optionFilterProp="children"
+            onChange={this.onChangeLanguages}
+          >
+            {this.props.webConfig!.editorLanguages.map((i, idx) => (
+              <Option key={idx} value={i}>
+                {i}
+              </Option>
+            ))}
+          </Select>
+          <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder="Time" />
+        </ActionGroup>
+
+        <ActionGroup direction="left" ele="button">
           <Button>Save</Button>
           <Button type="primary">Publish</Button>
-        </BtnGroup>
+        </ActionGroup>
       </div>
     );
   }
@@ -78,5 +101,9 @@ export default styled(Toolbar)`
   align-items: center;
   .radio__group {
     margin-right: 20px;
+  }
+
+  .max__grow {
+    flex-grow: 1;
   }
 `;

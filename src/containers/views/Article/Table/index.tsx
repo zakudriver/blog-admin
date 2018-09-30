@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from '@/styles'
 import { Table, Button, Modal } from 'antd'
-import { BtnGroup } from '@/components/common'
+import { ActionGroup } from '@/components/common'
 import { ColumnProps } from 'antd/lib/table'
 
 interface IArticleTableProps extends IClassName {}
@@ -34,14 +34,14 @@ class ArticleTable extends React.Component<IArticleTableProps> {
         dataIndex: '',
         key: 'x',
         render: (text: any, record: any, index: any) => (
-          <BtnGroup direction="right" ele="button">
+          <ActionGroup direction="right" ele="button">
             <Button type="primary" onClick={this.onEdit(text)}>
               Edit
             </Button>
             <Button type="danger" onClick={this.onDelete(text)}>
               Delete
             </Button>
-          </BtnGroup>
+          </ActionGroup>
         )
       }
     ]
