@@ -8,6 +8,8 @@ import { ThemeProvider, styleVar } from '@/styles';
 import '@/styles/global';
 import registerServiceWorker from './registerServiceWorker';
 
+// import '@/assets/sass/reset.scss'
+
 const render = (Component: React.ComponentClass) => {
   ReactDOM.render(
     <ThemeProvider theme={styleVar}>

@@ -4,6 +4,16 @@ export as namespace DataStore;
 
 export interface IDataStore extends dataStore {}
 
+export interface IClassNames {
+  key?: string;
+  _id: string;
+  className: string;
+}
+
+export interface ISortClassification {
+  (value: IClassNames[]): void;
+}
+
 export interface IMessage {
   key?: string;
   _id: string;

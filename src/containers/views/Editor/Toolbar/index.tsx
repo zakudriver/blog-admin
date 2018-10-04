@@ -3,6 +3,8 @@ import { Select, Radio, Button, DatePicker } from 'antd';
 import { inject, observer } from 'mobx-react';
 import styled from '@/styles';
 import { ActionModel } from '@/components/common';
+import ClassificationModal from './ClassificationModal';
+
 import { SelectValue } from 'antd/lib/select';
 import { RadioChangeEvent } from 'antd/lib/radio';
 
@@ -15,39 +17,66 @@ const ActionItem = ActionModel.ActionItem;
 const ActionLine = ActionModel.ActionLine;
 
 interface IToolbarProps extends IClassName {
-  onChangeEdit?: GlobalStore.IOnChangeEdit;
-  selectionEdit?: string;
-  webConfig?: GlobalStore.IWebConfig;
-  onChangeLanguages?: GlobalStore.IOnChangeLanguages;
-  selectionLanguage?: string;
+  onChangeEdit: GlobalStore.IOnChangeEdit;
+  selectionEdit: string;
+  webConfig: GlobalStore.IWebConfig;
+  onChangeLanguages: GlobalStore.IOnChangeLanguages;
+  selectionLanguage: string;
+  classification: DataStore.IClassNames[];
+  getClassification: () => void;
+  sortClassification: DataStore.ISortClassification;
+}
+
+interface IToolbarState {
+  visible: boolean;
 }
 
 @inject(
   (store: IStore): IToolbarProps => {
     const { onChangeEdit, selectionEdit, webConfig, onChangeLanguages, selectionLanguage } = store.globalStore;
-    return { onChangeEdit, selectionEdit, webConfig, onChangeLanguages, selectionLanguage };
+    const { classification, getClassification, sortClassification } = store.dataStore;
+    return {
+      onChangeEdit,
+      selectionEdit,
+      webConfig,
+      onChangeLanguages,
+      selectionLanguage,
+      classification,
+      getClassification,
+      sortClassification
+    };
   }
 )
 @observer
-class Toolbar extends React.Component<IToolbarProps> {
-  constructor(props: IToolbarProps) {
-    super(props);
-  }
+class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
+  public state = {
+    visible: true
+  };
 
   public onChangeLanguages = (value: SelectValue) => {
     this.props.onChangeLanguages!(value as string);
   };
 
-  public onChange = (e: RadioChangeEvent) => {
+  public onChangeEditor = (e: RadioChangeEvent) => {
     this.props.onChangeEdit!(e.target.value);
   };
+
+  public openClassificationModal = () => {
+    this.setState({
+      visible: !this.state.visible
+    });
+  };
+
+  public componentDidMount() {
+    this.props.getClassification();
+  }
 
   public render() {
     return (
       <div className={this.props.className}>
         <ActionGroup direction="right">
           <ActionItem>
-            <RadioGroup onChange={this.onChange} defaultValue={this.props.selectionEdit}>
+            <RadioGroup onChange={this.onChangeEditor} defaultValue={this.props.selectionEdit}>
               <RadioButton value="Monaco">Monaco</RadioButton>
               <RadioButton value="CodeMirror">CodeMirror</RadioButton>
             </RadioGroup>
@@ -90,7 +119,7 @@ class Toolbar extends React.Component<IToolbarProps> {
             </Select>
           </ActionItem>
           <ActionItem>
-            <Button type="primary" ghost>
+            <Button type="primary" ghost onClick={this.openClassificationModal}>
               Edit
             </Button>
           </ActionItem>
@@ -111,6 +140,13 @@ class Toolbar extends React.Component<IToolbarProps> {
             <Button type="primary">Publish</Button>
           </ActionItem>
         </ActionGroup>
+
+        <ClassificationModal
+          visible={this.state.visible}
+          classification={this.props.classification}
+          onClassificationModal={this.openClassificationModal}
+          sortClassification={this.props.sortClassification}
+        />
       </div>
     );
   }

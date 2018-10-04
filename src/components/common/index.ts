@@ -1,5 +1,6 @@
 import Loading from '@/components/common/Loading';
 import IconBtn from '@/components/common/IconBtn';
 import ActionModel from '@/components/common/ActionModel';
+import Draggable from '@/components/common/Draggable';
 
-export { Loading, IconBtn, ActionModel };
+export { Loading, IconBtn, ActionModel, Draggable };

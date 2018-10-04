@@ -75,7 +75,7 @@ mark,
 audio,
 video,
 details,
-summary {
+summary:not(#preview *) {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -94,13 +94,13 @@ header,
 nav,
 section,
 details,
-summary {
+summary:not(#preview *) {
 	display: block;
 }
 
 /* Handle box-sizing while better addressing child elements:
    http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
-html {
+html:not(#preview *) {
 	box-sizing: border-box;
 }
 
@@ -133,12 +133,12 @@ embed {
 /* we use a lot of ULs that aren't bulleted.
 	you'll have to restore the bullets within content,
 	which is fine because they're probably customized anyway */
-ul {
+ul:not(#preview *) {
 	list-style: none;
 }
 
 blockquote,
-q {
+q :not(#preview blockquote, #preview q) {
 	quotes: none;
 }
 
@@ -150,7 +150,7 @@ q:after {
 	content: none;
 }
 
-a {
+a:not(#preview a) {
 	margin: 0;
 	padding: 0;
 	font-size: 100%;
@@ -158,7 +158,7 @@ a {
 	background: transparent;
 }
 
-del {
+del:not(#preview del) {
 	text-decoration: line-through;
 }
 
@@ -169,22 +169,22 @@ dfn[title] {
 }
 
 /* tables still need cellspacing="0" in the markup */
-table {
+table:not(#preview table) {
 	border-collapse: separate;
 	border-spacing: 0;
 }
 
-th {
+th:not(#preview th) {
 	font-weight: bold;
 	vertical-align: bottom;
 }
 
-td {
+td:not(#preview td) {
 	font-weight: normal;
 	vertical-align: top;
 }
 
-hr {
+hr:not(#preview hr) {
 	display: block;
 	height: 1px;
 	border: 0;
@@ -198,7 +198,7 @@ select {
 	vertical-align: middle;
 }
 
-pre {
+pre:not(#preview pre) {
 	white-space: pre;
 	/* CSS2 */
 	white-space: pre-wrap;
@@ -231,37 +231,37 @@ textarea {
 	font: 99% sans-serif;
 }
 
-table {
+table:not(#preview table) {
 	font-size: inherit;
 	font: 100%;
 }
 
-small {
+small:not(#preview small) {
 	font-size: 85%;
 }
 
-strong {
+strong:not(#preview strong) {
 	font-weight: bold;
 }
 
 td,
-td img {
+td img:not(#preview td, #preview td img) {
 	vertical-align: top;
 }
 
 /* Make sure sup and sub don't mess with your line-heights http://gist.github.com/413930 */
 sub,
-sup {
+sup:not(#preview sub, #preview sup) {
 	font-size: 75%;
 	line-height: 0;
 	position: relative;
 }
 
-sup {
+sup:not(#preview sup) {
 	top: -0.5em;
 }
 
-sub {
+sub:not(#preview sub) {
 	bottom: -0.25em;
 }
 
@@ -269,7 +269,7 @@ sub {
 pre,
 code,
 kbd,
-samp {
+samp:not(#preview pre, #preview code, #preview kbd, #preview samp) {
 	font-family: monospace, sans-serif;
 }
 
