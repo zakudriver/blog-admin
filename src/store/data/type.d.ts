@@ -5,6 +5,7 @@ export as namespace DataStore;
 
 export interface IDataStore extends dataStore {}
 
+// Classification
 export interface IClassNames {
   key?: string;
   _id: string;
@@ -26,6 +27,22 @@ export interface IUpdateClassification {
 
 export interface IRemoveClassification {
   (value: IClassNames): void;
+}
+
+// Article
+export interface IArticle {
+  title: string;
+  // className: string;
+  classId: string;
+  content: string;
+  isFormal: boolean;
+  createTime: string;
+  updateTime: string;
+}
+
+type Indexes<T> = { [P in keyof T]?: T[P] };
+export interface IChangeArticle {
+  (value: Indexes<IArticle>): void;
 }
 
 export interface IMessage {

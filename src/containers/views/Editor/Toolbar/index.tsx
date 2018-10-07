@@ -7,6 +7,7 @@ import ClassificationModal from './ClassificationModal';
 
 import { SelectValue } from 'antd/lib/select';
 import { RadioChangeEvent } from 'antd/lib/radio';
+import { Moment } from 'moment';
 
 const Option = Select.Option;
 const RadioButton = Radio.Button;
@@ -28,6 +29,8 @@ interface IToolbarProps extends IClassName {
   sortClassification: DataStore.ISortClassification;
   updateClassification: DataStore.IUpdateClassification;
   removeClassification: DataStore.IRemoveClassification;
+  article: DataStore.IArticle;
+  changeArticle: DataStore.IChangeArticle;
 }
 
 interface IToolbarState {
@@ -43,7 +46,9 @@ interface IToolbarState {
       addClassification,
       sortClassification,
       updateClassification,
-      removeClassification
+      removeClassification,
+      article,
+      changeArticle
     } = store.dataStore;
     return {
       onChangeEdit,
@@ -56,18 +61,21 @@ interface IToolbarState {
       addClassification,
       sortClassification,
       updateClassification,
-      removeClassification
+      removeClassification,
+      article,
+      changeArticle
     };
   }
 )
 @observer
 class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   public state = {
-    visible: false
+    visible: false,
+    submit: {}
   };
 
   public onChangeLanguages = (value: SelectValue) => {
-    this.props.onChangeLanguages!(value as string);
+    this.props.onChangeLanguages(value as string);
   };
 
   public onChangeEditor = (e: RadioChangeEvent) => {
@@ -78,6 +86,15 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
     this.setState({
       visible: !this.state.visible
     });
+  };
+
+  public onChangeClassification = (value: SelectValue) => {
+    this.props.changeArticle({ classId: value as string });
+  };
+
+  public onChangeTime = (date: Moment, dateString: string) => {
+    console.log(date);
+    console.log(dateString);
   };
 
   public componentDidMount() {
@@ -100,7 +117,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
               showSearch
               defaultValue={this.props.selectionLanguage}
               style={{ width: 120 }}
-              placeholder="Select a person"
+              placeholder="Select a language"
               optionFilterProp="children"
               onChange={this.onChangeLanguages}
             >
@@ -118,15 +135,14 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
           <ActionItem>
             <Select
               showSearch
-              defaultValue={this.props.selectionLanguage}
-              style={{ width: 120 }}
-              placeholder="Select a person"
+              style={{ width: 130 }}
+              placeholder="classification"
               optionFilterProp="children"
-              onChange={this.onChangeLanguages}
+              onChange={this.onChangeClassification}
             >
-              {this.props.webConfig!.editorLanguages.map((i, idx) => (
-                <Option key={idx} value={i}>
-                  {i}
+              {this.props.classification.map((i, idx) => (
+                <Option key={idx} value={i._id}>
+                  {i.className}
                 </Option>
               ))}
             </Select>
@@ -141,7 +157,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
         <ActionGroup direction="right" className="time__grow">
           <ActionLine border="1px solid #eee" width="10" height="32" />
           <ActionItem>
-            <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder="Time" />
+            <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder="Time" onChange={this.onChangeTime} />
           </ActionItem>
         </ActionGroup>
 

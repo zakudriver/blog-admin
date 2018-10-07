@@ -6,6 +6,17 @@ export class DataStore extends StoreExtends {
   classification: DataStore.IClassNames[] = [];
 
   @observable
+  article: DataStore.IArticle = {
+    title: '// title',
+    content: '// . . . content',
+    // className: '',
+    classId: '',
+    isFormal: false,
+    createTime: '',
+    updateTime: ''
+  };
+
+  @observable
   message: DataStore.IMessageResponse = { count: 0, rows: [] };
 
   @observable
@@ -67,6 +78,13 @@ export class DataStore extends StoreExtends {
     } else {
       this.$message.error(res.msg);
     }
+  };
+
+  @action
+  changeArticle: DataStore.IChangeArticle = value => {
+    Object.keys(value).forEach(i => {
+      this.article[i] = value[i];
+    });
   };
 
   @action
