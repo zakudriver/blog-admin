@@ -1,48 +1,32 @@
-import * as React from 'react'
-import { inject, observer } from 'mobx-react'
-import styled from '@/styles'
+import * as React from 'react';
+import { inject, observer } from 'mobx-react';
+import styled from '@/styles';
 
-import Edit from './Edit'
-import Preview from './Preview'
+import Edit from './Edit';
+import Preview from './Preview';
 
 interface IEditorProps extends IClassName {
-  isCollapsed?: boolean
-  selectionEdit?: string
-  selectionLanguage?: string
-}
-
-interface IEditorState {
-  value: string
+  selectionEdit: string;
+  selectionLanguage: string;
 }
 
 @inject(
   (store: IStore): IEditorProps => {
-    const { isCollapsed, selectionEdit, selectionLanguage } = store.globalStore
-    return { isCollapsed, selectionEdit, selectionLanguage }
+    const { selectionEdit, selectionLanguage } = store.globalStore;
+    return { selectionEdit, selectionLanguage };
   }
 )
 @observer
-class Editor extends React.Component<IEditorProps, IEditorState> {
-  autoCollapsed: any
-  constructor(props: IEditorProps) {
-    super(props)
-    this.state = {
-      value: 'test'
-    }
-  }
+class Editor extends React.Component<IEditorProps> {
+  public state = {
+    value: 'test'
+  };
 
-  onInput = (val: string) => {
-    console.log(val)
-    this.setState({
-      value: val
-    })
-  }
-
-  public updateCode = (value: string) => (event: React.ChangeEvent) => {
+  public onChangeArticle = (value: string) => {
     this.setState({
       value
-    })
-  }
+    });
+  };
 
   public render() {
     // const options = {
@@ -53,10 +37,15 @@ class Editor extends React.Component<IEditorProps, IEditorState> {
     // }
     return (
       <div className={this.props.className}>
-        <Edit value={this.state.value} onChange={this.onInput} type={this.props.selectionEdit!} language={this.props.selectionLanguage!}/>
+        <Edit
+          value={this.state.value}
+          onChange={this.onChangeArticle}
+          type={this.props.selectionEdit}
+          language={this.props.selectionLanguage}
+        />
         <Preview value={this.state.value} />
       </div>
-    )
+    );
   }
 }
 
@@ -68,4 +57,4 @@ export default styled(Editor)`
   grid-template-columns: 50% 50%;
   grid-template-rows: 100%;
   grid-gap: 10px;
-`
+`;

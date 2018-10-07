@@ -1,5 +1,5 @@
 import axios, { IAxiosResponse } from './index';
-import { GET, POST, DELETE } from './decorators';
+import { GET, POST, DELETE, PUT } from './decorators';
 
 class ClassificationApi {
   @GET({
@@ -22,6 +22,14 @@ class ClassificationApi {
     url: '/classification'
   })
   async removeClassification(opt?: any) {
+    const res: IAxiosResponse = await axios(opt);
+    return Promise.resolve(res.data);
+  }
+
+  @PUT({
+    url: '/classification'
+  })
+  async updateClassification(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
     return Promise.resolve(res.data);
   }

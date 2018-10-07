@@ -35,7 +35,7 @@ axios.interceptors.response.use(
 
 export default axios;
 
-interface IResponse {
+export interface IResponse {
   code: number;
   msg: string;
   data: any;

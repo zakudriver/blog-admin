@@ -1,37 +1,33 @@
 import * as React from 'react';
-import { Modal, Button, Select, Input } from 'antd';
+import { Modal, Button, Input } from 'antd';
 import styled from '@/styles';
-import { ComponentExtends } from '@/utils/extends';
 import { Draggable } from '@/components/common';
-
-const Option = Select.Option;
 
 interface IClassificationModalProps extends IClassName {
   visible: boolean;
   onClassificationModal: () => void;
   classification: DataStore.IClassNames[];
   sortClassification: DataStore.ISortClassification;
+  getClassification: () => void;
+  addClassification: DataStore.IAddClassification;
+  updateClassification: DataStore.IUpdateClassification;
+  removeClassification: DataStore.IRemoveClassification;
 }
 
-class ClassificationModal extends ComponentExtends<IClassificationModalProps> {
+class ClassificationModal extends React.Component<IClassificationModalProps> {
   public state = {
     addClassName: '',
     isAddBtn: false
   };
 
-  public onSelectedClassName = () => {};
-
   public onAddClassName = async () => {
     this.onBtnState(true);
-    const res = await this.classificationApi$$.addClassification({ className: this.state.addClassName });
+    const res = await this.props.addClassification({ className: this.state.addClassName });
     this.onBtnState(false);
     if (res.code === 0) {
       this.setState({
         addClassName: ''
       });
-      this.$message.success(res.msg);
-    } else {
-      this.$message.error(res.msg);
     }
   };
 
@@ -51,45 +47,63 @@ class ClassificationModal extends ComponentExtends<IClassificationModalProps> {
     this.props.sortClassification(value);
   };
 
+  public onEdit = async (newRow: DataStore.IClassNames, oldRow: DataStore.IClassNames) => {
+    if (newRow.className !== oldRow.className) {
+      await this.props.updateClassification(newRow);
+    }
+  };
+
+  public onRemove = async (row: DataStore.IClassNames) => {
+    await this.props.removeClassification(row);
+  };
+
+  public onSaveClassificationModal = async () => {
+    await this.props.updateClassification();
+  };
+
   public render() {
     return (
       <Modal
         visible={this.props.visible}
         onCancel={this.props.onClassificationModal}
         footer={[
-          <Button key="submit" type="primary" onClick={this.props.onClassificationModal}>
+          <Button key="ok" type="primary" onClick={this.onSaveClassificationModal}>
             ok
+          </Button>,
+          <Button key="no" onClick={this.props.onClassificationModal}>
+            no
           </Button>
         ]}
         title="Classification"
+        className={this.props.className}
       >
         <div>
-          <Select
-            showSearch
-            style={{ width: 120 }}
-            placeholder="Select a person"
-            optionFilterProp="children"
-            onChange={this.onSelectedClassName}
-          >
-            {this.props.classification.map((i, idx) => (
-              <Option key={idx} value={i._id}>
-                {i.className}
-              </Option>
-            ))}
-          </Select>
-
-          <div>
-            <Input value={this.state.addClassName} onChange={this.onChangeAddClassName} style={{ width: '120px', marginRight: '10px' }} />
+          <div className="modal__inp">
+            <Input
+              value={this.state.addClassName}
+              onChange={this.onChangeAddClassName}
+              style={{ width: '200px', marginRight: '10px' }}
+            />
             <Button onClick={this.onAddClassName} disabled={this.state.isAddBtn}>
               Add
             </Button>
           </div>
 
-          <Draggable dataSource={this.props.classification} dataIndex="className" onChange={this.onChangeSort} />
+          <Draggable
+            dataSource={this.props.classification}
+            dataIndex="className"
+            onChange={this.onChangeSort}
+            onEdit={this.onEdit}
+            onRemove={this.onRemove}
+          />
         </div>
       </Modal>
     );
   }
 }
 
-export default styled(ClassificationModal)``;
+export default styled(ClassificationModal)`
+  .modal__inp {
+    margin-bottom: 20px;
+  }
+`;

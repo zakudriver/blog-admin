@@ -24,7 +24,10 @@ interface IToolbarProps extends IClassName {
   selectionLanguage: string;
   classification: DataStore.IClassNames[];
   getClassification: () => void;
+  addClassification: DataStore.IAddClassification;
   sortClassification: DataStore.ISortClassification;
+  updateClassification: DataStore.IUpdateClassification;
+  removeClassification: DataStore.IRemoveClassification;
 }
 
 interface IToolbarState {
@@ -34,7 +37,14 @@ interface IToolbarState {
 @inject(
   (store: IStore): IToolbarProps => {
     const { onChangeEdit, selectionEdit, webConfig, onChangeLanguages, selectionLanguage } = store.globalStore;
-    const { classification, getClassification, sortClassification } = store.dataStore;
+    const {
+      classification,
+      getClassification,
+      addClassification,
+      sortClassification,
+      updateClassification,
+      removeClassification
+    } = store.dataStore;
     return {
       onChangeEdit,
       selectionEdit,
@@ -43,14 +53,17 @@ interface IToolbarState {
       selectionLanguage,
       classification,
       getClassification,
-      sortClassification
+      addClassification,
+      sortClassification,
+      updateClassification,
+      removeClassification
     };
   }
 )
 @observer
 class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   public state = {
-    visible: true
+    visible: false
   };
 
   public onChangeLanguages = (value: SelectValue) => {
@@ -58,7 +71,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   };
 
   public onChangeEditor = (e: RadioChangeEvent) => {
-    this.props.onChangeEdit!(e.target.value);
+    this.props.onChangeEdit(e.target.value);
   };
 
   public openClassificationModal = () => {
@@ -146,6 +159,10 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
           classification={this.props.classification}
           onClassificationModal={this.openClassificationModal}
           sortClassification={this.props.sortClassification}
+          getClassification={this.props.getClassification}
+          addClassification={this.props.addClassification}
+          updateClassification={this.props.updateClassification}
+          removeClassification={this.props.removeClassification}
         />
       </div>
     );
