@@ -22,7 +22,7 @@ class ClassificationModal extends React.Component<IClassificationModalProps> {
 
   public onAddClassName = async () => {
     this.onBtnState(true);
-    const res = await this.props.addClassification({ className: this.state.addClassName });
+    const res = await this.props.addClassification({ name: this.state.addClassName });
     this.onBtnState(false);
     if (res.code === 0) {
       this.setState({
@@ -48,7 +48,7 @@ class ClassificationModal extends React.Component<IClassificationModalProps> {
   };
 
   public onEdit = async (newRow: DataStore.IClassNames, oldRow: DataStore.IClassNames) => {
-    if (newRow.className !== oldRow.className) {
+    if (newRow.name !== oldRow.name) {
       await this.props.updateClassification(newRow);
     }
   };
@@ -91,7 +91,7 @@ class ClassificationModal extends React.Component<IClassificationModalProps> {
 
           <Draggable
             dataSource={this.props.classification}
-            dataIndex="className"
+            dataIndex="name"
             onChange={this.onChangeSort}
             onEdit={this.onEdit}
             onRemove={this.onRemove}

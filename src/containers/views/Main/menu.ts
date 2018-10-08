@@ -60,18 +60,18 @@ export const menu: IMenu[] = [
   },
   {
     key: '3',
-    title: 'Message',
-    icon: 'message',
-    path: '/message',
-    component: 'Message',
-    exact: true
-  },
-  {
-    key: '4',
     title: 'Article',
     icon: 'home',
     path: '/article',
     component: 'Article',
+    exact: true
+  },
+  {
+    key: '4',
+    title: 'Message',
+    icon: 'message',
+    path: '/message',
+    component: 'Message',
     exact: true
   },
   {

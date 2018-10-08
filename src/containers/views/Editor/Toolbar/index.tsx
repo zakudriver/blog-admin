@@ -31,6 +31,7 @@ interface IToolbarProps extends IClassName {
   removeClassification: DataStore.IRemoveClassification;
   article: DataStore.IArticle;
   changeArticle: DataStore.IChangeArticle;
+  saveArticle: () => void;
 }
 
 interface IToolbarState {
@@ -48,7 +49,8 @@ interface IToolbarState {
       updateClassification,
       removeClassification,
       article,
-      changeArticle
+      changeArticle,
+      saveArticle
     } = store.dataStore;
     return {
       onChangeEdit,
@@ -63,7 +65,8 @@ interface IToolbarState {
       updateClassification,
       removeClassification,
       article,
-      changeArticle
+      changeArticle,
+      saveArticle
     };
   }
 )
@@ -89,12 +92,13 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   };
 
   public onChangeClassification = (value: SelectValue) => {
-    this.props.changeArticle({ classId: value as string });
+    this.props.changeArticle({ className: value as string });
   };
 
   public onChangeTime = (date: Moment, dateString: string) => {
     console.log(date);
     console.log(dateString);
+    this.props.changeArticle({ time: dateString });
   };
 
   public componentDidMount() {
@@ -142,7 +146,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
             >
               {this.props.classification.map((i, idx) => (
                 <Option key={idx} value={i._id}>
-                  {i.className}
+                  {i.name}
                 </Option>
               ))}
             </Select>
@@ -163,7 +167,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 
         <ActionGroup direction="left">
           <ActionItem>
-            <Button>Save</Button>
+            <Button onClick={this.props.saveArticle}>Save</Button>
           </ActionItem>
           <ActionItem>
             <Button type="primary">Publish</Button>

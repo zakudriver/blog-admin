@@ -6,7 +6,7 @@ import { ComponentExtends } from '@/utils/extends';
 import styled from '@/styles';
 
 interface IMessageProps extends IClassName {
-  message: DataStore.IMessageResponse;
+  message: DataStore.IMessageList;
   getMessage: DataStore.IGetMessage;
   isMessageLoading: boolean;
 }

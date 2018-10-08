@@ -9,15 +9,19 @@ export class DataStore extends StoreExtends {
   article: DataStore.IArticle = {
     title: '// title',
     content: '// . . . content',
-    // className: '',
-    classId: '',
+    className: '',
     isFormal: false,
-    createTime: '',
-    updateTime: ''
+    time: ''
   };
 
   @observable
-  message: DataStore.IMessageResponse = { count: 0, rows: [] };
+  articleList: DataStore.IArticleList = { count: 0, rows: [] };
+
+  @observable
+  isArticleListLoading: boolean = false;
+
+  @observable
+  message: DataStore.IMessageList = { count: 0, rows: [] };
 
   @observable
   isMessageLoading: boolean = false;
@@ -85,6 +89,29 @@ export class DataStore extends StoreExtends {
     Object.keys(value).forEach(i => {
       this.article[i] = value[i];
     });
+  };
+
+  @action
+  saveArticle = async () => {
+    const res = await this.articleApi$$.addArticle(this.article);
+    console.log(res);
+  };
+
+  @action
+  publishArticle = async () => {
+    const publishArticle = { ...this.article, isFormal: true };
+    const res = await this.articleApi$$.addArticle(publishArticle);
+    console.log(res);
+  };
+
+  @action
+  getArticleList: DataStore.IGetArticleList = async (index = 1, limit = 10) => {
+    this.isArticleListLoading = true;
+    const res = await this.articleApi$$.getArticleList({ index, limit });
+    this.isArticleListLoading = false;
+    if (res.code === 0) {
+      this.articleList = res.data;
+    }
   };
 
   @action

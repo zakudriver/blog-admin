@@ -25,6 +25,14 @@ class ArticleApi {
     const res: IAxiosResponse = await axios(opt);
     return Promise.resolve(res.data);
   }
+
+  @GET({
+    url: '/article/listpro'
+  })
+  async getArticleList(opt?: any) {
+    const res: IAxiosResponse = await axios(opt);
+    return Promise.resolve(res.data);
+  }
 }
 
 export default new ArticleApi();

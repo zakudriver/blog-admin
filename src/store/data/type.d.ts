@@ -10,11 +10,11 @@ export interface IClassNames {
   key?: string;
   _id: string;
   order: number;
-  className: string;
+  name: string;
 }
 
 export interface IAddClassification {
-  (value: { [i: string]: string }): Promise<IResponse>;
+  (value: { name: string }): Promise<IResponse>;
 }
 
 export interface ISortClassification {
@@ -31,13 +31,13 @@ export interface IRemoveClassification {
 
 // Article
 export interface IArticle {
+  key?: string;
+  _id?: string;
   title: string;
-  // className: string;
-  classId: string;
+  className: string;
   content: string;
   isFormal: boolean;
-  createTime: string;
-  updateTime: string;
+  time: string;
 }
 
 type Indexes<T> = { [P in keyof T]?: T[P] };
@@ -45,15 +45,26 @@ export interface IChangeArticle {
   (value: Indexes<IArticle>): void;
 }
 
+// ArticleList
+export interface IArticleList {
+  count: number;
+  rows: IArticle[];
+}
+
+export interface IGetArticleList {
+  (index?: number, limit?: number): void;
+}
+
+// Message
 export interface IMessage {
   key?: string;
-  _id: string;
+  _id?: string;
   email: string;
   time: string;
   text: string;
 }
 
-export interface IMessageResponse {
+export interface IMessageList {
   count: number;
   rows: IMessage[];
 }
