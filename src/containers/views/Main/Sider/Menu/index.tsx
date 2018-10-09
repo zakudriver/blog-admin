@@ -1,70 +1,76 @@
-import * as React from 'react'
-import { inject, observer } from 'mobx-react'
-import { computed } from 'mobx'
-import { Menu, Icon } from 'antd'
-import { ClickParam } from 'antd/lib/menu'
-import { menu, IMenu, IMenuTree } from '@/containers/views/Main/menu'
-import { buildTree } from '@/utils'
-import { withRouterProps } from '@/components/utils/withComponents'
+import * as React from 'react';
+import { inject, observer } from 'mobx-react';
+import { computed, reaction } from 'mobx';
+import { Menu, Icon } from 'antd';
+import { ClickParam } from 'antd/lib/menu';
+import { menu, IMenu, IMenuTree } from '@/containers/views/Main/menu';
+import { buildTree } from '@/utils';
+import { withRouterProps } from '@/components/utils/withComponents';
 
-const MenuItem = Menu.Item
-const SubMenu = Menu.SubMenu
+const MenuItem = Menu.Item;
+const SubMenu = Menu.SubMenu;
 
 interface ISiderMenuProps extends IClassName, IRouterProps {
-  isCollapsed?: boolean
+  isCollapsed?: boolean;
+  currentRouter?: string;
 }
 
 interface ISiderMenuState {
-  defaultSelectedKeys: string[]
-  defaultOpenKeys: string[]
+  selectedKeys: string[];
+  openKeys: string[];
 }
 
 @withRouterProps
 @inject(
   (store: IStore): ISiderMenuProps => {
-    const { isCollapsed } = store.globalStore
-    return { isCollapsed }
+    const { isCollapsed, currentRouter } = store.globalStore;
+    return { isCollapsed, currentRouter };
   }
 )
 @observer
 class SiderMenu extends React.Component<ISiderMenuProps, ISiderMenuState> {
   constructor(props: ISiderMenuProps) {
-    super(props)
+    super(props);
     this.state = {
-      defaultSelectedKeys: ['1'],
-      defaultOpenKeys: ['1']
-    }
+      selectedKeys: ['1'],
+      openKeys: ['1']
+    };
+    reaction(
+      () => this.props.currentRouter!,
+      currentRouter => {
+        this.onCurrentMenu(currentRouter);
+      }
+    );
   }
 
   @computed
   get menuTree() {
-    return buildTree<IMenu, IMenuTree>(menu)
+    return buildTree<IMenu, IMenuTree>(menu);
   }
 
-  public onRedirect = ({ key }: ClickParam) => {
-    const selectedMenu = menu.find(val => key === val.key)
-    if (selectedMenu && selectedMenu.path && selectedMenu.path !== this.props.location!.pathname) {
-      this.props.history!.push(selectedMenu.path)
+  public onMenu = ({ key }: ClickParam) => {
+    const selectedMenu = menu.find(val => key === val.key);
+    if (selectedMenu && selectedMenu.path && selectedMenu.path) {
+      this.props.history!.push(selectedMenu.path);
     }
-  }
+  };
 
-  public onOpenCurrent = (path: string) => {
-    const selectedMenu = menu.find(val => path === val.path)!
+  public onCurrentMenu = (path: string) => {
+    const selectedMenu = menu.find(val => path === val.path)!;
     if (selectedMenu.parentKey) {
       this.setState({
-        defaultOpenKeys: [selectedMenu!.parentKey!],
-        defaultSelectedKeys: [selectedMenu.key]
-      })
+        openKeys: [selectedMenu!.parentKey!],
+        selectedKeys: [selectedMenu.key]
+      });
     } else {
       this.setState({
-        defaultSelectedKeys: [selectedMenu.key]
-      })
+        selectedKeys: [selectedMenu.key]
+      });
     }
-  }
+  };
 
-
-  componentWillMount() {
-    this.onOpenCurrent(this.props.location!.pathname)
+  public componentWillMount() {
+    this.onCurrentMenu(this.props.location!.pathname);
   }
 
   public createMenu = (menuTree: IMenuTree[]) => {
@@ -82,31 +88,31 @@ class SiderMenu extends React.Component<ISiderMenuProps, ISiderMenuState> {
           >
             {this.createMenu(i.children)}
           </SubMenu>
-        )
+        );
       } else {
         return (
           <MenuItem key={i.key}>
             <Icon type={i.icon} />
             <span>{i.title}</span>
           </MenuItem>
-        )
+        );
       }
-    })
-  }
+    });
+  };
 
   public render() {
     return (
       <Menu
-        onClick={this.onRedirect}
-        defaultSelectedKeys={this.state.defaultSelectedKeys}
-        defaultOpenKeys={this.state.defaultOpenKeys}
+        onClick={this.onMenu}
+        selectedKeys={this.state.selectedKeys}
+        openKeys={this.state.openKeys}
         inlineCollapsed={this.props.isCollapsed}
         mode="inline"
       >
         {this.createMenu(this.menuTree)}
       </Menu>
-    )
+    );
   }
 }
 
-export default (SiderMenu)
+export default SiderMenu;

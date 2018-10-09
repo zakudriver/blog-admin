@@ -1,6 +1,8 @@
-import { observable, action, reaction, autorun } from 'mobx';
+import { observable, action } from 'mobx';
 
 export class GlobalStore {
+  @observable
+  currentRouter: string = '';
   @observable
   webConfig: GlobalStore.IWebConfig = {
     headPic: '',
@@ -21,20 +23,12 @@ export class GlobalStore {
   @observable
   selectionLanguage: string = 'javascript';
 
-  constructor() {
-    reaction(
-      () => this.isCollapsed,
-      (val, val1) => {
-        console.log('change');
-        console.log(val);
-        console.log(val1);
-      }
-    );
+  constructor() {}
 
-    autorun(() => {
-      console.log(this.isCollapsed);
-    });
-  }
+  @action
+  updateRouter: GlobalStore.IUpdateRouter = route => {
+    this.currentRouter = route;
+  };
 
   @action
   onCollapsed = () => {

@@ -1,23 +1,26 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Input } from 'antd';
+import { withRouterProps } from '@/components/utils/withComponents';
 import styled from '@/styles';
 
 import Edit from './Edit';
 import Preview from './Preview';
 
-interface IEditorProps extends IClassName {
+interface IEditorProps extends IClassName, IRouterProps {
   selectionEdit: string;
   selectionLanguage: string;
   article: DataStore.IArticle;
   changeArticle: DataStore.IChangeArticle;
+  getArticle: DataStore.IGetArticle;
 }
 
+@withRouterProps
 @inject(
   (store: IStore): IEditorProps => {
     const { selectionEdit, selectionLanguage } = store.globalStore;
-    const { article, changeArticle } = store.dataStore;
-    return { selectionEdit, selectionLanguage, article, changeArticle };
+    const { article, changeArticle, getArticle } = store.dataStore;
+    return { selectionEdit, selectionLanguage, article, changeArticle, getArticle };
   }
 )
 @observer
@@ -29,6 +32,14 @@ class Editor extends React.Component<IEditorProps> {
   public onChangeArticleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.props.changeArticle({ title: e.target.value });
   };
+
+  public componentDidMount() {
+    const search = this.props.location!.search;
+    if (search) {
+      const _id = search.split('=')[1];
+      this.props.getArticle(_id);
+    }
+  }
 
   public render() {
     // const options = {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Select, Radio, Button, DatePicker } from 'antd';
+import { Select, Radio, Button, DatePicker, Modal } from 'antd';
 import { inject, observer } from 'mobx-react';
 import styled from '@/styles';
 import { ActionModel } from '@/components/common';
@@ -8,6 +8,7 @@ import ClassificationModal from './ClassificationModal';
 import { SelectValue } from 'antd/lib/select';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import { Moment } from 'moment';
+import * as moment from 'moment';
 
 const Option = Select.Option;
 const RadioButton = Radio.Button;
@@ -32,6 +33,8 @@ interface IToolbarProps extends IClassName {
   article: DataStore.IArticle;
   changeArticle: DataStore.IChangeArticle;
   saveArticle: () => void;
+  publishArticle: () => void;
+  restore: () => void;
 }
 
 interface IToolbarState {
@@ -50,7 +53,9 @@ interface IToolbarState {
       removeClassification,
       article,
       changeArticle,
-      saveArticle
+      saveArticle,
+      publishArticle,
+      restore
     } = store.dataStore;
     return {
       onChangeEdit,
@@ -66,7 +71,9 @@ interface IToolbarState {
       removeClassification,
       article,
       changeArticle,
-      saveArticle
+      saveArticle,
+      publishArticle,
+      restore
     };
   }
 )
@@ -101,6 +108,43 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
     this.props.changeArticle({ time: dateString });
   };
 
+  public restore = () => {
+    Modal.confirm({
+      title: 'Warning',
+      content: 'Bla bla ...',
+      okText: 'ok',
+      okType: 'danger',
+      cancelText: 'no',
+      onOk: async () => {
+        this.props.restore();
+      }
+    });
+  };
+
+  public saveArticle = () => {
+    Modal.confirm({
+      title: 'Warning',
+      content: 'Bla bla ...',
+      okText: 'ok',
+      cancelText: 'no',
+      onOk: async () => {
+        this.props.saveArticle();
+      }
+    });
+  };
+
+  public publishArticle = () => {
+    Modal.confirm({
+      title: 'Warning',
+      content: 'Bla bla ...',
+      okText: 'ok',
+      cancelText: 'no',
+      onOk: async () => {
+        this.props.publishArticle();
+      }
+    });
+  };
+
   public componentDidMount() {
     this.props.getClassification();
   }
@@ -122,7 +166,6 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
               defaultValue={this.props.selectionLanguage}
               style={{ width: 120 }}
               placeholder="Select a language"
-              optionFilterProp="children"
               onChange={this.onChangeLanguages}
             >
               {this.props.webConfig!.editorLanguages.map((i, idx) => (
@@ -141,7 +184,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
               showSearch
               style={{ width: 130 }}
               placeholder="classification"
-              optionFilterProp="children"
+              value={this.props.article.className}
               onChange={this.onChangeClassification}
             >
               {this.props.classification.map((i, idx) => (
@@ -161,16 +204,29 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
         <ActionGroup direction="right" className="time__grow">
           <ActionLine border="1px solid #eee" width="10" height="32" />
           <ActionItem>
-            <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder="Time" onChange={this.onChangeTime} />
+            <DatePicker
+              showTime
+              format="YYYY-MM-DD HH:mm:ss"
+              placeholder="Time"
+              value={moment(this.props.article.time)}
+              onChange={this.onChangeTime}
+            />
           </ActionItem>
         </ActionGroup>
 
         <ActionGroup direction="left">
           <ActionItem>
-            <Button onClick={this.props.saveArticle}>Save</Button>
+            <Button type="danger" icon="delete" onClick={this.restore} />
           </ActionItem>
           <ActionItem>
-            <Button type="primary">Publish</Button>
+            <Button onClick={this.saveArticle} icon={this.props.article.isEdit ? 'edit' : ''}>
+              Save
+            </Button>
+          </ActionItem>
+          <ActionItem>
+            <Button type="primary" onClick={this.publishArticle} icon={this.props.article.isEdit ? 'edit' : ''}>
+              Publish
+            </Button>
           </ActionItem>
         </ActionGroup>
 

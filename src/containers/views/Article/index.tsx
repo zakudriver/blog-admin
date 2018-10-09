@@ -3,16 +3,19 @@ import { observer, inject } from 'mobx-react';
 import styled from '@/styles';
 import { Table, Button, Modal } from 'antd';
 import { ActionModel } from '@/components/common';
+import { withRouterProps } from '@/components/utils/withComponents';
+import { ComponentExtends } from '@/utils/extends';
 import { ColumnProps } from 'antd/lib/table';
 
 const ActionGroup = ActionModel.ActionGroup;
 const ActionItem = ActionModel.ActionItem;
 
-interface IArticleProps extends IClassName {
+interface IArticleProps extends IClassName, IRouterProps {
   getArticleList: DataStore.IGetArticleList;
   articleList: DataStore.IArticleList;
 }
 
+@withRouterProps
 @inject((store: IStore) => {
   const { getArticleList, articleList } = store.dataStore;
   return {
@@ -21,13 +24,27 @@ interface IArticleProps extends IClassName {
   };
 })
 @observer
-class Article extends React.Component<IArticleProps> {
-  public onEdit = (val: any) => (e: React.MouseEvent<HTMLButtonElement>) => {
-    EditConfirm();
+class Article extends ComponentExtends<IArticleProps> {
+  public onEdit = (row: any) => (e: React.MouseEvent<HTMLButtonElement>) => {
+    this.props.history!.push(`/editor?article=${row._id}`);
   };
 
-  public onDelete = (val: any) => (e: React.MouseEvent<HTMLButtonElement>) => {
-    DelConfirm();
+  public onDelete = (row: any) => (e: React.MouseEvent<HTMLButtonElement>) => {
+    Modal.confirm({
+      title: 'Warning',
+      content: 'Bla bla ...',
+      okText: 'ok',
+      okType: 'danger',
+      cancelText: 'no',
+      onOk: async () => {
+        const res = await this.articleApi$$.removeArticle({ _id: row._id });
+        if (res.code === 0) {
+          this.$message.success(res.msg);
+        } else {
+          this.$message.error(res.msg);
+        }
+      }
+    });
   };
 
   public componentDidMount() {
@@ -85,19 +102,3 @@ export default styled(Article)`
     background-color: #fff;
   }
 `;
-
-const EditConfirm = () =>
-  Modal.confirm({
-    title: 'Confirm',
-    content: 'Bla bla ...',
-    okText: '确认',
-    cancelText: '取消'
-  });
-
-const DelConfirm = () =>
-  Modal.confirm({
-    title: 'Warning',
-    content: 'Bla bla ...',
-    okText: '确认',
-    cancelText: '取消'
-  });

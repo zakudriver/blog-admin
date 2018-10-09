@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import { StoreExtends } from '@/utils/extends';
+import * as moment from 'moment';
 
 export class DataStore extends StoreExtends {
   @observable
@@ -11,7 +12,7 @@ export class DataStore extends StoreExtends {
     content: '// . . . content',
     className: '',
     isFormal: false,
-    time: ''
+    time: moment().format()
   };
 
   @observable
@@ -19,6 +20,9 @@ export class DataStore extends StoreExtends {
 
   @observable
   isArticleListLoading: boolean = false;
+
+  @observable
+  isArticleLoading: boolean = false;
 
   @observable
   message: DataStore.IMessageList = { count: 0, rows: [] };
@@ -93,15 +97,49 @@ export class DataStore extends StoreExtends {
 
   @action
   saveArticle = async () => {
-    const res = await this.articleApi$$.addArticle(this.article);
+    const saveArticle = { ...this.article, isFormal: false };
+    let res;
+    if (saveArticle.isEdit) {
+      res = await this.articleApi$$.updateArticle(saveArticle);
+    } else {
+      res = await this.articleApi$$.addArticle(saveArticle);
+    }
     console.log(res);
+    if (res.code === 0) {
+      this.$message.success(res.msg);
+      this.restore();
+    } else {
+      this.$message.error(res.msg);
+    }
   };
 
   @action
   publishArticle = async () => {
     const publishArticle = { ...this.article, isFormal: true };
-    const res = await this.articleApi$$.addArticle(publishArticle);
+    let res;
+    if (publishArticle.isEdit) {
+      res = await this.articleApi$$.updateArticle(publishArticle);
+    } else {
+      res = await this.articleApi$$.addArticle(publishArticle);
+    }
     console.log(res);
+    if (res.code === 0) {
+      this.$message.success(res.msg);
+      this.restore();
+    } else {
+      this.$message.error(res.msg);
+    }
+  };
+
+  @action
+  getArticle: DataStore.IGetArticle = async _id => {
+    this.isArticleLoading = true;
+    const res = await this.articleApi$$.getArticle({ _id });
+    this.isArticleLoading = false;
+    if (res.code === 0) {
+      this.article = res.data;
+      this.article = Object.assign(res.data, { isEdit: true });
+    }
   };
 
   @action
@@ -122,6 +160,17 @@ export class DataStore extends StoreExtends {
     if (res.code === 0) {
       this.message = res.data;
     }
+  };
+
+  @action
+  restore = () => {
+    this.article = {
+      title: '// title',
+      content: '// . . . content',
+      className: '',
+      isFormal: false,
+      time: moment().format()
+    };
   };
 }
 

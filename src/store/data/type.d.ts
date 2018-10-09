@@ -38,6 +38,7 @@ export interface IArticle {
   content: string;
   isFormal: boolean;
   time: string;
+  isEdit?: boolean;
 }
 
 type Indexes<T> = { [P in keyof T]?: T[P] };
@@ -49,6 +50,10 @@ export interface IChangeArticle {
 export interface IArticleList {
   count: number;
   rows: IArticle[];
+}
+
+export interface IGetArticle {
+  (_id: string): void;
 }
 
 export interface IGetArticleList {
