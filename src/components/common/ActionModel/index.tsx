@@ -9,24 +9,29 @@ interface IActionGroupProps extends IClassName {
 }
 
 const ActionGroup = styled<IActionGroupProps, 'div'>('div')`
-  position: relative;
-  & > span {
+  display: flex;
+  & > .action__item {
     display: inline-block;
     margin: ${props => (props.direction === 'right' ? `0 ${props.pixel || 10}px 0 0` : `0 0 0 ${props.pixel || 10}px`)};
+    &: ${props => (props.direction === 'right' ? 'last-child' : 'first-child')} {
+      margin: 0;
+    }
   }
 `;
 
-const ActionItem = styled('span')``;
+const ActionItem = (props: { children: JSX.Element }) => <span className="action__item">{props.children}</span>;
 
-interface IActionLineProps {
+interface IActionLineProps extends IClassName {
   border: string;
   height: number | string;
-  width?: number | string;
+  spacing?: number | string;
 }
 
 const ActionLine = styled<IActionLineProps, 'i'>('i')`
   display: inline-block;
-  width: ${props => `${props.width || 20}px`};
+  position: relative;
+  /* width: ${props => `${props.spacing || 20}px`}; */
+  margin:0 ${props => props.spacing || 20}px;
   &::before {
     content: '';
     position: absolute;

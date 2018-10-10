@@ -1,11 +1,14 @@
-import { observable, action } from 'mobx';
-import { StoreExtends } from '@/utils/extends';
+import { observable, action, reaction } from 'mobx';
 import * as moment from 'moment';
+import { StoreExtends } from '@/utils/extends';
+import { MessagePage, ArticlePage } from '@/constants';
 
 export class DataStore extends StoreExtends {
+  // classification
   @observable
   classification: DataStore.IClassNames[] = [];
 
+  // article
   @observable
   article: DataStore.IArticle = {
     title: '// title',
@@ -25,6 +28,13 @@ export class DataStore extends StoreExtends {
   isArticleLoading: boolean = false;
 
   @observable
+  filterCondition: number = 0;
+
+  @observable
+  classNameCondition: string = '';
+
+  // message
+  @observable
   message: DataStore.IMessageList = { count: 0, rows: [] };
 
   @observable
@@ -33,6 +43,20 @@ export class DataStore extends StoreExtends {
   constructor() {
     super();
     this.init();
+
+    reaction(
+      () => this.filterCondition,
+      condition => {
+        this.getArticleList(ArticlePage.Index, ArticlePage.Limit, condition, this.classNameCondition);
+      }
+    );
+
+    reaction(
+      () => this.classNameCondition,
+      className => {
+        this.getArticleList(ArticlePage.Index, ArticlePage.Limit, this.filterCondition, className);
+      }
+    );
   }
 
   init() {
@@ -152,9 +176,14 @@ export class DataStore extends StoreExtends {
   };
 
   @action
-  getArticleList: DataStore.IGetArticleList = async (index = 1, limit = 10) => {
+  getArticleList: DataStore.IGetArticleList = async (
+    index = ArticlePage.Index,
+    limit = ArticlePage.Limit,
+    condition,
+    className
+  ) => {
     this.isArticleListLoading = true;
-    const res = await this.articleApi$$.getArticleList({ index, limit });
+    const res = await this.articleApi$$.getArticleList({ index, limit, condition, className });
     this.isArticleListLoading = false;
     if (res.code === 0) {
       this.articleList = res.data;
@@ -162,7 +191,17 @@ export class DataStore extends StoreExtends {
   };
 
   @action
-  getMessage: DataStore.IGetMessage = async (index = 1, limit = 10) => {
+  changeFilterCondition: DataStore.IChangeFilterCondition = condition => {
+    this.filterCondition = condition;
+  };
+
+  @action
+  changeClassNameCondition: DataStore.IChangeClassNameCondition = className => {
+    this.classNameCondition = className;
+  };
+
+  @action
+  getMessage: DataStore.IGetMessage = async (index = MessagePage.Index, limit = MessagePage.Limit) => {
     this.isMessageLoading = true;
     const res = await this.messageApi$$.getMessage({ index, limit });
     this.isMessageLoading = false;

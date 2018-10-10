@@ -77,7 +77,7 @@ interface IToolbarState {
 @observer
 class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   public state = {
-    visible: false,
+    visible: false
   };
 
   public onChangeLanguages = (value: SelectValue) => {
@@ -167,42 +167,44 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
           </ActionItem>
         </ActionGroup>
 
-        <ActionGroup direction="right" className="classNmae__grow">
-          <ActionLine border="1px solid #eee" height="40" />
-          <ActionItem>
-            <Select
-              showSearch
-              style={{ width: 130 }}
-              placeholder="classification"
-              value={this.props.article.className}
-              onChange={this.onChangeClassification}
-            >
-              {this.props.classification.map((i, idx) => (
-                <Option key={idx} value={i._id}>
-                  {i.name}
-                </Option>
-              ))}
-            </Select>
-          </ActionItem>
-          <ActionItem>
-            <Button type="primary" ghost onClick={this.openClassificationModal}>
-              Edit
-            </Button>
-          </ActionItem>
-        </ActionGroup>
+        <div className="article_action__grow">
+          <ActionGroup direction="right">
+            <ActionLine border="1px solid #eee" height="40" />
+            <ActionItem>
+              <Select
+                showSearch
+                style={{ width: 130 }}
+                placeholder="classification"
+                value={this.props.article.className}
+                onChange={this.onChangeClassification}
+              >
+                {this.props.classification.map((i, idx) => (
+                  <Option key={idx} value={i._id}>
+                    {i.name}
+                  </Option>
+                ))}
+              </Select>
+            </ActionItem>
+            <ActionItem>
+              <Button type="primary" ghost onClick={this.openClassificationModal}>
+                Edit
+              </Button>
+            </ActionItem>
+          </ActionGroup>
 
-        <ActionGroup direction="right" className="time__grow">
-          <ActionLine border="1px solid #eee" width="10" height="32" />
-          <ActionItem>
-            <DatePicker
-              showTime
-              format="YYYY-MM-DD HH:mm:ss"
-              placeholder="Time"
-              value={moment(this.props.article.time)}
-              onChange={this.onChangeTime}
-            />
-          </ActionItem>
-        </ActionGroup>
+          <ActionGroup direction="right">
+            <ActionLine border="1px solid #eee" spacing="10" height="32" />
+            <ActionItem>
+              <DatePicker
+                showTime
+                format="YYYY-MM-DD HH:mm:ss"
+                placeholder="Time"
+                value={moment(this.props.article.time)}
+                onChange={this.onChangeTime}
+              />
+            </ActionItem>
+          </ActionGroup>
+        </div>
 
         <ActionGroup direction="left">
           <ActionItem>
@@ -239,11 +241,8 @@ export default styled(Toolbar)`
   justify-content: space-between;
   align-items: center;
 
-  .classNmae__grow {
-    margin-left: 10px;
-  }
-
-  .time__grow {
+  .article_action__grow {
     flex-grow: 1;
+    display: flex;
   }
 `;

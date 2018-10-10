@@ -57,7 +57,15 @@ export interface IGetArticle {
 }
 
 export interface IGetArticleList {
-  (index?: number, limit?: number): void;
+  (index?: number, limit?: number, condition?: number, className?: string): void;
+}
+
+export interface IChangeFilterCondition {
+  (condition: number): void;
+}
+
+export interface IChangeClassNameCondition {
+  (className: string): void;
 }
 
 // Message

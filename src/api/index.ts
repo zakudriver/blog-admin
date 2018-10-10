@@ -5,12 +5,12 @@ const API = APP_ENV === 'dev' ? 'http://127.0.0.1:8999' : '';
 const config = {};
 
 const axios: AxiosInstance = http.create(Object.assign(config, { baseURL: API }));
-console.log(localStorage.getItem('access_Token'));
+
 axios.interceptors.request.use(
   conf => {
     conf.headers.Authorization =
       'Bearer ' +
-      (localStorage.getItem('authToken') === 'null' || !localStorage.getItem('access_Token')
+      (localStorage.getItem('authToken') === 'null' || !localStorage.getItem('authToken')
         ? ''
         : localStorage.getItem('authToken'));
     return conf;
