@@ -25,7 +25,6 @@ interface IToolbarProps extends IClassName {
   onChangeLanguages: GlobalStore.IOnChangeLanguages;
   selectionLanguage: string;
   classification: DataStore.IClassNames[];
-  getClassification: () => void;
   addClassification: DataStore.IAddClassification;
   sortClassification: DataStore.ISortClassification;
   updateClassification: DataStore.IUpdateClassification;
@@ -46,7 +45,6 @@ interface IToolbarState {
     const { onChangeEdit, selectionEdit, webConfig, onChangeLanguages, selectionLanguage } = store.globalStore;
     const {
       classification,
-      getClassification,
       addClassification,
       sortClassification,
       updateClassification,
@@ -64,7 +62,6 @@ interface IToolbarState {
       onChangeLanguages,
       selectionLanguage,
       classification,
-      getClassification,
       addClassification,
       sortClassification,
       updateClassification,
@@ -81,7 +78,6 @@ interface IToolbarState {
 class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   public state = {
     visible: false,
-    submit: {}
   };
 
   public onChangeLanguages = (value: SelectValue) => {
@@ -103,8 +99,6 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   };
 
   public onChangeTime = (date: Moment, dateString: string) => {
-    console.log(date);
-    console.log(dateString);
     this.props.changeArticle({ time: dateString });
   };
 
@@ -145,10 +139,6 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
     });
   };
 
-  public componentDidMount() {
-    this.props.getClassification();
-  }
-
   public render() {
     return (
       <div className={this.props.className}>
@@ -168,7 +158,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
               placeholder="Select a language"
               onChange={this.onChangeLanguages}
             >
-              {this.props.webConfig!.editorLanguages.map((i, idx) => (
+              {this.props.webConfig.editorLanguages.map((i, idx) => (
                 <Option key={idx} value={i}>
                   {i}
                 </Option>
@@ -235,7 +225,6 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
           classification={this.props.classification}
           onClassificationModal={this.openClassificationModal}
           sortClassification={this.props.sortClassification}
-          getClassification={this.props.getClassification}
           addClassification={this.props.addClassification}
           updateClassification={this.props.updateClassification}
           removeClassification={this.props.removeClassification}

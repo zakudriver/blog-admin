@@ -8,7 +8,6 @@ interface IClassificationModalProps extends IClassName {
   onClassificationModal: () => void;
   classification: DataStore.IClassNames[];
   sortClassification: DataStore.ISortClassification;
-  getClassification: () => void;
   addClassification: DataStore.IAddClassification;
   updateClassification: DataStore.IUpdateClassification;
   removeClassification: DataStore.IRemoveClassification;

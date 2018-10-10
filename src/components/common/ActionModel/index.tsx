@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from '@/styles';
 
 interface IActionGroupProps extends IClassName {
-  direction: string;
+  direction: 'right' | 'left';
   pixel?: string | number;
   border?: string;
   children: React.ReactNode;

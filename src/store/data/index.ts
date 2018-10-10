@@ -30,6 +30,15 @@ export class DataStore extends StoreExtends {
   @observable
   isMessageLoading: boolean = false;
 
+  constructor() {
+    super();
+    this.init();
+  }
+
+  init() {
+    this.getClassification();
+  }
+
   @action
   getClassification = async () => {
     const res = await this.classificationApi$$.getClassification();

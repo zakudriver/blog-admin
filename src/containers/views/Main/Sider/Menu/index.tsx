@@ -17,7 +17,7 @@ interface ISiderMenuProps extends IClassName, IRouterProps {
 
 interface ISiderMenuState {
   selectedKeys: string[];
-  openKeys: string[];
+  defaultOpenKeys: string[];
 }
 
 @withRouterProps
@@ -33,7 +33,7 @@ class SiderMenu extends React.Component<ISiderMenuProps, ISiderMenuState> {
     super(props);
     this.state = {
       selectedKeys: ['1'],
-      openKeys: ['1']
+      defaultOpenKeys: ['1']
     };
     reaction(
       () => this.props.currentRouter!,
@@ -50,8 +50,12 @@ class SiderMenu extends React.Component<ISiderMenuProps, ISiderMenuState> {
 
   public onMenu = ({ key }: ClickParam) => {
     const selectedMenu = menu.find(val => key === val.key);
-    if (selectedMenu && selectedMenu.path && selectedMenu.path) {
+    if (selectedMenu && selectedMenu.path) {
       this.props.history!.push(selectedMenu.path);
+    } else {
+      this.setState({
+        defaultOpenKeys: [key]
+      });
     }
   };
 
@@ -59,7 +63,7 @@ class SiderMenu extends React.Component<ISiderMenuProps, ISiderMenuState> {
     const selectedMenu = menu.find(val => path === val.path)!;
     if (selectedMenu.parentKey) {
       this.setState({
-        openKeys: [selectedMenu!.parentKey!],
+        defaultOpenKeys: [selectedMenu.parentKey],
         selectedKeys: [selectedMenu.key]
       });
     } else {
@@ -68,10 +72,6 @@ class SiderMenu extends React.Component<ISiderMenuProps, ISiderMenuState> {
       });
     }
   };
-
-  public componentWillMount() {
-    this.onCurrentMenu(this.props.location!.pathname);
-  }
 
   public createMenu = (menuTree: IMenuTree[]) => {
     return menuTree.map(i => {
@@ -100,12 +100,16 @@ class SiderMenu extends React.Component<ISiderMenuProps, ISiderMenuState> {
     });
   };
 
+  public componentWillMount() {
+    this.onCurrentMenu(this.props.location!.pathname);
+  }
+
   public render() {
     return (
       <Menu
         onClick={this.onMenu}
         selectedKeys={this.state.selectedKeys}
-        openKeys={this.state.openKeys}
+        defaultOpenKeys={this.state.defaultOpenKeys}
         inlineCollapsed={this.props.isCollapsed}
         mode="inline"
       >
