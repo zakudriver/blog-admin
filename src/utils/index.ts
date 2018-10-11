@@ -1,4 +1,5 @@
 import { cloneDeep } from 'lodash';
+import * as moment from 'moment';
 
 /**
  * 生成菜单树
@@ -64,4 +65,15 @@ export function moveArrayItem(source: any[], from: number, to: number) {
   const target = source.splice(from, 1)[0];
   source.splice(to, 0, target);
   return source;
+}
+
+/**
+ * 时间格式化
+ *
+ * @export
+ * @param {string} time
+ * @returns
+ */
+export function timeFormat(time: string, format = 'dddd, MMM Do YYYY, HH:mm:ss') {
+  return moment(new Date(time).toString()).format(format);
 }

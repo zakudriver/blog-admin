@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Select, Radio, Button, DatePicker, Modal } from 'antd';
+import { Select, Radio, Button, Modal } from 'antd';
 import { inject, observer } from 'mobx-react';
 import styled from '@/styles';
 import { ActionModel } from '@/components/common';
@@ -7,8 +7,8 @@ import ClassificationModal from './ClassificationModal';
 
 import { SelectValue } from 'antd/lib/select';
 import { RadioChangeEvent } from 'antd/lib/radio';
-import { Moment } from 'moment';
-import * as moment from 'moment';
+// import { Moment } from 'moment';
+// import * as moment from 'moment';
 
 const Option = Select.Option;
 const RadioButton = Radio.Button;
@@ -110,9 +110,9 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
     this.props.changeArticle({ className: value as string });
   };
 
-  public onChangeTime = (date: Moment, dateString: string) => {
-    this.props.changeArticle({ time: dateString });
-  };
+  // public onChangeTime = (date: Moment, dateString: string) => {
+  //   this.props.changeArticle({ time: dateString });
+  // };
 
   public restore = () => {
     Modal.confirm({
@@ -206,7 +206,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 
           <ActionGroup direction="right">
             <ActionLine border="1px solid #eee" spacing="10" height="32" />
-            <ActionItem>
+            {/* <ActionItem>
               <DatePicker
                 showTime
                 format="YYYY-MM-DD HH:mm:ss"
@@ -214,7 +214,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
                 value={moment(this.props.article.time)}
                 onChange={this.onChangeTime}
               />
-            </ActionItem>
+            </ActionItem> */}
             <ActionItem>
               <Button
                 type={this.props.isUploadDisplay ? 'danger' : 'primary'}

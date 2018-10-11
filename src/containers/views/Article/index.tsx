@@ -5,6 +5,7 @@ import { Table, Button, Modal } from 'antd';
 import { ActionModel, Preview } from '@/components/common';
 import { withRouterProps } from '@/components/utils/withComponents';
 import { ComponentExtends } from '@/utils/extends';
+import { timeFormat } from '@/utils';
 import { ColumnProps } from 'antd/lib/table';
 
 const ActionGroup = ActionModel.ActionGroup;
@@ -55,8 +56,18 @@ class Article extends ComponentExtends<IArticleProps> {
     const columns: Array<ColumnProps<ArticleStore.IArticle>> = [
       { title: 'Title', dataIndex: 'title', key: 'title' },
       { title: 'Classification', dataIndex: 'className.name', key: 'className._id' },
-      { title: 'UpdateTime', dataIndex: 'updateTime', key: 'updateTime' },
-      { title: 'CreateTime', dataIndex: 'createTime', key: 'createTime' },
+      {
+        title: 'UpdateTime',
+        dataIndex: 'updateTime',
+        key: 'updateTime',
+        render: (text, record) => <span>{timeFormat(record.updateTime)}</span>
+      },
+      {
+        title: 'CreateTime',
+        dataIndex: 'createTime',
+        key: 'createTime',
+        render: (text, record) => <span>{timeFormat(record.createTime)}</span>
+      },
       {
         title: 'Action',
         dataIndex: '',

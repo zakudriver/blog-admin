@@ -2,9 +2,11 @@ import * as React from 'react';
 import { Upload as Uploading, Icon, Modal } from 'antd';
 import styled from '@/styles';
 
-import { UploadFile } from 'antd/lib/upload/interface';
+import { UploadFile, UploadChangeParam } from 'antd/lib/upload/interface';
 
-interface IUploadProps extends IClassName {}
+interface IUploadProps extends IClassName {
+  uploads?: UploadFile[];
+}
 
 class Upload extends React.Component<IUploadProps> {
   public state = {
@@ -20,36 +22,43 @@ class Upload extends React.Component<IUploadProps> {
     ]
   };
 
-  handleCancel = () => this.setState({ previewVisible: false });
+  public onCancelPreview = () => this.setState({ previewVisible: false });
 
-  handlePreview = (file: UploadFile) => {
+  public onPreviewUpload = (file: UploadFile) => {
     this.setState({
       previewImage: file.url || file.thumbUrl,
       previewVisible: true
     });
   };
 
-  handleChange = ({ fileList }: any) => this.setState({ fileList });
+  public onChangeUpload = (fileInfo: UploadChangeParam) => {
+    console.log(fileInfo);
+  };
+
+  public onRemoveUpload = () => {
+    return false;
+  };
 
   public render() {
-    const { previewVisible, previewImage, fileList }: any = this.state;
+    const { previewVisible, previewImage }: any = this.state;
 
     return (
       <div className={this.props.className}>
         <Uploading
           action="//jsonplaceholder.typicode.com/posts/"
           listType="picture-card"
-          fileList={fileList}
-          onPreview={this.handlePreview}
-          onChange={this.handleChange}
+          fileList={this.props.uploads}
+          onPreview={this.onPreviewUpload}
+          onRemove={this.onRemoveUpload}
+          onChange={this.onChangeUpload}
         >
           <div>
             <Icon type="plus" />
             <div className="ant-upload-text">Upload</div>
           </div>
-        </Upload>
-        <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-          <img alt="example" style={{ width: '100%' }} src={previewImage} />
+        </Uploading>
+        <Modal visible={previewVisible} footer={null} onCancel={this.onCancelPreview}>
+          <img style={{ width: '100%' }} src={previewImage} />
         </Modal>
       </div>
     );

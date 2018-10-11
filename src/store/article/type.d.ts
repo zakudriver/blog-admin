@@ -1,5 +1,6 @@
 import { ArticleStore as articleStore } from './index';
 import { IResponse } from '@/api';
+import { UploadFile } from 'antd/lib/upload/interface';
 
 export as namespace ArticleStore;
 
@@ -37,10 +38,10 @@ export interface IArticle {
   className: string;
   content: string;
   isFormal: boolean;
-  time: string;
+  uploads?: UploadFile[];
   isEdit?: boolean;
-  // updateTime: string;
-  // createTime: string;
+  updateTime: string;
+  createTime: string;
 }
 
 type Indexes<T> = { [P in keyof T]?: T[P] };

@@ -1,5 +1,4 @@
 import { observable, action, reaction } from 'mobx';
-import * as moment from 'moment';
 import { StoreExtends } from '@/utils/extends';
 import { ArticlePage } from '@/constants';
 
@@ -15,9 +14,9 @@ export class ArticleStore extends StoreExtends {
     content: '// . . . content',
     className: '',
     isFormal: false,
-    time: moment().format(),
-    // updateTime: moment().format(),
-    // createTime: moment().format()
+    uploads: [],
+    updateTime: '',
+    createTime: ''
   };
 
   @observable
@@ -64,6 +63,7 @@ export class ArticleStore extends StoreExtends {
     const res = await this.classificationApi$$.getClassification();
     if (res.code === 0) {
       this.classification = res.data;
+      this.article.className = res.data[0]._id;
     }
   };
 
@@ -167,7 +167,7 @@ export class ArticleStore extends StoreExtends {
     const res = await this.articleApi$$.getArticle({ _id });
     this.isArticleLoading = false;
     if (res.code === 0) {
-      this.article = res.data;
+      // this.article = res.data;
       this.article = Object.assign(res.data, { isEdit: true });
     }
   };
@@ -202,9 +202,11 @@ export class ArticleStore extends StoreExtends {
     this.article = {
       title: '// title',
       content: '// . . . content',
-      className: '',
+      className: this.classification[0]._id,
       isFormal: false,
-      time: moment().format()
+      // time: moment().format(),
+      createTime: '',
+      updateTime: ''
     };
   };
 }
