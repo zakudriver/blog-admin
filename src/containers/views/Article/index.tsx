@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from '@/styles';
 import { Table, Button, Modal } from 'antd';
-import { ActionModel } from '@/components/common';
+import { ActionModel, Preview } from '@/components/common';
 import { withRouterProps } from '@/components/utils/withComponents';
 import { ComponentExtends } from '@/utils/extends';
 import { ColumnProps } from 'antd/lib/table';
@@ -11,13 +11,13 @@ const ActionGroup = ActionModel.ActionGroup;
 const ActionItem = ActionModel.ActionItem;
 
 interface IArticleProps extends IClassName, IRouterProps {
-  getArticleList: DataStore.IGetArticleList;
-  articleList: DataStore.IArticleList;
+  getArticleList: ArticleStore.IGetArticleList;
+  articleList: ArticleStore.IArticleList;
 }
 
 @withRouterProps
 @inject((store: IStore) => {
-  const { getArticleList, articleList } = store.dataStore;
+  const { getArticleList, articleList } = store.articleStore;
   return {
     getArticleList,
     articleList
@@ -52,7 +52,7 @@ class Article extends ComponentExtends<IArticleProps> {
   }
 
   public render() {
-    const columns: Array<ColumnProps<DataStore.IArticle>> = [
+    const columns: Array<ColumnProps<ArticleStore.IArticle>> = [
       { title: 'Title', dataIndex: 'title', key: 'title' },
       { title: 'Classification', dataIndex: 'className.name', key: 'className._id' },
       { title: 'UpdateTime', dataIndex: 'updateTime', key: 'updateTime' },
@@ -88,7 +88,7 @@ class Article extends ComponentExtends<IArticleProps> {
         <Table
           className="article__table"
           columns={columns}
-          expandedRowRender={record => <p style={{ margin: 0 }}>{record.content}</p>}
+          expandedRowRender={record => <Preview value={record.content} />}
           dataSource={dataSource}
         />
       </div>

@@ -1,25 +1,27 @@
 import { observable, action, reaction } from 'mobx';
 import * as moment from 'moment';
 import { StoreExtends } from '@/utils/extends';
-import { MessagePage, ArticlePage } from '@/constants';
+import { ArticlePage } from '@/constants';
 
-export class DataStore extends StoreExtends {
+export class ArticleStore extends StoreExtends {
   // classification
   @observable
-  classification: DataStore.IClassNames[] = [];
+  classification: ArticleStore.IClassNames[] = [];
 
   // article
   @observable
-  article: DataStore.IArticle = {
+  article: ArticleStore.IArticle = {
     title: '// title',
     content: '// . . . content',
     className: '',
     isFormal: false,
-    time: moment().format()
+    time: moment().format(),
+    // updateTime: moment().format(),
+    // createTime: moment().format()
   };
 
   @observable
-  articleList: DataStore.IArticleList = { count: 0, rows: [] };
+  articleList: ArticleStore.IArticleList = { count: 0, rows: [] };
 
   @observable
   isArticleListLoading: boolean = false;
@@ -32,13 +34,6 @@ export class DataStore extends StoreExtends {
 
   @observable
   classNameCondition: string = '';
-
-  // message
-  @observable
-  message: DataStore.IMessageList = { count: 0, rows: [] };
-
-  @observable
-  isMessageLoading: boolean = false;
 
   constructor() {
     super();
@@ -63,6 +58,7 @@ export class DataStore extends StoreExtends {
     this.getClassification();
   }
 
+  // Classification
   @action
   getClassification = async () => {
     const res = await this.classificationApi$$.getClassification();
@@ -72,7 +68,7 @@ export class DataStore extends StoreExtends {
   };
 
   @action
-  addClassification: DataStore.IAddClassification = async req => {
+  addClassification: ArticleStore.IAddClassification = async req => {
     const res = await this.classificationApi$$.addClassification(req);
     if (res.code === 0) {
       this.$message.success(res.msg);
@@ -84,7 +80,7 @@ export class DataStore extends StoreExtends {
   };
 
   @action
-  sortClassification: DataStore.ISortClassification = value => {
+  sortClassification: ArticleStore.ISortClassification = value => {
     value.forEach((i, idx) => {
       i.order = idx;
     });
@@ -92,7 +88,7 @@ export class DataStore extends StoreExtends {
   };
 
   @action
-  updateClassification: DataStore.IUpdateClassification = async value => {
+  updateClassification: ArticleStore.IUpdateClassification = async value => {
     let req;
     if (value) {
       req = value;
@@ -111,7 +107,7 @@ export class DataStore extends StoreExtends {
   };
 
   @action
-  removeClassification: DataStore.IRemoveClassification = async value => {
+  removeClassification: ArticleStore.IRemoveClassification = async value => {
     const res = await this.classificationApi$$.removeClassification({ _id: value._id });
     if (res.code === 0) {
       this.$message.success(res.msg);
@@ -121,8 +117,9 @@ export class DataStore extends StoreExtends {
     }
   };
 
+  // Article
   @action
-  changeArticle: DataStore.IChangeArticle = value => {
+  changeArticle: ArticleStore.IChangeArticle = value => {
     Object.keys(value).forEach(i => {
       this.article[i] = value[i];
     });
@@ -130,7 +127,7 @@ export class DataStore extends StoreExtends {
 
   @action
   saveArticle = async () => {
-    const saveArticle = { ...this.article, isFormal: false };
+    const saveArticle = Object.assign(this.article, { isFormal: false });
     let res;
     if (saveArticle.isEdit) {
       res = await this.articleApi$$.updateArticle(saveArticle);
@@ -148,7 +145,7 @@ export class DataStore extends StoreExtends {
 
   @action
   publishArticle = async () => {
-    const publishArticle = { ...this.article, isFormal: true };
+    const publishArticle = Object.assign(this.article, { isFormal: true });
     let res;
     if (publishArticle.isEdit) {
       res = await this.articleApi$$.updateArticle(publishArticle);
@@ -165,7 +162,7 @@ export class DataStore extends StoreExtends {
   };
 
   @action
-  getArticle: DataStore.IGetArticle = async _id => {
+  getArticle: ArticleStore.IGetArticle = async _id => {
     this.isArticleLoading = true;
     const res = await this.articleApi$$.getArticle({ _id });
     this.isArticleLoading = false;
@@ -176,7 +173,7 @@ export class DataStore extends StoreExtends {
   };
 
   @action
-  getArticleList: DataStore.IGetArticleList = async (
+  getArticleList: ArticleStore.IGetArticleList = async (
     index = ArticlePage.Index,
     limit = ArticlePage.Limit,
     condition,
@@ -191,23 +188,13 @@ export class DataStore extends StoreExtends {
   };
 
   @action
-  changeFilterCondition: DataStore.IChangeFilterCondition = condition => {
+  changeFilterCondition: ArticleStore.IChangeFilterCondition = condition => {
     this.filterCondition = condition;
   };
 
   @action
-  changeClassNameCondition: DataStore.IChangeClassNameCondition = className => {
+  changeClassNameCondition: ArticleStore.IChangeClassNameCondition = className => {
     this.classNameCondition = className;
-  };
-
-  @action
-  getMessage: DataStore.IGetMessage = async (index = MessagePage.Index, limit = MessagePage.Limit) => {
-    this.isMessageLoading = true;
-    const res = await this.messageApi$$.getMessage({ index, limit });
-    this.isMessageLoading = false;
-    if (res.code === 0) {
-      this.message = res.data;
-    }
   };
 
   @action
@@ -222,4 +209,4 @@ export class DataStore extends StoreExtends {
   };
 }
 
-export default new DataStore();
+export default new ArticleStore();

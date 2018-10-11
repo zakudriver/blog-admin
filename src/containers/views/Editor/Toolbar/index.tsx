@@ -24,13 +24,15 @@ interface IToolbarProps extends IClassName {
   webConfig: GlobalStore.IWebConfig;
   onChangeLanguages: GlobalStore.IOnChangeLanguages;
   selectionLanguage: string;
-  classification: DataStore.IClassNames[];
-  addClassification: DataStore.IAddClassification;
-  sortClassification: DataStore.ISortClassification;
-  updateClassification: DataStore.IUpdateClassification;
-  removeClassification: DataStore.IRemoveClassification;
-  article: DataStore.IArticle;
-  changeArticle: DataStore.IChangeArticle;
+  isUploadDisplay: boolean;
+  onUploadDisplay: () => void;
+  classification: ArticleStore.IClassNames[];
+  addClassification: ArticleStore.IAddClassification;
+  sortClassification: ArticleStore.ISortClassification;
+  updateClassification: ArticleStore.IUpdateClassification;
+  removeClassification: ArticleStore.IRemoveClassification;
+  article: ArticleStore.IArticle;
+  changeArticle: ArticleStore.IChangeArticle;
   saveArticle: () => void;
   publishArticle: () => void;
   restore: () => void;
@@ -42,7 +44,15 @@ interface IToolbarState {
 
 @inject(
   (store: IStore): IToolbarProps => {
-    const { onChangeEdit, selectionEdit, webConfig, onChangeLanguages, selectionLanguage } = store.globalStore;
+    const {
+      onChangeEdit,
+      selectionEdit,
+      webConfig,
+      onChangeLanguages,
+      selectionLanguage,
+      isUploadDisplay,
+      onUploadDisplay
+    } = store.globalStore;
     const {
       classification,
       addClassification,
@@ -54,7 +64,7 @@ interface IToolbarState {
       saveArticle,
       publishArticle,
       restore
-    } = store.dataStore;
+    } = store.articleStore;
     return {
       onChangeEdit,
       selectionEdit,
@@ -70,7 +80,9 @@ interface IToolbarState {
       changeArticle,
       saveArticle,
       publishArticle,
-      restore
+      restore,
+      isUploadDisplay,
+      onUploadDisplay
     };
   }
 )
@@ -201,6 +213,14 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
                 placeholder="Time"
                 value={moment(this.props.article.time)}
                 onChange={this.onChangeTime}
+              />
+            </ActionItem>
+            <ActionItem>
+              <Button
+                type={this.props.isUploadDisplay ? 'danger' : 'primary'}
+                icon="upload"
+                ghost
+                onClick={this.props.onUploadDisplay}
               />
             </ActionItem>
           </ActionGroup>

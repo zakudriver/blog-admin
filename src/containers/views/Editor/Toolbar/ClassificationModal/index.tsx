@@ -6,11 +6,11 @@ import { Draggable } from '@/components/common';
 interface IClassificationModalProps extends IClassName {
   visible: boolean;
   onClassificationModal: () => void;
-  classification: DataStore.IClassNames[];
-  sortClassification: DataStore.ISortClassification;
-  addClassification: DataStore.IAddClassification;
-  updateClassification: DataStore.IUpdateClassification;
-  removeClassification: DataStore.IRemoveClassification;
+  classification: ArticleStore.IClassNames[];
+  sortClassification: ArticleStore.ISortClassification;
+  addClassification: ArticleStore.IAddClassification;
+  updateClassification: ArticleStore.IUpdateClassification;
+  removeClassification: ArticleStore.IRemoveClassification;
 }
 
 class ClassificationModal extends React.Component<IClassificationModalProps> {
@@ -42,17 +42,17 @@ class ClassificationModal extends React.Component<IClassificationModalProps> {
     });
   };
 
-  public onChangeSort = (value: DataStore.IClassNames[]) => {
+  public onChangeSort = (value: ArticleStore.IClassNames[]) => {
     this.props.sortClassification(value);
   };
 
-  public onEdit = async (newRow: DataStore.IClassNames, oldRow: DataStore.IClassNames) => {
+  public onEdit = async (newRow: ArticleStore.IClassNames, oldRow: ArticleStore.IClassNames) => {
     if (newRow.name !== oldRow.name) {
       await this.props.updateClassification(newRow);
     }
   };
 
-  public onRemove = async (row: DataStore.IClassNames) => {
+  public onRemove = async (row: ArticleStore.IClassNames) => {
     await this.props.removeClassification(row);
   };
 

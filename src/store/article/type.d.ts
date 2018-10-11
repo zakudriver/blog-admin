@@ -1,9 +1,9 @@
-import { DataStore as dataStore } from './index';
+import { ArticleStore as articleStore } from './index';
 import { IResponse } from '@/api';
 
-export as namespace DataStore;
+export as namespace ArticleStore;
 
-export interface IDataStore extends dataStore {}
+export interface IArticleStore extends articleStore {}
 
 // Classification
 export interface IClassNames {
@@ -39,6 +39,8 @@ export interface IArticle {
   isFormal: boolean;
   time: string;
   isEdit?: boolean;
+  // updateTime: string;
+  // createTime: string;
 }
 
 type Indexes<T> = { [P in keyof T]?: T[P] };
@@ -66,22 +68,4 @@ export interface IChangeFilterCondition {
 
 export interface IChangeClassNameCondition {
   (className: string): void;
-}
-
-// Message
-export interface IMessage {
-  key?: string;
-  _id?: string;
-  email: string;
-  time: string;
-  text: string;
-}
-
-export interface IMessageList {
-  count: number;
-  rows: IMessage[];
-}
-
-export interface IGetMessage {
-  (index?: number, limit?: number): void;
 }

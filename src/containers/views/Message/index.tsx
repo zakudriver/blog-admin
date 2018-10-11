@@ -6,13 +6,13 @@ import { ComponentExtends } from '@/utils/extends';
 import styled from '@/styles';
 
 interface IMessageProps extends IClassName {
-  message: DataStore.IMessageList;
-  getMessage: DataStore.IGetMessage;
+  message: MessageStore.IMessageList;
+  getMessage: MessageStore.IGetMessage;
   isMessageLoading: boolean;
 }
 
 @inject((store: IStore) => {
-  const { message, getMessage } = store.dataStore;
+  const { message, getMessage } = store.messageStore;
   return { message, getMessage };
 })
 @observer
@@ -21,7 +21,7 @@ class Message extends ComponentExtends<IMessageProps> {
     index: 1
   };
 
-  public rmMessage = (row: DataStore.IMessage) => async (e: React.MouseEvent<HTMLButtonElement>) => {
+  public rmMessage = (row: MessageStore.IMessage) => async (e: React.MouseEvent<HTMLButtonElement>) => {
     await this.messageApi$$.rmMessage({ _id: row._id });
     await this.props.getMessage(this.state.index);
   };
@@ -38,7 +38,7 @@ class Message extends ComponentExtends<IMessageProps> {
   }
 
   public render() {
-    const columns: Array<ColumnProps<DataStore.IMessage>> = [
+    const columns: Array<ColumnProps<MessageStore.IMessage>> = [
       { title: 'Email', dataIndex: 'email', key: 'email' },
       { title: 'Time', dataIndex: 'time', key: 'time' },
       { title: 'Text', dataIndex: 'text', key: 'text' },

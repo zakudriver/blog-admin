@@ -1,26 +1,27 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Input } from 'antd';
+import { Input, Row, Col } from 'antd';
 import { withRouterProps } from '@/components/utils/withComponents';
 import styled from '@/styles';
 
 import Edit from './Edit';
-import Preview from './Preview';
+import { Preview } from '@/components/common';
 
 interface IEditorProps extends IClassName, IRouterProps {
   selectionEdit: string;
   selectionLanguage: string;
-  article: DataStore.IArticle;
-  changeArticle: DataStore.IChangeArticle;
-  getArticle: DataStore.IGetArticle;
+  article: ArticleStore.IArticle;
+  changeArticle: ArticleStore.IChangeArticle;
+  getArticle: ArticleStore.IGetArticle;
+  isUploadDisplay: boolean;
 }
 
 @withRouterProps
 @inject(
   (store: IStore): IEditorProps => {
-    const { selectionEdit, selectionLanguage } = store.globalStore;
-    const { article, changeArticle, getArticle } = store.dataStore;
-    return { selectionEdit, selectionLanguage, article, changeArticle, getArticle };
+    const { selectionEdit, selectionLanguage, isUploadDisplay } = store.globalStore;
+    const { article, changeArticle, getArticle } = store.articleStore;
+    return { selectionEdit, selectionLanguage, article, changeArticle, getArticle, isUploadDisplay };
   }
 )
 @observer
@@ -48,20 +49,29 @@ class Editor extends React.Component<IEditorProps> {
     //   mode: 'markdown',
     //   extraKeys: { Ctrl: 'autocomplete' }
     // }
+
     return (
       <div className={this.props.className}>
+        {this.props.isUploadDisplay && <div />}
         <div className="title">
           <label>Title : </label>
           <Input className="title__input" value={this.props.article.title} onChange={this.onChangeArticleTitle} />
         </div>
-        <Edit
-          className="edit"
-          value={this.props.article.content}
-          onChange={this.onChangeArticleContent}
-          type={this.props.selectionEdit}
-          language={this.props.selectionLanguage}
-        />
-        <Preview className="preview" value={this.props.article.content} />
+
+        <Row gutter={10} className="edit__preview">
+          <Col span={12} className="edit__wrapper">
+            <Edit
+              className="edit"
+              value={this.props.article.content}
+              onChange={this.onChangeArticleContent}
+              type={this.props.selectionEdit}
+              language={this.props.selectionLanguage}
+            />
+          </Col>
+          <Col span={12} className="preview__wrapper">
+            <Preview className="preview" value={this.props.article.content} />
+          </Col>
+        </Row>
       </div>
     );
   }
@@ -71,19 +81,17 @@ export default styled(Editor)`
   height: 100%;
   width: 100%;
   overflow: hidden;
-  display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 50px auto;
-  grid-gap: 10px;
-  grid-template-areas:
-    'title title'
-    'edit preview';
+
+  .upload {
+    padding: 6px;
+    /* background-color: #fff; */
+  }
 
   .title {
-    grid-area: title;
     background-color: #fff;
     line-height: 50px;
     padding: 0 20px;
+    margin-bottom: 10px;
 
     &__input {
       width: 70%;
@@ -100,9 +108,17 @@ export default styled(Editor)`
     }
   }
   .edit {
-    grid-area: edit;
+    &__wrapper {
+      height: 100%;
+    }
   }
   .preview {
-    grid-area: preview;
+    &__wrapper {
+      height: 100%;
+    }
+  }
+
+  .edit__preview {
+    height: calc(100% - 50px);
   }
 `;

@@ -13,18 +13,18 @@ const ActionItem = ActionModel.ActionItem;
 const ActionLine = ActionModel.ActionLine;
 
 interface IToolbarProps extends IClassName {
-  classification: DataStore.IClassNames[];
-  changeFilterCondition: DataStore.IChangeFilterCondition;
-  changeClassNameCondition: DataStore.IChangeClassNameCondition;
+  classification: ArticleStore.IClassNames[];
+  changeFilterCondition: ArticleStore.IChangeFilterCondition;
+  changeClassNameCondition: ArticleStore.IChangeClassNameCondition;
 }
 
 interface IToolbarState {
-  classification: DataStore.IClassNames[];
+  classification: ArticleStore.IClassNames[];
   checkboxOptions: string[];
 }
 
 @inject((store: IStore) => {
-  const { classification, changeFilterCondition, changeClassNameCondition } = store.dataStore;
+  const { classification, changeFilterCondition, changeClassNameCondition } = store.articleStore;
   return {
     classification,
     changeFilterCondition,

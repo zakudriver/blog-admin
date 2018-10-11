@@ -15,6 +15,7 @@ declare global {
   interface IStore {
     userStore: UserStore.IUserStore;
     globalStore: GlobalStore.IGlobalStore;
-    dataStore: DataStore.IDataStore;
+    articleStore: ArticleStore.IArticleStore;
+    messageStore: MessageStore.IMessageStore;
   }
 }
