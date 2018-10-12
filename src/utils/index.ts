@@ -1,5 +1,4 @@
 import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 
 /**
  * 生成菜单树
@@ -67,13 +66,29 @@ export function moveArrayItem(source: any[], from: number, to: number) {
   return source;
 }
 
+const weekMap = new Map([[0, 'Sun'], [1, 'Mon'], [2, 'Tues'], [3, 'Wed'], [4, 'Thur'], [5, 'Fri'], [6, 'Sat']]);
 /**
  * 时间格式化
- *
- * @export
- * @param {string} time
+ * return MMM Do YYYY, HH:mm:ss
+ * @param {string} dateStr
+ * @param {boolean} [isWeek=true]
  * @returns
  */
-export function timeFormat(time: string, format = 'dddd, MMM Do YYYY, HH:mm:ss') {
-  return moment(new Date(time).toString()).format(format);
+export function formatDateTime(dateStr: string, isWeek = true) {
+  const date = new Date(dateStr);
+
+  const y = date.getFullYear();
+  let m: number | string = date.getMonth() + 1;
+  m = m < 10 ? '0' + m : m;
+  let d: number | string = date.getDate();
+  d = d < 10 ? '0' + d : d;
+  let h: number | string = date.getHours();
+  h = h < 10 ? '0' + h : h;
+  let minute: number | string = date.getMinutes();
+  minute = minute < 10 ? '0' + minute : minute;
+  let second: number | string = date.getSeconds();
+  second = second < 10 ? '0' + second : second;
+  let w: number | string = date.getDay();
+  w = weekMap.get(w)!;
+  return `${isWeek ? w + ', ' : ''}${y}-${m}-${d} ${h}:${minute}:${second}`;
 }

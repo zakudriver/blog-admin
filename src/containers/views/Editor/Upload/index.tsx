@@ -45,7 +45,7 @@ class Upload extends React.Component<IUploadProps> {
     return (
       <div className={this.props.className}>
         <Uploading
-          action="//jsonplaceholder.typicode.com/posts/"
+          action="http://127.0.0.1:8999/upload"
           listType="picture-card"
           fileList={this.props.uploads}
           onPreview={this.onPreviewUpload}

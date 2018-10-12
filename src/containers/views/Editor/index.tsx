@@ -2,7 +2,7 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Input, Row, Col } from 'antd';
 import { withRouterProps } from '@/components/utils/withComponents';
-import { timeFormat } from '@/utils';
+import { formatDateTime } from '@/utils';
 import { Preview } from '@/components/common';
 import styled from '@/styles';
 
@@ -54,7 +54,7 @@ class Editor extends React.Component<IEditorProps> {
 
     return (
       <div className={this.props.className}>
-        {this.props.isUploadDisplay && <Upload uploads={this.props.article.uploads}/>}
+        {this.props.isUploadDisplay && <Upload uploads={this.props.article.uploads} />}
         <div className="title">
           <Row>
             <Col span={this.props.article.isEdit ? 12 : 20} className="title__label">
@@ -65,11 +65,11 @@ class Editor extends React.Component<IEditorProps> {
               <>
                 <Col span={6} className="title__time">
                   <label>UpdateTime : </label>
-                  <span>{timeFormat(this.props.article.updateTime, 'YYYY-MM-DD, HH:mm:ss')}</span>
+                  <span>{formatDateTime(this.props.article.updateTime, false)}</span>
                 </Col>
                 <Col span={6} className="title__time">
                   <label>CreateTime : </label>
-                  <span>{timeFormat(this.props.article.createTime, 'YYYY-MM-DD, HH:mm:ss')}</span>
+                  <span>{formatDateTime(this.props.article.createTime, false)}</span>
                 </Col>
               </>
             )}

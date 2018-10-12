@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { Table, Button } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { ComponentExtends } from '@/utils/extends';
+import { MessagePage } from '@/constants';
 import styled from '@/styles';
 
 interface IMessageProps extends IClassName {
@@ -21,9 +22,11 @@ class Message extends ComponentExtends<IMessageProps> {
     index: 1
   };
 
-  public rmMessage = (row: MessageStore.IMessage) => async (e: React.MouseEvent<HTMLButtonElement>) => {
-    await this.messageApi$$.rmMessage({ _id: row._id });
-    await this.props.getMessage(this.state.index);
+  public removeMessage = (row: MessageStore.IMessage) => async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const res = await this.messageApi$$.removeMessage({ _id: row._id });
+    if (res.code === 0) {
+      await this.props.getMessage(this.state.index);
+    }
   };
 
   public onChangePage = (page: number) => {
@@ -47,7 +50,7 @@ class Message extends ComponentExtends<IMessageProps> {
         dataIndex: '',
         key: 'x',
         render: (text, record, index) => (
-          <Button type="danger" onClick={this.rmMessage(text)}>
+          <Button type="danger" onClick={this.removeMessage(text)}>
             Delete
           </Button>
         )
@@ -68,7 +71,7 @@ class Message extends ComponentExtends<IMessageProps> {
           dataSource={dataSource}
           pagination={{
             current: this.state.index,
-            pageSize: 10,
+            pageSize: MessagePage.Limit,
             total: this.props.message.count,
             onChange: this.onChangePage
           }}

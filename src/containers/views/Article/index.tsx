@@ -5,7 +5,8 @@ import { Table, Button, Modal } from 'antd';
 import { ActionModel, Preview } from '@/components/common';
 import { withRouterProps } from '@/components/utils/withComponents';
 import { ComponentExtends } from '@/utils/extends';
-import { timeFormat } from '@/utils';
+import { formatDateTime } from '@/utils';
+import { ArticlePage } from '@/constants';
 import { ColumnProps } from 'antd/lib/table';
 
 const ActionGroup = ActionModel.ActionGroup;
@@ -26,6 +27,10 @@ interface IArticleProps extends IClassName, IRouterProps {
 })
 @observer
 class Article extends ComponentExtends<IArticleProps> {
+  public state = {
+    index: 1
+  };
+
   public onEdit = (row: any) => (e: React.MouseEvent<HTMLButtonElement>) => {
     this.props.history!.push(`/editor?article=${row._id}`);
   };
@@ -41,11 +46,19 @@ class Article extends ComponentExtends<IArticleProps> {
         const res = await this.articleApi$$.removeArticle({ _id: row._id });
         if (res.code === 0) {
           this.$message.success(res.msg);
+          await this.articleApi$$.getArticleList(this.state.index);
         } else {
           this.$message.error(res.msg);
         }
       }
     });
+  };
+
+  public onChangePage = (page: number) => {
+    this.setState({
+      index: page
+    });
+    this.props.getArticleList(page);
   };
 
   public componentDidMount() {
@@ -60,13 +73,13 @@ class Article extends ComponentExtends<IArticleProps> {
         title: 'UpdateTime',
         dataIndex: 'updateTime',
         key: 'updateTime',
-        render: (text, record) => <span>{timeFormat(record.updateTime)}</span>
+        render: (text, record) => <span>{formatDateTime(record.updateTime)}</span>
       },
       {
         title: 'CreateTime',
         dataIndex: 'createTime',
         key: 'createTime',
-        render: (text, record) => <span>{timeFormat(record.createTime)}</span>
+        render: (text, record) => <span>{formatDateTime(record.createTime)}</span>
       },
       {
         title: 'Action',
@@ -101,6 +114,12 @@ class Article extends ComponentExtends<IArticleProps> {
           columns={columns}
           expandedRowRender={record => <Preview value={record.content} />}
           dataSource={dataSource}
+          pagination={{
+            current: this.state.index,
+            pageSize: ArticlePage.Limit,
+            total: this.props.articleList.count,
+            onChange: this.onChangePage
+          }}
         />
       </div>
     );
