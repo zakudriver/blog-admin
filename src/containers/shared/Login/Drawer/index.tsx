@@ -4,6 +4,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import styled from '@/styles';
 import { ComponentExtends } from '@/utils/extends';
 import { withRouterProps } from '@/components/utils/withComponents';
+import { TokenField } from '@/constants';
 
 const FormItem = Form.Item;
 
@@ -27,7 +28,7 @@ class LoginDrawer extends ComponentExtends<IDrawerProps> {
     this.onBtnState(false);
     if (res.code === 0) {
       this.$message.success(res.msg);
-      localStorage.setItem('authToken', res.token!);
+      localStorage.setItem(TokenField, res.token!);
       this.props.history!.push('/');
     } else {
       this.$message.error(res.msg);
@@ -117,4 +118,4 @@ class LoginForm extends React.Component<ILoginFormProps> {
   }
 }
 
-export default (LoginDrawer);
+export default LoginDrawer;

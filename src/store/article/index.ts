@@ -1,6 +1,6 @@
 import { observable, action, reaction } from 'mobx';
 import { StoreExtends } from '@/utils/extends';
-import { ArticlePage } from '@/constants';
+import { ArticlePage } from '@/constants/enum';
 
 export class ArticleStore extends StoreExtends {
   // classification

@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { Table, Button } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { ComponentExtends } from '@/utils/extends';
-import { MessagePage } from '@/constants';
+import { MessagePage } from '@/constants/enum';
 import styled from '@/styles';
 
 interface IMessageProps extends IClassName {

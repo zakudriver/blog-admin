@@ -1,18 +1,18 @@
 import http, { AxiosInstance, AxiosResponse } from 'axios';
+import { TokenField } from '@/constants';
 
 const API = APP_ENV === 'dev' ? 'http://127.0.0.1:8999' : '';
 
 const config = {};
+const tokenStr = localStorage.getItem(TokenField);
+
+export const Authorization = 'Bearer ' + (tokenStr === 'null' || !tokenStr ? '' : tokenStr);
 
 const axios: AxiosInstance = http.create(Object.assign(config, { baseURL: API }));
 
 axios.interceptors.request.use(
   conf => {
-    conf.headers.Authorization =
-      'Bearer ' +
-      (localStorage.getItem('authToken') === 'null' || !localStorage.getItem('authToken')
-        ? ''
-        : localStorage.getItem('authToken'));
+    conf.headers.Authorization = Authorization;
     return conf;
   },
   err => {

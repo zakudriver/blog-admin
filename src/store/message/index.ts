@@ -1,7 +1,6 @@
 import { observable, action } from 'mobx';
 import { StoreExtends } from '@/utils/extends';
-import { MessagePage } from '@/constants';
-
+import { MessagePage } from '@/constants/enum';
 
 export class MessageStore extends StoreExtends {
   @observable

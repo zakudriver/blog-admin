@@ -6,7 +6,7 @@ import { ActionModel, Preview } from '@/components/common';
 import { withRouterProps } from '@/components/utils/withComponents';
 import { ComponentExtends } from '@/utils/extends';
 import { formatDateTime } from '@/utils';
-import { ArticlePage } from '@/constants';
+import { ArticlePage } from '@/constants/enum';
 import { ColumnProps } from 'antd/lib/table';
 
 const ActionGroup = ActionModel.ActionGroup;
