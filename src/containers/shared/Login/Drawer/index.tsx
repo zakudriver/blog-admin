@@ -2,15 +2,15 @@ import * as React from 'react';
 import { Form, Icon, Input, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import styled from '@/styles';
-import { ComponentExtends } from '@/utils/extends';
 import { withRouterProps } from '@/components/utils/withComponents';
-import { TokenField } from '@/constants';
+import { ComponentExtends } from '@/utils/extends';
 
 const FormItem = Form.Item;
 
 interface IDrawerProps extends IClassName, IRouterProps {
   isDrawer: boolean;
   width: number;
+  changeToken: GlobalStore.IChangeToken;
 }
 
 @withRouterProps
@@ -28,7 +28,7 @@ class LoginDrawer extends ComponentExtends<IDrawerProps> {
     this.onBtnState(false);
     if (res.code === 0) {
       this.$message.success(res.msg);
-      localStorage.setItem(TokenField, res.token!);
+      this.props.changeToken(res.token!);
       this.props.history!.push('/');
     } else {
       this.$message.error(res.msg);

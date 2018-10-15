@@ -1,6 +1,10 @@
 import { observable, action } from 'mobx';
+import { TokenField } from '@/constants';
+import { IChangeToken } from './type';
 
 export class GlobalStore {
+  @observable
+  token: string = 'Bearer ' + localStorage.getItem(TokenField) || '';
   @observable
   currentRouter: string = '';
   @observable
@@ -27,6 +31,12 @@ export class GlobalStore {
   isUploadDisplay: boolean = false;
 
   constructor() {}
+
+  @action
+  changeToken: IChangeToken = token => {
+    this.token = 'Bearer ' + token;
+    localStorage.setItem(TokenField, token);
+  };
 
   // 记录路由
   @action

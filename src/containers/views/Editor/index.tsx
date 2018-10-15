@@ -10,6 +10,7 @@ import Edit from './Edit';
 import Upload from './Upload';
 
 interface IEditorProps extends IClassName, IRouterProps {
+  token: string;
   selectionEdit: string;
   selectionLanguage: string;
   article: ArticleStore.IArticle;
@@ -21,9 +22,9 @@ interface IEditorProps extends IClassName, IRouterProps {
 @withRouterProps
 @inject(
   (store: IStore): IEditorProps => {
-    const { selectionEdit, selectionLanguage, isUploadDisplay } = store.globalStore;
+    const { selectionEdit, selectionLanguage, isUploadDisplay, token } = store.globalStore;
     const { article, changeArticle, getArticle } = store.articleStore;
-    return { selectionEdit, selectionLanguage, article, changeArticle, getArticle, isUploadDisplay };
+    return { selectionEdit, selectionLanguage, article, changeArticle, getArticle, isUploadDisplay, token };
   }
 )
 @observer
@@ -54,7 +55,7 @@ class Editor extends React.Component<IEditorProps> {
 
     return (
       <div className={this.props.className}>
-        {this.props.isUploadDisplay && <Upload uploads={this.props.article.uploads} />}
+        {this.props.isUploadDisplay && <Upload uploads={this.props.article.uploads} token={this.props.token}/>}
         <div className="title">
           <Row>
             <Col span={this.props.article.isEdit ? 12 : 20} className="title__label">

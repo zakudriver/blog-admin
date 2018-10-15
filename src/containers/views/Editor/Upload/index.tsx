@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Upload as Uploading, Icon, Modal } from 'antd';
 import styled from '@/styles';
-import { Authorization } from '@/api';
 
 import { UploadFile, UploadChangeParam } from 'antd/lib/upload/interface';
 
 interface IUploadProps extends IClassName {
   uploads?: UploadFile[];
+  token: string;
 }
 
 class Upload extends React.Component<IUploadProps> {
@@ -50,7 +50,7 @@ class Upload extends React.Component<IUploadProps> {
           listType="picture-card"
           multiple={true}
           headers={{
-            Authorization
+            Authorization: this.props.token
           }}
           fileList={this.props.uploads}
           onPreview={this.onPreviewUpload}

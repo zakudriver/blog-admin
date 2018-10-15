@@ -14,6 +14,10 @@ export interface IWebConfig {
   editorLanguages: string[];
 }
 
+export interface IChangeToken {
+  (token: string): void;
+}
+
 export interface IUpdateRouter {
   (route: string): void;
 }

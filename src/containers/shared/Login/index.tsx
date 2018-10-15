@@ -7,6 +7,7 @@ import LoginMain from '@/containers/shared/Login/Main';
 
 interface ILoginProps extends IClassName {
   webConfig: GlobalStore.IWebConfig;
+  changeToken: GlobalStore.IChangeToken;
 }
 
 interface ILoginState {
@@ -16,8 +17,8 @@ interface ILoginState {
 
 @inject(
   (store: IStore): ILoginProps => {
-    const { webConfig } = store.globalStore;
-    return { webConfig };
+    const { webConfig, changeToken } = store.globalStore;
+    return { webConfig, changeToken };
   }
 )
 class Login extends React.Component<ILoginProps, ILoginState> {
@@ -62,13 +63,12 @@ class Login extends React.Component<ILoginProps, ILoginState> {
   public render() {
     return (
       <div className={this.props.className}>
-        <LoginDrawer isDrawer={this.state.isDrawer} width={this.props.webConfig.drawerWidth} />
-        <LoginMain
-          webConfig={this.props.webConfig}
-          onDrawer={this.onDrawer}
-          closeDrawer={this.closeDrawer}
-          {...this.state}
+        <LoginDrawer
+          isDrawer={this.state.isDrawer}
+          width={this.props.webConfig.drawerWidth}
+          changeToken={this.props.changeToken}
         />
+        <LoginMain webConfig={this.props.webConfig} onDrawer={this.onDrawer} closeDrawer={this.closeDrawer} {...this.state} />
       </div>
     );
   }
