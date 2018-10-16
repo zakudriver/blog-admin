@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Upload as Uploading, Icon, Modal } from 'antd';
 import styled from '@/styles';
+import { API } from '@/api';
 
 import { UploadFile, UploadChangeParam } from 'antd/lib/upload/interface';
 
@@ -32,8 +33,10 @@ class Upload extends React.Component<IUploadProps> {
     });
   };
 
-  public onChangeUpload = (fileInfo: UploadChangeParam) => {
-    console.log(fileInfo);
+  public onChangeUpload = ({ fileList }: UploadChangeParam) => {
+    console.log('..change');
+    console.log(fileList);
+    this.setState({ fileList });
   };
 
   public onRemoveUpload = () => {
@@ -46,7 +49,8 @@ class Upload extends React.Component<IUploadProps> {
     return (
       <div className={this.props.className}>
         <Uploading
-          action="http://127.0.0.1:8999/upload"
+          name="uploadFile"
+          action={`${API}/upload`}
           listType="picture-card"
           multiple={true}
           headers={{

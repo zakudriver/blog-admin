@@ -1,8 +1,9 @@
 import http, { AxiosInstance, AxiosResponse } from 'axios';
 import { autorun } from 'mobx';
+import { message } from 'antd';
 import globalStore from '@/store/global';
 
-const API = APP_ENV === 'dev' ? 'http://127.0.0.1:8999' : '';
+export const API = APP_ENV === 'dev' ? 'http://127.0.0.1:8999' : '';
 
 const config = {};
 
@@ -27,6 +28,13 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   res => {
     if (res.status === 200) {
+      if (res.data.code === 110) {
+        message.error(res.data.msg);
+        setTimeout(() => {
+          location.href = '/login';
+        }, 500);
+        return Promise.reject(res.data.msg);
+      }
       return Promise.resolve(res);
     } else {
       return Promise.reject(res);
