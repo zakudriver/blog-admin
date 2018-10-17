@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import { Select, Checkbox } from 'antd';
-import { ActionModel } from '@/components/common';
+import { ActionGroup } from '@/components/common';
 import styled from '@/styles';
 import { CheckboxValueType } from 'antd/lib/checkbox/Group';
 import { SelectValue } from 'antd/lib/select';
 
 const Option = Select.Option;
 const CheckboxGroup = Checkbox.Group;
-const ActionGroup = ActionModel.ActionGroup;
-const ActionItem = ActionModel.ActionItem;
-const ActionLine = ActionModel.ActionLine;
+const ActionItem = ActionGroup.ActionItem;
+const ActionLine = ActionGroup.ActionLine;
 
 interface IToolbarProps extends IClassName {
   classification: ArticleStore.IClassNames[];

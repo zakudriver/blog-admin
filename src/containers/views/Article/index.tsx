@@ -2,15 +2,14 @@ import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from '@/styles';
 import { Table, Button, Modal } from 'antd';
-import { ActionModel, Preview } from '@/components/common';
+import { ActionGroup, Preview } from '@/components/common';
 import { withRouterProps } from '@/components/utils/withComponents';
 import { ComponentExtends } from '@/utils/extends';
 import { formatDateTime } from '@/utils';
 import { ArticlePage } from '@/constants/enum';
 import { ColumnProps } from 'antd/lib/table';
 
-const ActionGroup = ActionModel.ActionGroup;
-const ActionItem = ActionModel.ActionItem;
+const ActionItem = ActionGroup.ActionItem;
 
 interface IArticleProps extends IClassName, IRouterProps {
   getArticleList: ArticleStore.IGetArticleList;

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Select, Radio, Button, Modal } from 'antd';
 import { inject, observer } from 'mobx-react';
 import styled from '@/styles';
-import { ActionModel } from '@/components/common';
+import { ActionGroup } from '@/components/common';
 import ClassificationModal from './ClassificationModal';
 
 import { SelectValue } from 'antd/lib/select';
@@ -14,9 +14,8 @@ const Option = Select.Option;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
-const ActionGroup = ActionModel.ActionGroup;
-const ActionItem = ActionModel.ActionItem;
-const ActionLine = ActionModel.ActionLine;
+const ActionItem = ActionGroup.ActionItem;
+const ActionLine = ActionGroup.ActionLine;
 
 interface IToolbarProps extends IClassName {
   onChangeEdit: GlobalStore.IOnChangeEdit;

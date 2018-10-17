@@ -1,5 +1,7 @@
 import * as React from 'react';
 import styled from '@/styles';
+import { StyledComponentClass } from 'styled-components';
+import { IStyleInterface } from '@/styles/_var';
 
 interface IActionGroupProps extends IClassName {
   direction: 'right' | 'left';
@@ -7,7 +9,14 @@ interface IActionGroupProps extends IClassName {
   children: React.ReactNode;
 }
 
-const ActionGroup = styled<IActionGroupProps, 'div'>('div')`
+type StyledComponent = StyledComponentClass<IActionGroupProps, IStyleInterface>;
+
+interface IActionGroup extends StyledComponent {
+  ActionItem?: any;
+  ActionLine?: any;
+}
+
+const ActionGroup: IActionGroup = styled<IActionGroupProps, 'div'>('div')`
   display: flex;
   & > .action__item {
     display: inline-block;
@@ -22,7 +31,9 @@ ActionGroup.defaultProps = {
   pixel: 10
 };
 
-const ActionItem = (props: { children: JSX.Element }) => <span className="action__item">{props.children}</span>;
+interface IActionItemProps extends React.ReactPortal {}
+
+const ActionItem = (props: IActionItemProps) => <span className="action__item">{props.children}</span>;
 
 interface IActionLineProps extends IClassName {
   border: string;
@@ -48,7 +59,11 @@ ActionLine.defaultProps = {
   spacing: 20
 };
 
-export default { ActionGroup, ActionItem, ActionLine };
+ActionGroup.ActionItem = ActionItem;
+ActionGroup.ActionLine = ActionLine;
+
+export default ActionGroup;
+// export default { ActionGroup, ActionItem, ActionLine };
 
 function countTop(h: string | number, height = 64) {
   h = typeof h === 'string' ? parseInt(h, 10) : h;

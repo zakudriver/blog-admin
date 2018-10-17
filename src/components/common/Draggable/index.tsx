@@ -2,10 +2,9 @@ import * as React from 'react';
 import { Button, Input } from 'antd';
 import styled from '@/styles';
 import { moveArrayItem } from '@/utils';
-import { ActionModel } from '@/components/common';
+import { ActionGroup } from '@/components/common';
 
-const ActionGroup = ActionModel.ActionGroup;
-const ActionItem = ActionModel.ActionItem;
+const ActionItem = ActionGroup.ActionItem;
 
 interface IDraggableProps extends IClassName {
   dataSource: any[];

@@ -85,7 +85,7 @@ interface ILoginFormProps extends FormComponentProps, IForm {
 }
 
 class LoginForm extends React.Component<ILoginFormProps> {
-  handleSubmit = (e: React.FormEvent<ILoginFormProps>) => {
+  onSubmit = (e: React.FormEvent<ILoginFormProps>) => {
     e.preventDefault();
     this.props.form.validateFields((err, value) => {
       if (!err) {
@@ -97,7 +97,7 @@ class LoginForm extends React.Component<ILoginFormProps> {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.onSubmit}>
         <FormItem>
           {getFieldDecorator('username', {
             rules: [{ required: true, message: 'username is required' }]
