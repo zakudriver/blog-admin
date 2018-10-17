@@ -12,7 +12,7 @@ const SubMenu = Menu.SubMenu;
 
 interface ISiderMenuProps extends IClassName, IRouterProps {
   isCollapsed?: boolean;
-  currentRouter?: string;
+  currentRouter?: RouterStore.ICurrentRouter | null;
 }
 
 interface ISiderMenuState {
@@ -23,7 +23,8 @@ interface ISiderMenuState {
 @withRouterProps
 @inject(
   (store: IStore): ISiderMenuProps => {
-    const { isCollapsed, currentRouter } = store.globalStore;
+    const { isCollapsed } = store.globalStore;
+    const { currentRouter } = store.routerStore;
     return { isCollapsed, currentRouter };
   }
 )
@@ -38,7 +39,8 @@ class SiderMenu extends React.Component<ISiderMenuProps, ISiderMenuState> {
     reaction(
       () => this.props.currentRouter!,
       currentRouter => {
-        this.onCurrentMenu(currentRouter);
+        console.log(currentRouter.pathname);
+        this.onCurrentMenu(currentRouter.pathname);
       }
     );
   }

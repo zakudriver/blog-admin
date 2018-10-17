@@ -11,18 +11,18 @@ import Sidber from './Sider';
 import Header from './Header';
 
 interface IMainProps extends IClassName, IRouterProps {
-  updateRouter: GlobalStore.IUpdateRouter;
+  updateRouter: RouterStore.IUpdateCurrentRouter;
 }
 
 @withRouterProps
 @inject((store: IStore) => {
-  const { updateRouter } = store.globalStore;
+  const { updateRouter } = store.routerStore;
   return { updateRouter };
 })
 @observer
 class Main extends React.Component<IMainProps> {
   public getSnapshotBeforeUpdate() {
-    this.props.updateRouter(this.props.location!.pathname);
+    this.props.updateRouter(this.props.location!);
     return true;
   }
 

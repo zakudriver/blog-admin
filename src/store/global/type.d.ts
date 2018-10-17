@@ -18,10 +18,6 @@ export interface IChangeToken {
   (token: string): void;
 }
 
-export interface IUpdateRouter {
-  (route: string): void;
-}
-
 export interface IOnChangeEdit {
   (value: string): void;
 }

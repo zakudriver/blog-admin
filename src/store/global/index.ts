@@ -6,8 +6,6 @@ export class GlobalStore {
   @observable
   token: string = 'Bearer ' + localStorage.getItem(TokenField) || '';
   @observable
-  currentRouter: string = '';
-  @observable
   webConfig: GlobalStore.IWebConfig = {
     headPic: '',
     theme: {
@@ -36,12 +34,6 @@ export class GlobalStore {
   changeToken: IChangeToken = token => {
     this.token = 'Bearer ' + token;
     localStorage.setItem(TokenField, token);
-  };
-
-  // 记录路由
-  @action
-  updateRouter: GlobalStore.IUpdateRouter = route => {
-    this.currentRouter = route;
   };
 
   // 右菜单 缩放

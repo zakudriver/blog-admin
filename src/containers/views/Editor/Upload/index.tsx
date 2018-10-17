@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { toJS } from 'mobx';
 import { Upload as Uploading, Icon, Modal } from 'antd';
 import styled from '@/styles';
 import { API } from '@/api';
@@ -6,37 +7,52 @@ import { API } from '@/api';
 import { UploadFile, UploadChangeParam } from 'antd/lib/upload/interface';
 
 interface IUploadProps extends IClassName {
-  uploads?: UploadFile[];
+  uploads: UploadFile[];
   token: string;
+  changeArticle: ArticleStore.IChangeArticle;
 }
 
-class Upload extends React.Component<IUploadProps> {
-  public state = {
-    previewVisible: false,
-    previewImage: '',
-    fileList: [
-      {
-        uid: '-1',
-        name: 'xxx.png',
-        status: 'done',
-        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-      }
-    ]
-  };
+interface IUploadState {
+  previewVisible: boolean;
+  previewImage: string;
+  // fileList: any[];
+}
+
+class Upload extends React.Component<IUploadProps, IUploadState> {
+  constructor(props: IUploadProps) {
+    super(props);
+    this.state = {
+      previewVisible: false,
+      previewImage: ''
+      // fileList: props.article.uploads.map((i, idx) => Object.assign(i, { uid: -idx })) || []
+    };
+  }
 
   public onCancelPreview = () => this.setState({ previewVisible: false });
 
   public onPreviewUpload = (file: UploadFile) => {
+    console.log(file);
     this.setState({
-      previewImage: file.url || file.thumbUrl,
+      previewImage: file.thumbUrl || file.url!,
       previewVisible: true
     });
   };
 
-  public onChangeUpload = ({ fileList }: UploadChangeParam) => {
+  public onChangeUpload = (fileInfo: UploadChangeParam) => {
     console.log('..change');
-    console.log(fileList);
-    this.setState({ fileList });
+    console.log(fileInfo);
+    // const uploadList = fileList.map(i => {
+    //   return {
+    //     _id: i.response.data._id
+    //   };
+    // });
+    // if (fileInfo.file.status === 'done') {
+    // const resFileList = fileInfo.fileList.map(i => {
+    //   return i.response.data;
+    // });
+    this.props.changeArticle({ uploads: fileInfo.fileList });
+    // }
+    // this.setState({ fileList: fileInfo.fileList });
   };
 
   public onRemoveUpload = () => {
@@ -44,7 +60,7 @@ class Upload extends React.Component<IUploadProps> {
   };
 
   public render() {
-    const { previewVisible, previewImage }: any = this.state;
+    const { previewVisible, previewImage } = this.state;
 
     return (
       <div className={this.props.className}>
@@ -56,7 +72,8 @@ class Upload extends React.Component<IUploadProps> {
           headers={{
             Authorization: this.props.token
           }}
-          fileList={this.props.uploads}
+          // fileList={this.state.fileList}
+          fileList={toJS(this.props.uploads)}
           onPreview={this.onPreviewUpload}
           onRemove={this.onRemoveUpload}
           onChange={this.onChangeUpload}

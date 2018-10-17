@@ -38,7 +38,7 @@ export interface IArticle {
   className: string;
   content: string;
   isFormal: boolean;
-  uploads?: UploadFile[];
+  uploads: UploadFile[];
   isEdit?: boolean;
   updateTime: string;
   createTime: string;

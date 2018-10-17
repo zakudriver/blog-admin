@@ -55,7 +55,9 @@ class Editor extends React.Component<IEditorProps> {
 
     return (
       <div className={this.props.className}>
-        {this.props.isUploadDisplay && <Upload uploads={this.props.article.uploads} token={this.props.token}/>}
+        {this.props.isUploadDisplay && (
+          <Upload uploads={this.props.article.uploads} changeArticle={this.props.changeArticle} token={this.props.token} />
+        )}
         <div className="title">
           <Row>
             <Col span={this.props.article.isEdit ? 12 : 20} className="title__label">

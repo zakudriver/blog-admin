@@ -1,4 +1,3 @@
-
 // export { default as Carousel } from './carousel';
 
 import { History, Location } from 'history';
@@ -7,7 +6,7 @@ declare global {
   const APP_ENV: string;
 
   interface IRouterProps {
-    location?: Location;
+    location?: Location<any>;
     history?: History;
     match?: any;
   }
@@ -17,5 +16,6 @@ declare global {
     globalStore: GlobalStore.IGlobalStore;
     articleStore: ArticleStore.IArticleStore;
     messageStore: MessageStore.IMessageStore;
+    routerStore: RouterStore.IRouterStore;
   }
 }
