@@ -52,7 +52,7 @@ class Upload extends React.Component<IUploadProps, IUploadState> {
         okText: 'ok',
         okType: 'danger',
         cancelText: 'no',
-        onOk: async () => {
+        onOk: () => {
           let _id;
           if (file.response) {
             _id = file.response.data._id;
