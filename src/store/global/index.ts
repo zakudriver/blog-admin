@@ -56,8 +56,8 @@ export class GlobalStore {
 
   // 上传模块 on/off
   @action
-  onUploadDisplay = () => {
-    this.isUploadDisplay = !this.isUploadDisplay;
+  onUploadDisplay: GlobalStore.IOnUploadDisplay = value => {
+    this.isUploadDisplay = value === true || value === false ? value : !this.isUploadDisplay;
   };
 }
 

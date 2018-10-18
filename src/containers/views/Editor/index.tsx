@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Input, Row, Col } from 'antd';
+
 import { withRouterProps } from '@/components/utils/withComponents';
 import { formatDateTime } from '@/utils';
 import { Preview } from '@/components/common';
@@ -17,14 +18,28 @@ interface IEditorProps extends IClassName, IRouterProps {
   changeArticle: ArticleStore.IChangeArticle;
   getArticle: ArticleStore.IGetArticle;
   isUploadDisplay: boolean;
+  removeUploadFile: ArticleStore.IRemoveUploadFile;
+  restore: () => void;
+  onUploadDisplay: GlobalStore.IOnUploadDisplay;
 }
 
 @withRouterProps
 @inject(
   (store: IStore): IEditorProps => {
-    const { selectionEdit, selectionLanguage, isUploadDisplay, token } = store.globalStore;
-    const { article, changeArticle, getArticle } = store.articleStore;
-    return { selectionEdit, selectionLanguage, article, changeArticle, getArticle, isUploadDisplay, token };
+    const { selectionEdit, selectionLanguage, isUploadDisplay, onUploadDisplay, token } = store.globalStore;
+    const { article, changeArticle, getArticle, removeUploadFile, restore } = store.articleStore;
+    return {
+      selectionEdit,
+      selectionLanguage,
+      article,
+      changeArticle,
+      getArticle,
+      isUploadDisplay,
+      token,
+      removeUploadFile,
+      restore,
+      onUploadDisplay
+    };
   }
 )
 @observer
@@ -45,6 +60,11 @@ class Editor extends React.Component<IEditorProps> {
     }
   }
 
+  public componentWillUnmount() {
+    this.props.restore();
+    this.props.onUploadDisplay(false);
+  }
+
   public render() {
     // const options = {
     //   lineNumbers: true,
@@ -56,7 +76,12 @@ class Editor extends React.Component<IEditorProps> {
     return (
       <div className={this.props.className}>
         {this.props.isUploadDisplay && (
-          <Upload uploads={this.props.article.uploads} changeArticle={this.props.changeArticle} token={this.props.token} />
+          <Upload
+            uploads={this.props.article.uploads}
+            changeArticle={this.props.changeArticle}
+            removeUploadFile={this.props.removeUploadFile}
+            token={this.props.token}
+          />
         )}
         <div className="title">
           <Row>

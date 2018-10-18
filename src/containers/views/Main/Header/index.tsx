@@ -1,14 +1,16 @@
-import * as React from 'react'
-import styled from '@/styles'
-import { observer, inject } from 'mobx-react'
-import { Layout, Avatar } from 'antd'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
-import { IconBtn } from '@/components/common'
+import * as React from 'react';
+import { observer, inject } from 'mobx-react';
+import { Layout, Avatar } from 'antd';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+
+import styled from '@/styles';
+import { IconBtn } from '@/components/common';
+import { TokenField } from '@/constants';
 
 interface IHeaderProps extends IClassName {
-  isCollapsed?: boolean
-  onCollapsed?: () => void
-  children: JSX.Element
+  isCollapsed?: boolean;
+  onCollapsed?: () => void;
+  children: JSX.Element;
 }
 
 interface IHeaderRouteProps extends IHeaderProps, RouteComponentProps<any> {}
@@ -22,19 +24,27 @@ const Header = ({ className, isCollapsed, onCollapsed, history, children }: IHea
       <div className="header__center">{children}</div>
       <div className="header__right">
         <Avatar className={'avatar'} shape="square" size={32} icon="user" />
-        <IconBtn type="logout" size="18" color={false} onClick={()=>{}} />
+        <IconBtn
+          type="logout"
+          size="18"
+          color={false}
+          onClick={() => {
+            history.push('/login');
+            localStorage.removeItem(TokenField);
+          }}
+        />
       </div>
     </Layout.Header>
-  )
-}
+  );
+};
 
 const InjectHeader = inject((store: IStore) => {
-  const { isCollapsed, onCollapsed } = store.globalStore
+  const { isCollapsed, onCollapsed } = store.globalStore;
   return {
     isCollapsed,
     onCollapsed
-  }
-})(observer(withRouter(Header)))
+  };
+})(observer(withRouter(Header)));
 
 export default styled(InjectHeader)`
   display: flex;
@@ -61,4 +71,4 @@ export default styled(InjectHeader)`
       height: 40px;
     }
   }
-`
+`;

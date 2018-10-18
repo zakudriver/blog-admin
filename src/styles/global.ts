@@ -1,6 +1,6 @@
-import { injectGlobal } from './index'
+import { createGlobalStyle } from './index'
 
-export default injectGlobal`
+export default createGlobalStyle`
   #app {
     height: 100vh;
   }

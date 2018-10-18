@@ -71,3 +71,7 @@ export interface IChangeFilterCondition {
 export interface IChangeClassNameCondition {
   (className: string): void;
 }
+
+export interface IRemoveUploadFile {
+  (_id: string): Promise<boolean>;
+}

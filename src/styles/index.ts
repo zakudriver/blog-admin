@@ -6,10 +6,10 @@ import { IStyleInterface, styleVar } from '@/styles/_var'
 const {
   default: styled,
   css,
-  injectGlobal,
+  createGlobalStyle,
   keyframes,
   ThemeProvider
 } = styledComponents as ThemedStyledComponentsModule<IStyleInterface>
 
-export { css, injectGlobal, keyframes, ThemeProvider, styleVar }
+export { css, createGlobalStyle, keyframes, ThemeProvider, styleVar }
 export default styled

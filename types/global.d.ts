@@ -1,5 +1,5 @@
-// export { default as Carousel } from './carousel';
-
+import * as React from 'react';
+import { UploadFile } from 'antd/lib/upload/interface';
 import { History, Location } from 'history';
 
 declare global {
@@ -19,3 +19,9 @@ declare global {
     routerStore: RouterStore.IRouterStore;
   }
 }
+
+// declare class Uploading extends React.Component<{ onRemove?: (file: UploadFile) => void | boolean | Promise<any> }> {}
+
+// declare interface UploadProps {
+//   onRemove?: (file: UploadFile) => void | boolean | Promise<any>;
+// }

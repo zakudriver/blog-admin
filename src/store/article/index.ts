@@ -210,6 +210,16 @@ export class ArticleStore extends StoreExtends {
   };
 
   @action
+  removeUploadFile: ArticleStore.IRemoveUploadFile = async _id => {
+    const res = await this.uploadApi$$.removeFile({ _id });
+    if (res.code === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  @action
   restore = () => {
     this.article = {
       title: '// title',

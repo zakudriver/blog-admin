@@ -22,7 +22,6 @@ class LoginDrawer extends ComponentExtends<IDrawerProps> {
   };
 
   onLogin = async (form: IForm) => {
-    console.log(form);
     this.onBtnState(true);
     const res = await this.userApi$$.login(form);
     this.onBtnState(false);

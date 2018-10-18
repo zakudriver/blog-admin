@@ -10,6 +10,7 @@ interface IUploadProps extends IClassName {
   uploads: Array<UploadFile | ArticleStore.UploadedFile | string>;
   token: string;
   changeArticle: ArticleStore.IChangeArticle;
+  removeUploadFile: ArticleStore.IRemoveUploadFile;
 }
 
 interface IUploadState {
@@ -43,17 +44,29 @@ class Upload extends React.Component<IUploadProps, IUploadState> {
     this.props.changeArticle({ uploads: fileInfo.fileList });
   };
 
-  public onRemoveUpload = (file: any) => {
-    let _id;
-    if (file.response) {
-      _id = file.response.data._id;
-    } else {
-      _id = file._id;
-    }
+  public onRemoveUpload: any = (file: UploadFile) =>
+    new Promise((resolve, reject) => {
+      Modal.confirm({
+        title: 'Warning',
+        content: 'Bla bla ...',
+        okText: 'ok',
+        okType: 'danger',
+        cancelText: 'no',
+        onOk: async () => {
+          let _id;
+          if (file.response) {
+            _id = file.response.data._id;
+          } else {
+            _id = (file as any)._id;
+          }
 
-    console.log(_id);
-    return false;
-  };
+          resolve(this.props.removeUploadFile(_id));
+        },
+        onCancel: () => {
+          reject(false);
+        }
+      });
+    });
 
   public render() {
     const { previewVisible, previewImage } = this.state;

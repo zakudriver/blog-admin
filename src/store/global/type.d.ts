@@ -25,3 +25,7 @@ export interface IOnChangeEdit {
 export interface IOnChangeLanguages {
   (value: string): void;
 }
+
+export interface IOnUploadDisplay {
+  (value?: boolean): void;
+}

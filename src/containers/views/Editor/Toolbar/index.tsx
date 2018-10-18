@@ -24,7 +24,7 @@ interface IToolbarProps extends IClassName {
   onChangeLanguages: GlobalStore.IOnChangeLanguages;
   selectionLanguage: string;
   isUploadDisplay: boolean;
-  onUploadDisplay: () => void;
+  onUploadDisplay: GlobalStore.IOnUploadDisplay;
   classification: ArticleStore.IClassNames[];
   addClassification: ArticleStore.IAddClassification;
   sortClassification: ArticleStore.ISortClassification;
@@ -219,7 +219,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
                 type={this.props.isUploadDisplay ? 'danger' : 'primary'}
                 icon="upload"
                 ghost
-                onClick={this.props.onUploadDisplay}
+                onClick={() => this.props.onUploadDisplay()}
               />
             </ActionItem>
           </ActionGroup>
