@@ -1,11 +1,19 @@
 import axios, { IAxiosResponse } from './index';
-import { POST } from './decorators';
+import { POST, DELETE } from './decorators';
 
 class UploadApi {
   @POST({
-    url: 'upload'
+    url: '/upload'
   })
-  async upload(opt?: any) {
+  async uploadFile(opt?: any) {
+    const res: IAxiosResponse = await axios(opt);
+    return Promise.resolve(res.data);
+  }
+
+  @DELETE({
+    url: '/upload'
+  })
+  async removeFile(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
     return Promise.resolve(res.data);
   }

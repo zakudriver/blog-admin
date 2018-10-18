@@ -1,11 +1,12 @@
-import http, { AxiosInstance, AxiosResponse } from 'axios';
+import http, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
 import { autorun } from 'mobx';
 import { message } from 'antd';
 import globalStore from '@/store/global';
 
 export const API = APP_ENV === 'dev' ? 'http://127.0.0.1:8999' : '';
 
-const config = {};
+const config: AxiosRequestConfig = {};
+config.baseURL = API;
 
 const token = { key: '' };
 
@@ -13,7 +14,7 @@ autorun(() => {
   token.key = globalStore.token;
 });
 
-const axios: AxiosInstance = http.create(Object.assign(config, { baseURL: API }));
+const axios: AxiosInstance = http.create(config);
 
 axios.interceptors.request.use(
   conf => {

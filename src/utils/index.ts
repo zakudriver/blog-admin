@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import immer from 'immer';
 
 /**
  * 生成菜单树
@@ -12,7 +12,7 @@ import { cloneDeep } from 'lodash';
  * @returns {A[]}
  */
 export function buildTree<T, A>(menu: T[], key: string = 'key', parentKey: string = 'parentKey'): A[] {
-  const _menu = cloneDeep(menu);
+  const _menu = immer(menu, () => undefined);
   const result: any[] = [];
 
   _menu.forEach(i => {
@@ -60,7 +60,7 @@ export function applyMixins(derivedCtor: any, baseCtors: any[]) {
  * @returns
  */
 export function moveArrayItem(source: any[], from: number, to: number) {
-  source = cloneDeep(source);
+  source = immer(source, () => undefined);
   const target = source.splice(from, 1)[0];
   source.splice(to, 0, target);
   return source;

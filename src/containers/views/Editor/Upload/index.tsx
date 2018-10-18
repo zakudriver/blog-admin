@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { toJS } from 'mobx';
 import { Upload as Uploading, Icon, Modal } from 'antd';
+
 import styled from '@/styles';
 import { API } from '@/api';
-
 import { UploadFile, UploadChangeParam } from 'antd/lib/upload/interface';
 
 interface IUploadProps extends IClassName {
-  uploads: UploadFile[];
+  uploads: Array<UploadFile | ArticleStore.UploadedFile | string>;
   token: string;
   changeArticle: ArticleStore.IChangeArticle;
 }
@@ -24,7 +24,6 @@ class Upload extends React.Component<IUploadProps, IUploadState> {
     this.state = {
       previewVisible: false,
       previewImage: ''
-      // fileList: props.article.uploads.map((i, idx) => Object.assign(i, { uid: -idx })) || []
     };
   }
 
@@ -41,21 +40,18 @@ class Upload extends React.Component<IUploadProps, IUploadState> {
   public onChangeUpload = (fileInfo: UploadChangeParam) => {
     console.log('..change');
     console.log(fileInfo);
-    // const uploadList = fileList.map(i => {
-    //   return {
-    //     _id: i.response.data._id
-    //   };
-    // });
-    // if (fileInfo.file.status === 'done') {
-    // const resFileList = fileInfo.fileList.map(i => {
-    //   return i.response.data;
-    // });
     this.props.changeArticle({ uploads: fileInfo.fileList });
-    // }
-    // this.setState({ fileList: fileInfo.fileList });
   };
 
-  public onRemoveUpload = () => {
+  public onRemoveUpload = (file: any) => {
+    let _id;
+    if (file.response) {
+      _id = file.response.data._id;
+    } else {
+      _id = file._id;
+    }
+
+    console.log(_id);
     return false;
   };
 
@@ -73,7 +69,7 @@ class Upload extends React.Component<IUploadProps, IUploadState> {
             Authorization: this.props.token
           }}
           // fileList={this.state.fileList}
-          fileList={toJS(this.props.uploads)}
+          fileList={toJS(this.props.uploads as UploadFile[])}
           onPreview={this.onPreviewUpload}
           onRemove={this.onRemoveUpload}
           onChange={this.onChangeUpload}

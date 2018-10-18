@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Button, Input } from 'antd';
+import immer from 'immer';
+
 import styled from '@/styles';
 import { moveArrayItem } from '@/utils';
 import { ActionGroup } from '@/components/common';
@@ -120,8 +122,10 @@ class DraggableItem extends React.Component<IDraggableItemProps> {
         isEdit: !this.state.isEdit
       });
       if (this.state.isEdit) {
-        const oldValue = { ...this.props.data };
-        const newValue = Object.assign(this.props.data, { [this.props.dataIndex]: this.state.currentInput });
+        const oldValue = immer(this.props.data, () => undefined);
+        const newValue = immer(this.props.data, draft => {
+          draft[this.props.dataIndex] = this.state.currentInput;
+        });
         this.props.onEdit(newValue, oldValue);
       } else {
         this.setState({
@@ -150,10 +154,17 @@ class DraggableItem extends React.Component<IDraggableItemProps> {
         onDragStart={this.onDragStart}
         onDragEnter={this.onDragEnter}
         onDragEnd={this.onDragEnd}
-        className={`${this.props.className} ${this.state.currentIndex === this.props.index ? 'current__li' : undefined}`}
+        className={`${this.props.className} ${
+          this.state.currentIndex === this.props.index ? 'current__li' : undefined
+        }`}
       >
         {this.state.isEdit ? (
-          <Input value={this.state.currentInput} onChange={this.onChangeInput} size="small" style={{ width: '180px' }} />
+          <Input
+            value={this.state.currentInput}
+            onChange={this.onChangeInput}
+            size="small"
+            style={{ width: '180px' }}
+          />
         ) : (
           this.props.data[this.props.dataIndex]
         )}

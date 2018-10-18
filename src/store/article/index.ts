@@ -1,6 +1,9 @@
 import { observable, action, reaction } from 'mobx';
+import immer from 'immer';
+
 import { StoreExtends } from '@/utils/extends';
 import { ArticlePage } from '@/constants/enum';
+import { UploadFile } from 'antd/lib/upload/interface';
 
 export class ArticleStore extends StoreExtends {
   // classification
@@ -121,7 +124,7 @@ export class ArticleStore extends StoreExtends {
   // Article
   @action
   changeArticle: ArticleStore.IChangeArticle = value => {
-    console.log('store');
+    console.log('changeArticle');
     console.log(value);
     Object.keys(value).forEach(i => {
       this.article[i] = value[i];
@@ -130,10 +133,7 @@ export class ArticleStore extends StoreExtends {
 
   @action
   saveArticle = async () => {
-    const saveArticle = Object.assign(this.article, { isFormal: false });
-    saveArticle.uploads = saveArticle.uploads.map(i => {
-      return i.response.data._id;
-    });
+    const saveArticle = handleArticleSource(this.article, false);
     let res;
     if (saveArticle.isEdit) {
       res = await this.articleApi$$.updateArticle(saveArticle);
@@ -151,10 +151,7 @@ export class ArticleStore extends StoreExtends {
 
   @action
   publishArticle = async () => {
-    const publishArticle = Object.assign(this.article, { isFormal: true });
-    publishArticle.uploads.forEach(i => {
-      i = i.response.data._id;
-    });
+    const publishArticle = handleArticleSource(this.article, true);
     let res;
     if (publishArticle.isEdit) {
       res = await this.articleApi$$.updateArticle(publishArticle);
@@ -176,8 +173,14 @@ export class ArticleStore extends StoreExtends {
     const res = await this.articleApi$$.getArticle({ _id });
     this.isArticleLoading = false;
     if (res.code === 0) {
-      // this.article = res.data;
-      this.article = Object.assign(res.data, { isEdit: true });
+      // this.article = Object.assign(res.data, { isEdit: true });
+      res.data.isEdit = true;
+      res.data.uploads = res.data.uploads.map((i: any, idx: number) => {
+        i.uid = i._id;
+        i.key = idx;
+        return i;
+      });
+      this.article = res.data;
     }
   };
 
@@ -213,7 +216,6 @@ export class ArticleStore extends StoreExtends {
       content: '// . . . content',
       className: this.classification[0]._id,
       isFormal: false,
-      // time: moment().format(),
       uploads: [],
       createTime: '',
       updateTime: ''
@@ -222,3 +224,27 @@ export class ArticleStore extends StoreExtends {
 }
 
 export default new ArticleStore();
+
+/**
+ *  处理文章数据
+ *
+ * @param {ArticleStore.IArticle} article
+ * @param {boolean} isFormal
+ * @returns
+ */
+function uploadsmap(params: UploadFile | ArticleStore.UploadedFile): string;
+function uploadsmap(params: any): string {
+  if (params.response) {
+    return params.response.data._id;
+  } else {
+    return params._id;
+  }
+}
+function handleArticleSource(article: ArticleStore.IArticle, isFormal: boolean) {
+  return immer(article, draft => {
+    draft.isFormal = isFormal;
+    draft.uploads = draft.uploads.map((i: any) => uploadsmap(i));
+  });
+}
+
+// function uploadsmap(params: UploadFile): string;

@@ -3,8 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
@@ -15,9 +14,9 @@ const env = require('./env');
 
 const basePlugins = [
   new webpack.DefinePlugin(env),
-  // new MomentLocalesPlugin({
-  //     localesToKeep: ['es-us', 'zh-cn']
-  // })
+  new MomentLocalesPlugin({
+    localesToKeep: ['es-us', 'zh-cn']
+  }),
   new CopyWebpackPlugin([
     {
       from: path.resolve(__dirname, '../public'),
@@ -61,8 +60,7 @@ const prodPlugins = [
     // both options are optional
     filename: assetsPath('css/[name].[hash].css'),
     chunkFilename: assetsPath('css/[name].[id].[hash].css')
-  }),
-  new LodashModuleReplacementPlugin()
+  })
 ];
 
 if (config.bundleAnalyzerReport) {

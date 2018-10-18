@@ -31,6 +31,7 @@ export interface IRemoveClassification {
 }
 
 // Article
+export type UploadedFile = { uid: string; name: string; url: string; key: number; _id: string };
 export interface IArticle {
   key?: string;
   _id?: string;
@@ -38,7 +39,7 @@ export interface IArticle {
   className: string;
   content: string;
   isFormal: boolean;
-  uploads: UploadFile[];
+  uploads: Array<UploadFile | UploadedFile | string>;
   isEdit?: boolean;
   updateTime: string;
   createTime: string;
