@@ -1,6 +1,7 @@
-import { observable, action, reaction } from 'mobx';
+import { observable, action, reaction, runInAction } from 'mobx';
 import immer from 'immer';
 
+import { IResponse } from '@/service';
 import { StoreExtends } from '@/utils/extends';
 import { ArticlePage } from '@/constants/enum';
 import { UploadFile } from 'antd/lib/upload/interface';
@@ -65,22 +66,26 @@ export class ArticleStore extends StoreExtends {
   @action
   getClassification = async () => {
     const res = await this.classificationApi$$.getClassification();
-    if (res.code === 0) {
-      this.classification = res.data;
-      this.article.className = res.data[0]._id;
-    }
+    runInAction(() => {
+      if (res.code === 0) {
+        this.classification = res.data;
+        this.article.className = res.data[0]._id;
+      }
+    });
   };
 
   @action
   addClassification: ArticleStore.IAddClassification = async req => {
     const res = await this.classificationApi$$.addClassification(req);
-    if (res.code === 0) {
-      this.$message.success(res.msg);
-      this.classification = res.data;
-    } else {
-      this.$message.error(res.msg);
-    }
-    return Promise.resolve(res);
+    return runInAction(() => {
+      if (res.code === 0) {
+        this.$message.success(res.msg);
+        this.classification = res.data;
+      } else {
+        this.$message.error(res.msg);
+      }
+      return Promise.resolve(res);
+    });
   };
 
   @action
@@ -102,23 +107,27 @@ export class ArticleStore extends StoreExtends {
       });
     }
     const res = await this.classificationApi$$.updateClassification(req);
-    if (res.code === 0) {
-      this.$message.success(res.msg);
-      this.classification = res.data;
-    } else {
-      this.$message.error(res.msg);
-    }
+    runInAction(() => {
+      if (res.code === 0) {
+        this.$message.success(res.msg);
+        this.classification = res.data;
+      } else {
+        this.$message.error(res.msg);
+      }
+    });
   };
 
   @action
   removeClassification: ArticleStore.IRemoveClassification = async value => {
     const res = await this.classificationApi$$.removeClassification({ _id: value._id });
-    if (res.code === 0) {
-      this.$message.success(res.msg);
-      this.classification = res.data;
-    } else {
-      this.$message.error(res.msg);
-    }
+    runInAction(() => {
+      if (res.code === 0) {
+        this.$message.success(res.msg);
+        this.classification = res.data;
+      } else {
+        this.$message.error(res.msg);
+      }
+    });
   };
 
   // Article
@@ -134,54 +143,58 @@ export class ArticleStore extends StoreExtends {
   @action
   saveArticle = async () => {
     const saveArticle = handleArticleSource(this.article, false);
-    let res;
+    let res: IResponse;
     if (saveArticle.isEdit) {
       res = await this.articleApi$$.updateArticle(saveArticle);
     } else {
       res = await this.articleApi$$.addArticle(saveArticle);
     }
-    console.log(res);
-    if (res.code === 0) {
-      this.$message.success(res.msg);
-      this.restore();
-    } else {
-      this.$message.error(res.msg);
-    }
+    runInAction(() => {
+      if (res.code === 0) {
+        this.$message.success(res.msg);
+        this.restore();
+      } else {
+        this.$message.error(res.msg);
+      }
+    });
   };
 
   @action
   publishArticle = async () => {
     const publishArticle = handleArticleSource(this.article, true);
-    let res;
+    let res: IResponse;
     if (publishArticle.isEdit) {
       res = await this.articleApi$$.updateArticle(publishArticle);
     } else {
       res = await this.articleApi$$.addArticle(publishArticle);
     }
-    console.log(res);
-    if (res.code === 0) {
-      this.$message.success(res.msg);
-      this.restore();
-    } else {
-      this.$message.error(res.msg);
-    }
+    runInAction(() => {
+      if (res.code === 0) {
+        this.$message.success(res.msg);
+        this.restore();
+      } else {
+        this.$message.error(res.msg);
+      }
+    });
   };
 
   @action
   getArticle: ArticleStore.IGetArticle = async _id => {
     this.isArticleLoading = true;
     const res = await this.articleApi$$.getArticle({ _id });
-    this.isArticleLoading = false;
-    if (res.code === 0) {
-      // this.article = Object.assign(res.data, { isEdit: true });
-      res.data.isEdit = true;
-      res.data.uploads = res.data.uploads.map((i: any, idx: number) => {
-        i.uid = i._id;
-        i.key = idx;
-        return i;
-      });
-      this.article = res.data;
-    }
+    runInAction(() => {
+      this.isArticleLoading = false;
+      if (res.code === 0) {
+        // this.article = Object.assign(res.data, { isEdit: true });
+        res.data.isEdit = true;
+        res.data.uploads = res.data.uploads.map((i: any, idx: number) => {
+          i.uid = i._id;
+          i.key = idx;
+          return i;
+        });
+        this.article = res.data;
+      }
+    });
   };
 
   @action
@@ -193,10 +206,12 @@ export class ArticleStore extends StoreExtends {
   ) => {
     this.isArticleListLoading = true;
     const res = await this.articleApi$$.getArticleList({ index, limit, condition, className });
-    this.isArticleListLoading = false;
-    if (res.code === 0) {
-      this.articleList = res.data;
-    }
+    runInAction(() => {
+      this.isArticleListLoading = false;
+      if (res.code === 0) {
+        this.articleList = res.data;
+      }
+    });
   };
 
   @action
@@ -212,11 +227,13 @@ export class ArticleStore extends StoreExtends {
   @action
   removeUploadFile: ArticleStore.IRemoveUploadFile = async _id => {
     const res = await this.uploadApi$$.removeFile({ _id });
-    if (res.code === 0) {
-      return true;
-    } else {
-      return false;
-    }
+    return runInAction(() => {
+      if (res.code === 0) {
+        return true;
+      } else {
+        return false;
+      }
+    });
   };
 
   @action
@@ -224,7 +241,7 @@ export class ArticleStore extends StoreExtends {
     this.article = {
       title: '// title',
       content: '// . . . content',
-      className: this.classification[0]._id,
+      className: this.classification[0]._id || '',
       isFormal: false,
       uploads: [],
       createTime: '',

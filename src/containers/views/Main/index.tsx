@@ -10,7 +10,7 @@ import { menu, loadableComponents, loadableToolbarComponents } from './menu';
 import Sidber from './Sider';
 import Header from './Header';
 
-interface IMainProps extends IClassName, IRouterProps {
+interface IMainProps extends IClassName, IWithRouterProps {
   updateRouter: RouterStore.IUpdateCurrentRouter;
 }
 

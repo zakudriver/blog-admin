@@ -1,14 +1,16 @@
-import * as React from 'react';
-import { UploadFile } from 'antd/lib/upload/interface';
 import { History, Location } from 'history';
 
 declare global {
   const APP_ENV: string;
 
-  interface IRouterProps {
+  interface IClassName {
+    className?: string;
+  }
+
+  interface IWithRouterProps {
     location?: Location<any>;
     history?: History;
-    match?: any;
+    match?: match;
   }
 
   interface IStore {
@@ -20,8 +22,9 @@ declare global {
   }
 }
 
-// declare class Uploading extends React.Component<{ onRemove?: (file: UploadFile) => void | boolean | Promise<any> }> {}
-
-// declare interface UploadProps {
-//   onRemove?: (file: UploadFile) => void | boolean | Promise<any>;
-// }
+interface match {
+  params: any;
+  isExact: boolean;
+  path: string;
+  url: string;
+}

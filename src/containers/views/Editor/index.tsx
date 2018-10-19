@@ -10,7 +10,7 @@ import styled from '@/styles';
 import Edit from './Edit';
 import Upload from './Upload';
 
-interface IEditorProps extends IClassName, IRouterProps {
+interface IEditorProps extends IClassName, IWithRouterProps {
   token: string;
   selectionEdit: string;
   selectionLanguage: string;

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { message } from 'antd';
 
-import userApi from '@/api/user.api';
-import messageApi from '@/api/message.api';
-import classificationApi from '@/api/classification.api';
-import articleApi from '@/api/article.api';
-import uploadApi from '@/api/upload.api';
+import userApi from '@/service/api/user.api';
+import messageApi from '@/service/api/message.api';
+import classificationApi from '@/service/api/classification.api';
+import articleApi from '@/service/api/article.api';
+import uploadApi from '@/service/api/upload.api';
 import { applyMixins } from '@/utils';
 
 export class ApiExtends {

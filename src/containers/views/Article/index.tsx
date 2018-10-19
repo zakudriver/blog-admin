@@ -11,7 +11,7 @@ import { ColumnProps } from 'antd/lib/table';
 
 const ActionItem = ActionGroup.ActionItem;
 
-interface IArticleProps extends IClassName, IRouterProps {
+interface IArticleProps extends IClassName, IWithRouterProps {
   getArticleList: ArticleStore.IGetArticleList;
   articleList: ArticleStore.IArticleList;
 }

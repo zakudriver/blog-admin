@@ -1,9 +1,10 @@
-import axios, { IAxiosResponse } from './index';
-import { POST, GET, DELETE, PUT } from './decorators';
+import axios, { IAxiosResponse } from '@/service';
+import { prefix, POST, GET, DELETE, PUT } from '@/service/decorators';
 
+@prefix('/article')
 class ArticleApi {
   @POST({
-    url: '/article'
+    url: ''
   })
   async addArticle(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
@@ -11,7 +12,7 @@ class ArticleApi {
   }
 
   @GET({
-    url: '/article'
+    url: ''
   })
   async getArticle(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
@@ -19,7 +20,7 @@ class ArticleApi {
   }
 
   @GET({
-    url: '/article/listpro'
+    url: '/listpro'
   })
   async getArticleList(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
@@ -27,7 +28,7 @@ class ArticleApi {
   }
 
   @DELETE({
-    url: '/article'
+    url: ''
   })
   async removeArticle(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
@@ -35,7 +36,7 @@ class ArticleApi {
   }
 
   @PUT({
-    url: '/article'
+    url: ''
   })
   async updateArticle(opt?: any) {
     const res: IAxiosResponse = await axios(opt);

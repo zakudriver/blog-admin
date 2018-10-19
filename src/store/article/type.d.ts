@@ -1,5 +1,5 @@
 import { ArticleStore as articleStore } from './index';
-import { IResponse } from '@/api';
+import { IResponse } from '@/service';
 import { UploadFile } from 'antd/lib/upload/interface';
 
 export as namespace ArticleStore;

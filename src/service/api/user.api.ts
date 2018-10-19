@@ -1,9 +1,10 @@
-import axios, { IAxiosResponse } from './index';
-import { POST } from './decorators';
+import axios, { IAxiosResponse } from '@/service';
+import { prefix, POST } from '@/service/decorators';
 
+@prefix('/user')
 class UserApi {
   @POST({
-    url: '/user/login'
+    url: '/login'
   })
   async login(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
@@ -11,7 +12,7 @@ class UserApi {
   }
 
   @POST({
-    url: '/user/auth'
+    url: '/auth'
   })
   async auth(opt?: any) {
     const res: IAxiosResponse = await axios(opt);

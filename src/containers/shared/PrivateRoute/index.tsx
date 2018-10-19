@@ -4,7 +4,7 @@ import { ComponentExtends } from '@/utils/extends';
 import { withRouterProps } from '@/components/utils/withComponents';
 import { TokenField } from '@/constants';
 
-interface IPrivateRouteProps extends IClassName, IRouterProps {
+interface IPrivateRouteProps extends IClassName, IWithRouterProps {
   component: any;
   path: string;
 }

@@ -1,37 +1,22 @@
-import axios from './index';
+/**
+ * http请求前缀
+ *
+ * @export
+ * @param {string} value
+ * @returns {ClassDecorator}
+ */
+export function prefix(value: string): ClassDecorator {
+  return target => {
+    target.prototype.prefix = value;
+  };
+}
 
 interface IHtttpDecoratorOptions {
   url: string;
   headers?: { [i: string]: string };
 }
 
-export const httpDecorator = (method: string, options: IHtttpDecoratorOptions): MethodDecorator => (
-  target,
-  propertyKey,
-  descriptor
-) => {
-  const oldVal: any = descriptor.value;
-  (descriptor as any).value = (...args: any[]) => {
-    const axiosOpt = {
-      method,
-      url: options.url,
-      data: method === 'get' || 'delete' ? {} : args[0],
-      params: method === 'get' || 'delete' ? args[0] : {}
-    };
-
-    axios(axiosOpt)
-      .then(res => {
-        args[0] = res;
-        oldVal.apply(target, args);
-      })
-      .catch(err => {
-        args[0] = err;
-        oldVal.apply(target, args);
-      });
-  };
-};
-
-const buildDecorator = (method: string, options: IHtttpDecoratorOptions): MethodDecorator => (
+const createDecorator = (method: string, options: IHtttpDecoratorOptions): MethodDecorator => (
   target,
   propertyKey,
   descriptor
@@ -45,6 +30,7 @@ const buildDecorator = (method: string, options: IHtttpDecoratorOptions): Method
     };
 
     const arg = Object.assign(axiosOpt, options);
+    arg.url = (target as any).prefix + arg.url;
 
     return oldVal.apply(target, [arg, target]);
   };
@@ -59,7 +45,7 @@ const buildDecorator = (method: string, options: IHtttpDecoratorOptions): Method
  */
 export function GET(options: IHtttpDecoratorOptions) {
   const method = 'get';
-  return buildDecorator(method, options);
+  return createDecorator(method, options);
 }
 
 /**
@@ -71,7 +57,7 @@ export function GET(options: IHtttpDecoratorOptions) {
  */
 export function POST(options: IHtttpDecoratorOptions) {
   const method = 'post';
-  return buildDecorator(method, options);
+  return createDecorator(method, options);
 }
 
 /**
@@ -83,7 +69,7 @@ export function POST(options: IHtttpDecoratorOptions) {
  */
 export function PUT(options: IHtttpDecoratorOptions) {
   const method = 'put';
-  return buildDecorator(method, options);
+  return createDecorator(method, options);
 }
 
 /**
@@ -95,5 +81,5 @@ export function PUT(options: IHtttpDecoratorOptions) {
  */
 export function DELETE(options: IHtttpDecoratorOptions) {
   const method = 'delete';
-  return buildDecorator(method, options);
+  return createDecorator(method, options);
 }

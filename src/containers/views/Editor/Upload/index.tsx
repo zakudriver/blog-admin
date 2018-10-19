@@ -3,7 +3,7 @@ import { toJS } from 'mobx';
 import { Upload as Uploading, Icon, Modal } from 'antd';
 
 import styled from '@/styles';
-import { API } from '@/api';
+import { API } from '@/service';
 import { UploadFile, UploadChangeParam } from 'antd/lib/upload/interface';
 
 interface IUploadProps extends IClassName {

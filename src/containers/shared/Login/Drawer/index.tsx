@@ -7,7 +7,7 @@ import { ComponentExtends } from '@/utils/extends';
 
 const FormItem = Form.Item;
 
-interface IDrawerProps extends IClassName, IRouterProps {
+interface IDrawerProps extends IClassName, IWithRouterProps {
   isDrawer: boolean;
   width: number;
   changeToken: GlobalStore.IChangeToken;

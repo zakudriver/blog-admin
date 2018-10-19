@@ -1,9 +1,10 @@
-import axios, { IAxiosResponse } from './index';
-import { POST, DELETE } from './decorators';
+import axios, { IAxiosResponse } from '@/service';
+import { prefix, POST, DELETE } from '@/service/decorators';
 
+@prefix('/upload')
 class UploadApi {
   @POST({
-    url: '/upload'
+    url: ''
   })
   async uploadFile(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
@@ -11,7 +12,7 @@ class UploadApi {
   }
 
   @DELETE({
-    url: '/upload'
+    url: ''
   })
   async removeFile(opt?: any) {
     const res: IAxiosResponse = await axios(opt);

@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 import { StoreExtends } from '@/utils/extends';
 import { MessagePage } from '@/constants/enum';
 
@@ -13,10 +13,12 @@ export class MessageStore extends StoreExtends {
   getMessage: MessageStore.IGetMessage = async (index = MessagePage.Index, limit = MessagePage.Limit) => {
     this.isMessageLoading = true;
     const res = await this.messageApi$$.getMessage({ index, limit });
-    this.isMessageLoading = false;
-    if (res.code === 0) {
-      this.message = res.data;
-    }
+    runInAction(() => {
+      this.isMessageLoading = false;
+      if (res.code === 0) {
+        this.message = res.data;
+      }
+    });
   };
 }
 

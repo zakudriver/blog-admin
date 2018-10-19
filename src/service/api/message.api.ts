@@ -1,9 +1,10 @@
-import axios, { IAxiosResponse } from '@/api';
-import { GET, DELETE } from '@/api/decorators';
+import axios, { IAxiosResponse } from '@/service';
+import { prefix, GET, DELETE } from '@/service/decorators';
 
+@prefix('/message')
 class MessageApi {
   @GET({
-    url: '/message'
+    url: ''
   })
   async getMessage(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
@@ -11,7 +12,7 @@ class MessageApi {
   }
 
   @DELETE({
-    url: '/message'
+    url: ''
   })
   async removeMessage(opt?: any) {
     const res: IAxiosResponse = await axios(opt);

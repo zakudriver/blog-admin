@@ -1,9 +1,10 @@
-import axios, { IAxiosResponse } from './index';
-import { GET, POST, DELETE, PUT } from './decorators';
+import axios, { IAxiosResponse } from '@/service';
+import { prefix, GET, POST, DELETE, PUT } from '@/service/decorators';
 
+@prefix('/classification')
 class ClassificationApi {
   @GET({
-    url: '/classification'
+    url: ''
   })
   async getClassification(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
@@ -11,7 +12,7 @@ class ClassificationApi {
   }
 
   @POST({
-    url: '/classification'
+    url: ''
   })
   async addClassification(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
@@ -19,7 +20,7 @@ class ClassificationApi {
   }
 
   @DELETE({
-    url: '/classification'
+    url: ''
   })
   async removeClassification(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
@@ -27,7 +28,7 @@ class ClassificationApi {
   }
 
   @PUT({
-    url: '/classification'
+    url: ''
   })
   async updateClassification(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
