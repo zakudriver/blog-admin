@@ -21,7 +21,7 @@ class LoginDrawer extends ComponentExtends<IDrawerProps> {
     isLoginBtn: false
   };
 
-  onLogin = async (form: IForm) => {
+  public onLogin = async (form: IForm) => {
     this.onBtnState(true);
     const res = await this.userApi$$.login(form);
     this.onBtnState(false);
@@ -34,7 +34,7 @@ class LoginDrawer extends ComponentExtends<IDrawerProps> {
     }
   };
 
-  onBtnState = (state: boolean) => {
+  public onBtnState = (state: boolean) => {
     this.setState({
       isLoginBtn: state
     });
@@ -84,7 +84,7 @@ interface ILoginFormProps extends FormComponentProps, IForm {
 }
 
 class LoginForm extends React.Component<ILoginFormProps> {
-  onSubmit = (e: React.FormEvent<ILoginFormProps>) => {
+  public onSubmit = (e: React.FormEvent<ILoginFormProps>) => {
     e.preventDefault();
     this.props.form.validateFields((err, value) => {
       if (!err) {
@@ -93,7 +93,7 @@ class LoginForm extends React.Component<ILoginFormProps> {
     });
   };
 
-  render() {
+  public render() {
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.onSubmit}>

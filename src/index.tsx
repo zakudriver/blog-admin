@@ -10,7 +10,7 @@ import '@/styles/global';
 import registerServiceWorker from './registerServiceWorker';
 
 // import '@/assets/sass/reset.scss'
-configure({ enforceActions: true });
+configure({ enforceActions: 'always' });
 
 const render = (Component: React.ComponentClass) => {
   ReactDOM.render(

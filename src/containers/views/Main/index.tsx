@@ -12,18 +12,25 @@ import Header from './Header';
 
 interface IMainProps extends IClassName, IWithRouterProps {
   updateRouter: RouterStore.IUpdateCurrentRouter;
+  init: () => void;
 }
 
 @withRouterProps
 @inject((store: IStore) => {
   const { updateRouter } = store.routerStore;
-  return { updateRouter };
+  const { init } = store.articleStore;
+  return { updateRouter, init };
 })
 @observer
 class Main extends React.Component<IMainProps> {
   public getSnapshotBeforeUpdate() {
     this.props.updateRouter(this.props.location!);
     return true;
+  }
+
+  public componentDidMount() {
+    console.log('init')
+    this.props.init();
   }
 
   public render() {

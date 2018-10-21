@@ -20,13 +20,10 @@ interface IUploadState {
 }
 
 class Upload extends React.Component<IUploadProps, IUploadState> {
-  constructor(props: IUploadProps) {
-    super(props);
-    this.state = {
-      previewVisible: false,
-      previewImage: ''
-    };
-  }
+  public state = {
+    previewVisible: false,
+    previewImage: ''
+  };
 
   public onCancelPreview = () => this.setState({ previewVisible: false });
 

@@ -36,7 +36,7 @@ class Message extends ComponentExtends<IMessageProps> {
     this.props.getMessage(page);
   };
 
-  public async componentDidMount() {
+  public componentDidMount() {
     this.props.getMessage();
   }
 

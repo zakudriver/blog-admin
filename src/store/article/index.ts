@@ -41,8 +41,6 @@ export class ArticleStore extends StoreExtends {
   constructor() {
     super();
 
-    this.init();
-
     reaction(
       () => this.filterCondition,
       condition => {
@@ -58,9 +56,10 @@ export class ArticleStore extends StoreExtends {
     );
   }
 
-  init() {
+  @action
+  init = () => {
     this.getClassification();
-  }
+  };
 
   // Classification
   @action

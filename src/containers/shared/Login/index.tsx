@@ -22,13 +22,10 @@ interface ILoginState {
   }
 )
 class Login extends React.Component<ILoginProps, ILoginState> {
-  constructor(props: ILoginProps) {
-    super(props);
-    this.state = {
-      clientWidth: 0,
-      isDrawer: false
-    };
-  }
+  public state = {
+    clientWidth: 0,
+    isDrawer: false
+  };
 
   public componentDidMount() {
     this.setState({
