@@ -9,12 +9,8 @@ const handleloadableComponent = (component: () => Promise<any>) =>
 
 export const loadableComponents = {
   Home: handleloadableComponent(() => import(/* webpackChunkName: "home" */ '@/containers/views/Home')),
-  SettingBlog: handleloadableComponent(() =>
-    import(/* webpackChunkName: "settingBlog" */ '@/containers/views/Setting/Blog')
-  ),
-  SettingAdmin: handleloadableComponent(() =>
-    import(/* webpackChunkName: "settingAdmin" */ '@/containers/views/Setting/Admin')
-  ),
+  SettingBlog: handleloadableComponent(() => import(/* webpackChunkName: "settingBlog" */ '@/containers/views/Setting/Blog')),
+  SettingAdmin: handleloadableComponent(() => import(/* webpackChunkName: "settingAdmin" */ '@/containers/views/Setting/Admin')),
   Editor: handleloadableComponent(() => import(/* webpackChunkName: "editor" */ '@/containers/views/Editor')),
   Message: handleloadableComponent(() => import(/* webpackChunkName: "message" */ '@/containers/views/Message')),
   Article: handleloadableComponent(() => import(/* webpackChunkName: "article" */ '@/containers/views/Article'))
@@ -28,6 +24,9 @@ export const loadableToolbarComponents = {
   ),
   ArticleToolbar: handleloadableComponent(() =>
     import(/* webpackChunkName: "editorToolbar" */ '@/containers/views/Article/Toolbar')
+  ),
+  SettingAdminToolbar: handleloadableComponent(() =>
+    import(/* webpackChunkName: "editorToolbar" */ '@/containers/views/Setting/Admin/Toolbar')
   )
 };
 
@@ -105,6 +104,7 @@ export const menu: IMenu[] = [
     icon: 'home',
     path: '/setting/admin',
     component: 'SettingAdmin',
+    toolbarComponent: 'SettingAdminToolbar',
     exact: true
   }
 ];

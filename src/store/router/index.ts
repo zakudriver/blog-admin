@@ -3,7 +3,6 @@ import { observable, action } from 'mobx';
 export class RouterStore {
   @observable
   currentRouter: RouterStore.ICurrentRouter | null = null;
-  // { pathname: '', search: '', state: '', hash: '' };
 
   // 记录路由
   @action

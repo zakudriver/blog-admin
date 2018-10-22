@@ -19,6 +19,9 @@ class SettingAdmin extends React.Component<ISettingAdminProps> {
 }
 
 export default styled(SettingAdmin)`
-  display: flex;
-  justify-content: space-between;
+  /* display: flex;
+  justify-content: space-between; */
+  height: 100%;
+  padding: 20px;
+  background-color: #fff;
 `;

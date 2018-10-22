@@ -1,42 +1,74 @@
 import * as React from 'react';
-import { Form, Input, Button } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
-
-// import styled from '@/styles';
+import { Input, Upload, Icon, Form } from 'antd';
+// import { FormComponentProps } from 'antd/lib/form';
+import styled from '@/styles';
 
 const FormItem = Form.Item;
 
-interface ISettingFormProps extends IClassName, FormComponentProps {}
+interface ISettingFormProps extends IClassName {}
 
 class SettingForm extends React.Component<ISettingFormProps> {
-  handleSubmit = (e: React.FormEvent<ISettingFormProps>) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
-    });
+  public state = {
+    loading: false,
+    imageUrl: ''
   };
 
   public render() {
-    const { getFieldDecorator } = this.props.form;
+    const uploadButton = (
+      <div>
+        <Icon type={this.state.loading ? 'loading' : 'plus'} />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
+    const imageUrl = this.state.imageUrl;
+
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 4 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 }
+      }
+    };
+
+    const noLabelformItemLayout = {
+      wrapperCol: {
+        xs: {
+          span: 24,
+          offset: 0
+        },
+        sm: {
+          span: 24,
+          offset: 4
+        }
+      }
+    };
+
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
-        <FormItem label="title">
-          {getFieldDecorator('title')(
-            <Input placeholder="" />
-          )}
+      <Form>
+        <FormItem {...noLabelformItemLayout}>
+          <Upload
+            name="avatar"
+            listType="picture-card"
+            className="avatar-uploader"
+            showUploadList={false}
+            action="//jsonplaceholder.typicode.com/posts/"
+          >
+            {imageUrl ? <img src={imageUrl} alt="avatar" /> : uploadButton}
+          </Upload>
         </FormItem>
-        <FormItem>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            Save
-          </Button>
+        <FormItem {...formItemLayout} label="title">
+          <Input placeholder="" />
         </FormItem>
       </Form>
     );
   }
 }
 
-export default Form.create()(SettingForm);
-
-// export default styled(SettingForm)``;
+export default styled(SettingForm)`
+  .label {
+    text-align: right;
+  }
+`;

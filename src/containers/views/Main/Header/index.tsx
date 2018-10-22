@@ -29,7 +29,8 @@ const Header = ({ className, isCollapsed, onCollapsed, history, children }: IHea
           size="18"
           color={false}
           onClick={() => {
-            history.push('/login');
+            // history.push('/login');
+            location.href = '/login';
             localStorage.removeItem(TokenField);
           }}
         />

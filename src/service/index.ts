@@ -31,6 +31,9 @@ axios.interceptors.response.use(
     if (res.status === 200) {
       if (res.data.code === 110) {
         message.error(res.data.msg);
+        setTimeout(() => {
+          location.href = '/login';
+        }, 800);
         return Promise.reject(res.data.msg);
       }
       return Promise.resolve(res);
