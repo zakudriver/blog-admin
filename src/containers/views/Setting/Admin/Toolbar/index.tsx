@@ -12,16 +12,16 @@ class Toolbar extends React.Component<IToolbarProps> {
   public render() {
     return (
       <div className={this.props.className}>
-        <Button className="toolbarbtn" type="primary">
+        <Button type="primary">
           Save
         </Button>
+        <Button>Save</Button>
       </div>
     );
   }
 }
 
 export default styled(Toolbar)`
-  .toolbarbtn {
-    float: right;
-  }
+  display: flex;
+  justify-content: space-between;
 `;

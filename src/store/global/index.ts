@@ -7,14 +7,15 @@ export class GlobalStore {
   token: string = 'Bearer ' + localStorage.getItem(TokenField) || '';
   @observable
   webConfig: GlobalStore.IWebConfig = {
-    headPic: '',
     theme: {
       primaryColor: '#1DA57A'
     },
     title: `Welcome, Zyhua's Admin`,
-    drawerWidth: 30,
-    editorLanguages: ['typescript', 'javascript', 'markdown']
+    drawerWidth: 30
   };
+
+  @observable
+  editorLanguages: string[] = ['markdown', 'typescript', 'javascript', 'go'];
 
   @observable
   isCollapsed: boolean = false;

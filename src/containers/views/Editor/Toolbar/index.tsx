@@ -35,6 +35,7 @@ interface IToolbarProps extends IClassName {
   saveArticle: () => void;
   publishArticle: () => void;
   restore: () => void;
+  editorLanguages: string[];
 }
 
 interface IToolbarState {
@@ -50,7 +51,8 @@ interface IToolbarState {
       onChangeLanguages,
       selectionLanguage,
       isUploadDisplay,
-      onUploadDisplay
+      onUploadDisplay,
+      editorLanguages
     } = store.globalStore;
     const {
       classification,
@@ -81,7 +83,8 @@ interface IToolbarState {
       publishArticle,
       restore,
       isUploadDisplay,
-      onUploadDisplay
+      onUploadDisplay,
+      editorLanguages
     };
   }
 )
@@ -169,7 +172,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
               placeholder="Select a language"
               onChange={this.onChangeLanguages}
             >
-              {this.props.webConfig.editorLanguages.map((i, idx) => (
+              {this.props.editorLanguages.map((i, idx) => (
                 <Option key={idx} value={i}>
                   {i}
                 </Option>

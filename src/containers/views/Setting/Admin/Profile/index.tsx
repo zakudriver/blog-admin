@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Input, Upload, Icon, Form } from 'antd';
 // import { FormComponentProps } from 'antd/lib/form';
-import styled from '@/styles';
+// import styled from '@/styles';
 
 const FormItem = Form.Item;
 
-interface ISettingFormProps extends IClassName {}
+interface IProfileProps extends IClassName {}
 
-class SettingForm extends React.Component<ISettingFormProps> {
+class Profile extends React.Component<IProfileProps> {
   public state = {
     loading: false,
     imageUrl: ''
@@ -25,30 +25,17 @@ class SettingForm extends React.Component<ISettingFormProps> {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 4 }
+        sm: { span: 6 }
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 16 }
-      }
-    };
-
-    const noLabelformItemLayout = {
-      wrapperCol: {
-        xs: {
-          span: 24,
-          offset: 0
-        },
-        sm: {
-          span: 24,
-          offset: 4
-        }
+        sm: { span: 12 }
       }
     };
 
     return (
-      <Form>
-        <FormItem {...noLabelformItemLayout}>
+      <Form className={this.props.className}>
+        <FormItem {...formItemLayout} label="Avatar">
           <Upload
             name="avatar"
             listType="picture-card"
@@ -59,7 +46,10 @@ class SettingForm extends React.Component<ISettingFormProps> {
             {imageUrl ? <img src={imageUrl} alt="avatar" /> : uploadButton}
           </Upload>
         </FormItem>
-        <FormItem {...formItemLayout} label="title">
+        <FormItem {...formItemLayout} label="Username">
+          <Input placeholder="" />
+        </FormItem>
+        <FormItem {...formItemLayout} label="Password">
           <Input placeholder="" />
         </FormItem>
       </Form>
@@ -67,8 +57,4 @@ class SettingForm extends React.Component<ISettingFormProps> {
   }
 }
 
-export default styled(SettingForm)`
-  .label {
-    text-align: right;
-  }
-`;
+export default Profile

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from '@/styles';
-import Form from './Form';
+import Profile from './Profile';
+import Config from './Config';
 
 interface ISettingAdminProps extends IClassName {}
 
@@ -12,16 +13,33 @@ class SettingAdmin extends React.Component<ISettingAdminProps> {
   public render() {
     return (
       <div className={this.props.className}>
-        <Form />
+        <div>
+          <Profile />
+        </div>
+        <div>
+          <Config />
+        </div>
       </div>
     );
   }
 }
 
 export default styled(SettingAdmin)`
-  /* display: flex;
-  justify-content: space-between; */
+  display: flex;
+  justify-content: space-between;
   height: 100%;
-  padding: 20px;
-  background-color: #fff;
+  & > div {
+    width: calc((100% - 20px) / 2);
+    padding: 80px 20px;
+    background-color: #fff;
+  }
+  .ant-form-item-label {
+    padding-right: 10px;
+  }
+  .block-picker {
+    box-shadow: none !important;
+    & > div {
+      border-radius: 3px !important;
+    }
+  }
 `;

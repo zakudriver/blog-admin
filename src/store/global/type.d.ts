@@ -5,13 +5,11 @@ export as namespace GlobalStore;
 export interface IGlobalStore extends globalStore {}
 
 export interface IWebConfig {
-  headPic: string;
   theme: {
     primaryColor: string;
   };
   title: string;
   drawerWidth: number;
-  editorLanguages: string[];
 }
 
 export interface IChangeToken {
