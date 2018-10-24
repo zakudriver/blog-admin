@@ -8,7 +8,8 @@ export class GlobalStore {
   @observable
   webConfig: GlobalStore.IWebConfig = {
     theme: {
-      primaryColor: '#1DA57A'
+      primaryColor: '#1DA57A',
+      drawerColor:'#5ee2b9'
     },
     title: `Welcome, Zyhua's Admin`,
     drawerWidth: 30

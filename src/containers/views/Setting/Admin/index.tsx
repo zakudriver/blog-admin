@@ -37,7 +37,7 @@ export default styled(SettingAdmin)`
     padding-right: 10px;
   }
   .block-picker {
-    box-shadow: none !important;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 4px !important;
     & > div {
       border-radius: 3px !important;
     }

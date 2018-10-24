@@ -69,6 +69,7 @@
         "allowMultiline": false
       }
     ],
-    "jsx-boolean-value": false
+    "jsx-boolean-value": false,
+    "no-bitwise": false
   }
 }

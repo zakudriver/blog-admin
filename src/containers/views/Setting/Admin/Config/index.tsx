@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Input, Form, InputNumber } from 'antd';
-import { BlockPicker } from 'react-color';
+import { BlockPicker, TwitterPicker } from 'react-color';
 import styled from '@/styles';
 
 const FormItem = Form.Item;
@@ -33,6 +33,9 @@ class Config extends React.Component<IConfigProps> {
         </FormItem>
         <FormItem {...formItemLayout} label="DrawerWidth">
           <InputNumber />
+        </FormItem>
+        <FormItem {...formItemLayout} label="DrawerColor">
+          <TwitterPicker triangle="hide" />
         </FormItem>
       </Form>
     );

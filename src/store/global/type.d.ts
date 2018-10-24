@@ -7,6 +7,7 @@ export interface IGlobalStore extends globalStore {}
 export interface IWebConfig {
   theme: {
     primaryColor: string;
+    drawerColor: string;
   };
   title: string;
   drawerWidth: number;

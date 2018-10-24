@@ -50,14 +50,11 @@ class Upload extends React.Component<IUploadProps, IUploadState> {
         okType: 'danger',
         cancelText: 'no',
         onOk: () => {
-          let _id;
           if (file.response) {
-            _id = file.response.data._id;
+            resolve(this.props.removeUploadFile(file.response.data._id));
           } else {
-            _id = (file as any)._id;
+            resolve(this.props.removeUploadFile((file as any)._id));
           }
-
-          resolve(this.props.removeUploadFile(_id));
         },
         onCancel: () => {
           reject(false);

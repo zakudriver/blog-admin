@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { inject } from 'mobx-react';
+import { inject ,observer} from 'mobx-react';
 import styled from '@/styles';
 
 import LoginDrawer from '@/containers/shared/Login/Drawer';
@@ -21,22 +21,12 @@ interface ILoginState {
     return { webConfig, changeToken };
   }
 )
+@observer
 class Login extends React.Component<ILoginProps, ILoginState> {
   public state = {
     clientWidth: 0,
     isDrawer: false
   };
-
-  public componentDidMount() {
-    this.setState({
-      clientWidth: document.body.clientWidth
-    });
-    window.addEventListener('resize', this.resize);
-  }
-
-  public componentWillUnmount() {
-    window.removeEventListener('resize', this.resize);
-  }
 
   public resize = () => {
     this.setState({
@@ -56,6 +46,17 @@ class Login extends React.Component<ILoginProps, ILoginState> {
       });
     }
   };
+
+  public componentDidMount() {
+    this.setState({
+      clientWidth: document.body.clientWidth
+    });
+    window.addEventListener('resize', this.resize);
+  }
+
+  public componentWillUnmount() {
+    window.removeEventListener('resize', this.resize);
+  }
 
   public render() {
     return (

@@ -59,7 +59,7 @@ interface LoginDrawerWrapperProps extends IDrawerProps {}
 
 const LoginDrawerWrapper = styled<LoginDrawerWrapperProps, 'div'>('div')`
   height: 100vh;
-  background-color: #4dd0e1;
+  background-color: ${props => props.theme.drawerColor};
   width: 30%;
   float: left;
   margin-left: ${props => (props.isDrawer ? 0 : `-${props.width}%`)};
