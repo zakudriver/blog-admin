@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Input, Form, InputNumber } from 'antd';
 import { BlockPicker, TwitterPicker } from 'react-color';
-import styled from '@/styles';
 
 const FormItem = Form.Item;
 
@@ -24,22 +23,25 @@ class Config extends React.Component<IConfigProps> {
       }
     };
     return (
-      <Form className={this.props.className}>
-        <FormItem {...formItemLayout} label="Title">
-          <Input placeholder="" />
-        </FormItem>
-        <FormItem {...formItemLayout} label="Theme">
-          <BlockPicker triangle="hide" />
-        </FormItem>
-        <FormItem {...formItemLayout} label="DrawerWidth">
-          <InputNumber />
-        </FormItem>
-        <FormItem {...formItemLayout} label="DrawerColor">
-          <TwitterPicker triangle="hide" />
-        </FormItem>
-      </Form>
+      <div>
+        <h6>Config</h6>
+        <Form className={this.props.className}>
+          <FormItem {...formItemLayout} label="Title">
+            <Input placeholder="" />
+          </FormItem>
+          <FormItem {...formItemLayout} label="Theme">
+            <BlockPicker triangle="hide" />
+          </FormItem>
+          <FormItem {...formItemLayout} label="DrawerWidth">
+            <InputNumber />
+          </FormItem>
+          <FormItem {...formItemLayout} label="DrawerColor">
+            <TwitterPicker triangle="hide" />
+          </FormItem>
+        </Form>
+      </div>
     );
   }
 }
 
-export default styled(Config)``;
+export default Config;

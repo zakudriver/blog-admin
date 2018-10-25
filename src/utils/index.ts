@@ -63,6 +63,7 @@ export function moveArrayItem(source: any[], from: number, to: number) {
   source = immer(source, () => undefined);
   const target = source.splice(from, 1)[0];
   source.splice(to, 0, target);
+  console.log(source)
   return source;
 }
 

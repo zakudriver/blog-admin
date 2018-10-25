@@ -89,10 +89,14 @@ export class ArticleStore extends StoreExtends {
 
   @action
   sortClassification: ArticleStore.ISortClassification = value => {
-    value.forEach((i, idx) => {
+    // value.forEach((i, idx) => {
+    //   i.order = idx;
+    // });
+
+    this.classification = value.map((i, idx) => {
       i.order = idx;
+      return i;
     });
-    this.classification = value;
   };
 
   @action

@@ -43,6 +43,7 @@ class ClassificationModal extends React.Component<IClassificationModalProps> {
   };
 
   public onChangeSort = (value: ArticleStore.IClassNames[]) => {
+    console.log(value)
     this.props.sortClassification(value);
   };
 
