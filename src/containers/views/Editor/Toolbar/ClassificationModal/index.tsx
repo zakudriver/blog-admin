@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Modal, Button, Input } from 'antd';
 import styled from '@/styles';
-import { Draggable } from '@/components/common';
+import SortableList from './SortableList';
+// import { Draggable } from '@/components/common';
 
 interface IClassificationModalProps extends IClassName {
   visible: boolean;
@@ -43,7 +44,7 @@ class ClassificationModal extends React.Component<IClassificationModalProps> {
   };
 
   public onChangeSort = (value: ArticleStore.IClassNames[]) => {
-    console.log(value)
+    console.log(value);
     this.props.sortClassification(value);
   };
 
@@ -89,9 +90,15 @@ class ClassificationModal extends React.Component<IClassificationModalProps> {
             </Button>
           </div>
 
-          <Draggable
+          {/* <Draggable
             dataSource={this.props.classification}
             dataIndex="name"
+            onChange={this.onChangeSort}
+            onEdit={this.onEdit}
+            onRemove={this.onRemove}
+          /> */}
+          <SortableList
+            dataSource={this.props.classification}
             onChange={this.onChangeSort}
             onEdit={this.onEdit}
             onRemove={this.onRemove}
