@@ -58,9 +58,7 @@ class User extends React.Component<IUserProps> {
           </Form>
         </div>
         <div className="userline" />
-        <div>
-          <h6>Root</h6>
-        </div>
+        
       </div>
     );
   }

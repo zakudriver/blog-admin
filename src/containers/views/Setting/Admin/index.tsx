@@ -30,12 +30,11 @@ export default styled(SettingAdmin)`
   height: 100%;
   & > div {
     width: calc((100% - 20px) / 2);
-    padding: 40px;
+    padding: 20px 40px;
     background-color: #fff;
 
     h6 {
       font-size: 24px;
-      padding: 0 20px;
       margin-bottom: 20px;
       color: ${props => props.theme.primaryColor};
       /* border-left: 4px solid ${props => props.theme.primaryColor}; */

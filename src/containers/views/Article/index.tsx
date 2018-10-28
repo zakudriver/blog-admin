@@ -101,10 +101,6 @@ class Article extends ComponentExtends<IArticleProps> {
       }
     ];
 
-    const dataSource = this.props.articleList.rows.map(i => {
-      i.key = i._id;
-      return i;
-    });
     return (
       <div className={this.props.className}>
         {/* <ArticleTable /> */}
@@ -112,7 +108,7 @@ class Article extends ComponentExtends<IArticleProps> {
           className="article__table"
           columns={columns}
           expandedRowRender={record => <Preview value={record.content} />}
-          dataSource={dataSource}
+          dataSource={this.props.articleList.rows}
           pagination={{
             current: this.state.index,
             pageSize: ArticlePage.Limit,

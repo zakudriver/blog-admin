@@ -212,6 +212,9 @@ export class ArticleStore extends StoreExtends {
     runInAction(() => {
       this.isArticleListLoading = false;
       if (res.code === 0) {
+        res.data.rows.forEach((i: any, idx: number) => {
+          i.key = idx;
+        });
         this.articleList = res.data;
       }
     });
@@ -244,7 +247,7 @@ export class ArticleStore extends StoreExtends {
     this.article = {
       title: '// title',
       content: '// . . . content',
-      className: this.classification[0]._id || '',
+      className: this.classification[0] ? this.classification[0]._id : '',
       isFormal: false,
       uploads: [],
       createTime: '',
