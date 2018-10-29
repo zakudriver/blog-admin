@@ -1,7 +1,7 @@
 import http, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
 import { autorun } from 'mobx';
 import { message } from 'antd';
-import globalStore from '@/store/global';
+import tokenStore from '@/store/user/token';
 
 export const API = APP_ENV === 'dev' ? 'http://127.0.0.1:8999' : '';
 
@@ -11,7 +11,7 @@ config.baseURL = API;
 const token = { key: '' };
 
 autorun(() => {
-  token.key = globalStore.token;
+  token.key = tokenStore.token;
 });
 
 const axios: AxiosInstance = http.create(config);
@@ -29,14 +29,12 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   res => {
     if (res.status === 200) {
-      if (res.data.code === 110) {
-        message.error(res.data.msg);
-        setTimeout(() => {
-          location.href = '/login';
-        }, 800);
+      if (res.data.code === 0) {
+        return Promise.resolve(res);
+      } else {
+        handleStatusCode(res.data);
         return Promise.reject(res.data.msg);
       }
-      return Promise.resolve(res);
     } else {
       return Promise.reject(res);
     }
@@ -56,3 +54,26 @@ export interface IResponse {
 }
 
 export interface IAxiosResponse extends AxiosResponse<IResponse> {}
+
+// 返回状态码处理
+function handleStatusCode(res: IResponse) {
+  switch (res.code) {
+    case 3:
+      message.warning(res.msg, 5);
+      break;
+
+    case 110:
+      message.error(res.msg, 4, () => {
+        location.href = '/login';
+      });
+      break;
+
+    case 10086:
+      message.warning(res.msg, 0);
+      break;
+
+    default:
+      message.error(res.msg);
+      break;
+  }
+}

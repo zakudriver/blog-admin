@@ -46,8 +46,6 @@ class Article extends ComponentExtends<IArticleProps> {
         if (res.code === 0) {
           this.$message.success(res.msg);
           await this.articleApi$$.getArticleList(this.state.index);
-        } else {
-          this.$message.error(res.msg);
         }
       }
     });

@@ -13,10 +13,6 @@ export interface IWebConfig {
   drawerWidth: number;
 }
 
-export interface IChangeToken {
-  (token: string): void;
-}
-
 export interface IOnChangeEdit {
   (value: string): void;
 }

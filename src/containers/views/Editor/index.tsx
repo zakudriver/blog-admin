@@ -26,8 +26,9 @@ interface IEditorProps extends IClassName, IWithRouterProps {
 @withRouterProps
 @inject(
   (store: IStore): IEditorProps => {
-    const { selectionEdit, selectionLanguage, isUploadDisplay, onUploadDisplay, token } = store.globalStore;
+    const { selectionEdit, selectionLanguage, isUploadDisplay, onUploadDisplay } = store.globalStore;
     const { article, changeArticle, getArticle, removeUploadFile, restore } = store.articleStore;
+    const { tokenStore } = store.userStore;
     return {
       selectionEdit,
       selectionLanguage,
@@ -35,7 +36,7 @@ interface IEditorProps extends IClassName, IWithRouterProps {
       changeArticle,
       getArticle,
       isUploadDisplay,
-      token,
+      token: tokenStore.token,
       removeUploadFile,
       restore,
       onUploadDisplay

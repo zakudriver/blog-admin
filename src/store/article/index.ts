@@ -1,6 +1,5 @@
 import { observable, action, reaction, runInAction } from 'mobx';
 import immer from 'immer';
-
 import { IResponse } from '@/service';
 import { StoreExtends } from '@/utils/extends';
 import { ArticlePage } from '@/constants/enum';
@@ -80,8 +79,6 @@ export class ArticleStore extends StoreExtends {
       if (res.code === 0) {
         this.$message.success(res.msg);
         this.classification = res.data;
-      } else {
-        this.$message.error(res.msg);
       }
       return Promise.resolve(res);
     });
@@ -114,8 +111,6 @@ export class ArticleStore extends StoreExtends {
       if (res.code === 0) {
         this.$message.success(res.msg);
         this.classification = res.data;
-      } else {
-        this.$message.error(res.msg);
       }
     });
   };
@@ -127,8 +122,6 @@ export class ArticleStore extends StoreExtends {
       if (res.code === 0) {
         this.$message.success(res.msg);
         this.classification = res.data;
-      } else {
-        this.$message.error(res.msg);
       }
     });
   };
@@ -156,8 +149,6 @@ export class ArticleStore extends StoreExtends {
       if (res.code === 0) {
         this.$message.success(res.msg);
         this.restore();
-      } else {
-        this.$message.error(res.msg);
       }
     });
   };
@@ -175,8 +166,6 @@ export class ArticleStore extends StoreExtends {
       if (res.code === 0) {
         this.$message.success(res.msg);
         this.restore();
-      } else {
-        this.$message.error(res.msg);
       }
     });
   };

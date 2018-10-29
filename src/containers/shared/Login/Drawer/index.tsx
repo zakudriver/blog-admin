@@ -3,18 +3,17 @@ import { Form, Icon, Input, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import styled from '@/styles';
 import { withRouterProps } from '@/components/utils/withComponents';
-import { ComponentExtends } from '@/utils/extends';
 
 const FormItem = Form.Item;
 
 interface IDrawerProps extends IClassName, IWithRouterProps {
   isDrawer: boolean;
   width: number;
-  changeToken: GlobalStore.IChangeToken;
+  login: UserStore.IOnLogin;
 }
 
 @withRouterProps
-class LoginDrawer extends ComponentExtends<IDrawerProps> {
+class LoginDrawer extends React.Component<IDrawerProps> {
   public state = {
     username: '',
     password: '',
@@ -23,14 +22,10 @@ class LoginDrawer extends ComponentExtends<IDrawerProps> {
 
   public onLogin = async (form: IForm) => {
     this.onBtnState(true);
-    const res = await this.userApi$$.login(form);
+    const res = await this.props.login(form);
     this.onBtnState(false);
-    if (res.code === 0) {
-      this.$message.success(res.msg);
-      this.props.changeToken(res.token!);
+    if (res) {
       this.props.history!.push('/');
-    } else {
-      this.$message.error(res.msg);
     }
   };
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { inject ,observer} from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import styled from '@/styles';
 
 import LoginDrawer from '@/containers/shared/Login/Drawer';
@@ -7,7 +7,7 @@ import LoginMain from '@/containers/shared/Login/Main';
 
 interface ILoginProps extends IClassName {
   webConfig: GlobalStore.IWebConfig;
-  changeToken: GlobalStore.IChangeToken;
+  onLogin: UserStore.IOnLogin;
 }
 
 interface ILoginState {
@@ -17,8 +17,9 @@ interface ILoginState {
 
 @inject(
   (store: IStore): ILoginProps => {
-    const { webConfig, changeToken } = store.globalStore;
-    return { webConfig, changeToken };
+    const { webConfig } = store.globalStore;
+    const { onLogin } = store.userStore;
+    return { webConfig, onLogin };
   }
 )
 @observer
@@ -64,7 +65,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         <LoginDrawer
           isDrawer={this.state.isDrawer}
           width={this.props.webConfig.drawerWidth}
-          changeToken={this.props.changeToken}
+          login={this.props.onLogin}
         />
         <LoginMain webConfig={this.props.webConfig} onDrawer={this.onDrawer} closeDrawer={this.closeDrawer} {...this.state} />
       </div>

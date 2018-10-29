@@ -25,11 +25,11 @@ class User extends React.Component<IUserProps> {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 6 }
+        sm: { span: 8 }
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 12 }
+        sm: { span: 14 }
       }
     };
 
@@ -52,13 +52,15 @@ class User extends React.Component<IUserProps> {
             <FormItem {...formItemLayout} label="Username">
               <Input placeholder="" />
             </FormItem>
-            <FormItem {...formItemLayout} label="Password">
-              <Input placeholder="" />
+            <FormItem {...formItemLayout} label="Old Password">
+              <Input type="password" placeholder="" />
+            </FormItem>
+            <FormItem {...formItemLayout} label="New Password">
+              <Input type="password" placeholder="" />
             </FormItem>
           </Form>
         </div>
         <div className="userline" />
-        
       </div>
     );
   }
