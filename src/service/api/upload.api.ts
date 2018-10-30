@@ -18,6 +18,14 @@ class UploadApi {
     const res: IAxiosResponse = await axios(opt);
     return Promise.resolve(res.data);
   }
+
+  @POST({
+    url: '/avatar'
+  })
+  async uploadAvatar(opt?: any) {
+    const res: IAxiosResponse = await axios(opt);
+    return Promise.resolve(res.data);
+  }
 }
 
 export default new UploadApi();

@@ -1,5 +1,5 @@
 import axios, { IAxiosResponse } from '@/service';
-import { prefix, POST } from '@/service/decorators';
+import { prefix, POST, GET, PUT } from '@/service/decorators';
 
 @prefix('/user')
 class UserApi {
@@ -15,6 +15,22 @@ class UserApi {
     url: '/auth'
   })
   async auth(opt?: any) {
+    const res: IAxiosResponse = await axios(opt);
+    return Promise.resolve(res.data);
+  }
+
+  @GET({
+    url: '/info'
+  })
+  async getUserInfo(opt?: any) {
+    const res: IAxiosResponse = await axios(opt);
+    return Promise.resolve(res.data);
+  }
+
+  @PUT({
+    url: ''
+  })
+  async updateUser(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
     return Promise.resolve(res.data);
   }

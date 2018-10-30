@@ -11,11 +11,12 @@ interface IHeaderProps extends IClassName {
   isCollapsed?: boolean;
   onCollapsed?: () => void;
   children: JSX.Element;
+  avatar: string;
 }
 
 interface IHeaderRouteProps extends IHeaderProps, RouteComponentProps<any> {}
 
-const Header = ({ className, isCollapsed, onCollapsed, history, children }: IHeaderRouteProps) => {
+const Header = ({ className, isCollapsed, onCollapsed, history, children, avatar }: IHeaderRouteProps) => {
   return (
     <Layout.Header className={className} style={{ background: '#fff', padding: '0 24px' }}>
       <div className="header__left">
@@ -23,14 +24,14 @@ const Header = ({ className, isCollapsed, onCollapsed, history, children }: IHea
       </div>
       <div className="header__center">{children}</div>
       <div className="header__right">
-        <Avatar className={'avatar'} shape="square" size={32} icon="user" />
+        <Avatar className={'avatar'} shape="square" size={32} icon="user" src={avatar} />
         <IconBtn
           type="logout"
           size="18"
           color={false}
           onClick={() => {
-            // history.push('/login');
-            location.href = '/login';
+            history.push('/login');
+            // location.href = '/login';
             localStorage.removeItem(TokenField);
           }}
         />

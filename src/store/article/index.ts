@@ -55,7 +55,6 @@ export class ArticleStore extends StoreExtends {
     );
   }
 
-  @action
   init = () => {
     this.getClassification();
   };
@@ -131,9 +130,11 @@ export class ArticleStore extends StoreExtends {
   changeArticle: ArticleStore.IChangeArticle = value => {
     console.log('changeArticle');
     console.log(value);
-    Object.keys(value).forEach(i => {
-      this.article[i] = value[i];
-    });
+    const key = Object.keys(value)[0];
+    // Object.keys(value).forEach(i => {
+    //   this.article[i] = value[i];
+    // });
+    this.article[key] = value[key];
   };
 
   @action

@@ -25,7 +25,8 @@ class LoginDrawer extends React.Component<IDrawerProps> {
     const res = await this.props.login(form);
     this.onBtnState(false);
     if (res) {
-      this.props.history!.push('/');
+      // this.props.history!.push('/');
+      location.href = '/';
     }
   };
 

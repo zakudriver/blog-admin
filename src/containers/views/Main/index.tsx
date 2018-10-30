@@ -12,14 +12,14 @@ import Header from './Header';
 
 interface IMainProps extends IClassName, IWithRouterProps {
   updateRouter: RouterStore.IUpdateCurrentRouter;
-  init: () => void;
+  userInfo: UserStore.IUserInfo;
 }
 
 @withRouterProps
 @inject((store: IStore) => {
   const { updateRouter } = store.routerStore;
-  const { init } = store.articleStore;
-  return { updateRouter, init };
+  const { userInfo } = store.userStore;
+  return { updateRouter, userInfo };
 })
 @observer
 class Main extends React.Component<IMainProps> {
@@ -29,8 +29,7 @@ class Main extends React.Component<IMainProps> {
   }
 
   public componentDidMount() {
-    console.log('init')
-    this.props.init();
+    this.props.updateRouter(this.props.location!);
   }
 
   public render() {
@@ -38,7 +37,7 @@ class Main extends React.Component<IMainProps> {
       <Layout className={this.props.className}>
         <Sidber />
         <Layout className="layout__right">
-          <Header>
+          <Header avatar={this.props.userInfo.avatar}>
             <Switch>
               {menu.map(i => {
                 if (i.toolbarComponent) {

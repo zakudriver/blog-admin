@@ -33,7 +33,7 @@ axios.interceptors.response.use(
         return Promise.resolve(res);
       } else {
         handleStatusCode(res.data);
-        return Promise.reject(res.data.msg);
+        return Promise.resolve(res);
       }
     } else {
       return Promise.reject(res);

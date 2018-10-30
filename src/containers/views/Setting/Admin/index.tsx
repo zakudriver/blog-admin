@@ -1,10 +1,23 @@
 import * as React from 'react';
+import { observer, inject } from 'mobx-react';
 import styled from '@/styles';
 import User from './User';
 import Config from './Config';
 
-interface ISettingAdminProps extends IClassName {}
+interface ISettingAdminProps extends IClassName {
+  userInfo: UserStore.IUserInfo;
+  token: string;
+  changeUserInfo: UserStore.IChangeUserInfo;
+}
 
+@inject(
+  (store: IStore): ISettingAdminProps => {
+    const { userInfo, changeUserInfo } = store.userStore;
+    const { token } = store.userStore.tokenStore;
+    return { userInfo, token, changeUserInfo };
+  }
+)
+@observer
 class SettingAdmin extends React.Component<ISettingAdminProps> {
   constructor(props: ISettingAdminProps) {
     super(props);
@@ -14,7 +27,7 @@ class SettingAdmin extends React.Component<ISettingAdminProps> {
     return (
       <div className={this.props.className}>
         <div>
-          <User />
+          <User userInfo={this.props.userInfo} token={this.props.token} changeUserInfo={this.props.changeUserInfo} />
         </div>
         <div>
           <Config />
@@ -45,13 +58,27 @@ export default styled(SettingAdmin)`
       margin: 40px 0;
     }
   }
+
   .ant-form-item-label {
     padding-right: 10px;
   }
+
   .block-picker {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 4px !important;
     & > div {
       border-radius: 3px !important;
+    }
+  }
+
+  .avatar__uplaod{
+    .ant-upload{
+        width: 110px !important;
+        height: 110px !important;
+
+      img{
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 `;
