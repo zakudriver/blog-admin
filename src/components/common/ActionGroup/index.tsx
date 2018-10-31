@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from '@/styles';
 import { StyledComponentClass } from 'styled-components';
-import { IStyleInterface } from '@/styles/_var';
+import { IStyleInterface } from '@/styles/variable';
 
 interface IActionGroupProps extends IClassName {
   direction: 'right' | 'left';

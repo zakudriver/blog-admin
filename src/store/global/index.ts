@@ -3,10 +3,9 @@ import { observable, action } from 'mobx';
 export class GlobalStore {
   @observable
   webConfig: GlobalStore.IWebConfig = {
-    theme: {
-      primaryColor: '#1DA57A',
-      drawerColor:'#5ee2b9'
-    },
+    primaryColor: '#1DA57A',
+    // primaryColor: '#eee',
+    drawerColor: '#5ee2b9',
     title: `Welcome, Zyhua's Admin`,
     drawerWidth: 30
   };
@@ -36,20 +35,26 @@ export class GlobalStore {
 
   // 编辑器选择
   @action
-  onChangeEdit: GlobalStore.IOnChangeEdit = value => {
+  changeEdit: GlobalStore.IChangeEdit = value => {
     this.selectionEdit = value;
   };
 
   // 编辑器语言选择
   @action
-  onChangeLanguages: GlobalStore.IOnChangeLanguages = value => {
+  changeLanguages: GlobalStore.IChangeLanguages = value => {
     this.selectionLanguage = value;
   };
 
   // 上传模块 on/off
   @action
-  onUploadDisplay: GlobalStore.IOnUploadDisplay = value => {
+  uploadDisplay: GlobalStore.IUploadDisplay = value => {
     this.isUploadDisplay = value === true || value === false ? value : !this.isUploadDisplay;
+  };
+
+  @action
+  changeWebConfig: GlobalStore.IChangeWebConfig = value => {
+    const key = Object.keys(value)[0];
+    this.webConfig[key] = value[key];
   };
 }
 

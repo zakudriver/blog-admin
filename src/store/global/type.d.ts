@@ -5,22 +5,25 @@ export as namespace GlobalStore;
 export interface IGlobalStore extends globalStore {}
 
 export interface IWebConfig {
-  theme: {
-    primaryColor: string;
-    drawerColor: string;
-  };
+  primaryColor: string;
+  drawerColor: string;
   title: string;
   drawerWidth: number;
 }
 
-export interface IOnChangeEdit {
+export interface IChangeEdit {
   (value: string): void;
 }
 
-export interface IOnChangeLanguages {
+export interface IChangeLanguages {
   (value: string): void;
 }
 
-export interface IOnUploadDisplay {
+export interface IUploadDisplay {
   (value?: boolean): void;
+}
+
+type Indexes<T> = { [P in keyof T]?: T[P] };
+export interface IChangeWebConfig {
+  (value: Indexes<IWebConfig>): void;
 }

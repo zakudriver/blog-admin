@@ -6,7 +6,7 @@ import { configure } from 'mobx';
 import App from '@/containers/shared/App';
 import * as store from '@/store';
 import { ThemeProvider, styleVar } from '@/styles';
-import '@/styles/global';
+import GlobalStyleComponent from '@/styles/global';
 import registerServiceWorker from './registerServiceWorker';
 
 // import '@/assets/sass/reset.scss'
@@ -14,11 +14,14 @@ configure({ enforceActions: 'always' });
 
 const render = (Component: React.ComponentClass) => {
   ReactDOM.render(
-    <ThemeProvider theme={styleVar}>
-      <Provider {...store}>
-        <Component />
-      </Provider>
-    </ThemeProvider>,
+    <Provider {...store}>
+      <ThemeProvider theme={styleVar}>
+        <>
+          <GlobalStyleComponent />
+          <Component />
+        </>
+      </ThemeProvider>
+    </Provider>,
     document.getElementById('app') as HTMLElement
   );
 };

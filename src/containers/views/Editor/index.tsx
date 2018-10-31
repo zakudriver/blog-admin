@@ -20,13 +20,13 @@ interface IEditorProps extends IClassName, IWithRouterProps {
   isUploadDisplay: boolean;
   removeUploadFile: ArticleStore.IRemoveUploadFile;
   restore: () => void;
-  onUploadDisplay: GlobalStore.IOnUploadDisplay;
+  uploadDisplay: GlobalStore.IUploadDisplay;
 }
 
 @withRouterProps
 @inject(
   (store: IStore): IEditorProps => {
-    const { selectionEdit, selectionLanguage, isUploadDisplay, onUploadDisplay } = store.globalStore;
+    const { selectionEdit, selectionLanguage, isUploadDisplay, uploadDisplay } = store.globalStore;
     const { article, changeArticle, getArticle, removeUploadFile, restore } = store.articleStore;
     const { tokenStore } = store.userStore;
     return {
@@ -39,7 +39,7 @@ interface IEditorProps extends IClassName, IWithRouterProps {
       token: tokenStore.token,
       removeUploadFile,
       restore,
-      onUploadDisplay
+      uploadDisplay
     };
   }
 )
@@ -63,7 +63,7 @@ class Editor extends React.Component<IEditorProps> {
 
   public componentWillUnmount() {
     this.props.restore();
-    this.props.onUploadDisplay(false);
+    this.props.uploadDisplay(false);
   }
 
   public render() {

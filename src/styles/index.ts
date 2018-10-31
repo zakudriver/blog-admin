@@ -1,7 +1,7 @@
 import * as styledComponents from 'styled-components'
 import { ThemedStyledComponentsModule } from 'styled-components'
 
-import { IStyleInterface, styleVar } from '@/styles/_var'
+import { IStyleInterface, styleVar } from '@/styles/variable'
 
 const {
   default: styled,

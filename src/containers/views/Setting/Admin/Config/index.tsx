@@ -1,17 +1,27 @@
 import * as React from 'react';
 import { Input, Form, InputNumber } from 'antd';
-import { BlockPicker, TwitterPicker } from 'react-color';
+import { BlockPicker, TwitterPicker, ColorResult } from 'react-color';
 
 const FormItem = Form.Item;
 
-interface IConfigProps extends IClassName {}
+interface IConfigProps extends IClassName {
+  webConfig: GlobalStore.IWebConfig;
+  changeWebConfig: GlobalStore.IChangeWebConfig;
+}
 
 class Config extends React.Component<IConfigProps> {
   constructor(props: IConfigProps) {
     super(props);
   }
 
+  public onChangePrimaryColor = (color: ColorResult) => {
+    console.log(color);
+    this.props.changeWebConfig({ primaryColor: color.hex });
+  };
+
   public render() {
+    const { primaryColor } = this.props.webConfig;
+
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -29,8 +39,8 @@ class Config extends React.Component<IConfigProps> {
           <FormItem {...formItemLayout} label="Title">
             <Input placeholder="" />
           </FormItem>
-          <FormItem {...formItemLayout} label="Theme">
-            <BlockPicker triangle="hide" />
+          <FormItem {...formItemLayout} label="PrimaryColor">
+            <BlockPicker triangle="hide" color={primaryColor} onChange={this.onChangePrimaryColor} />
           </FormItem>
           <FormItem {...formItemLayout} label="DrawerWidth">
             <InputNumber />

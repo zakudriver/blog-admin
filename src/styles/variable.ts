@@ -1,13 +1,12 @@
 import { globalStore } from '@/store';
 
-const { theme } = globalStore.webConfig;
-
+const { primaryColor, drawerColor } = globalStore.webConfig;
 export interface IStyleInterface {
   primaryColor: string;
   drawerColor: string;
 }
 
 export const styleVar = {
-  primaryColor: theme.primaryColor,
-  drawerColor: theme.drawerColor
+  primaryColor,
+  drawerColor
 };

@@ -18,13 +18,13 @@ const ActionItem = ActionGroup.ActionItem;
 const ActionLine = ActionGroup.ActionLine;
 
 interface IToolbarProps extends IClassName {
-  onChangeEdit: GlobalStore.IOnChangeEdit;
+  changeEdit: GlobalStore.IChangeEdit;
   selectionEdit: string;
   webConfig: GlobalStore.IWebConfig;
-  onChangeLanguages: GlobalStore.IOnChangeLanguages;
+  changeLanguages: GlobalStore.IChangeLanguages;
   selectionLanguage: string;
   isUploadDisplay: boolean;
-  onUploadDisplay: GlobalStore.IOnUploadDisplay;
+  uploadDisplay: GlobalStore.IUploadDisplay;
   classification: ArticleStore.IClassNames[];
   addClassification: ArticleStore.IAddClassification;
   sortClassification: ArticleStore.ISortClassification;
@@ -45,13 +45,13 @@ interface IToolbarState {
 @inject(
   (store: IStore): IToolbarProps => {
     const {
-      onChangeEdit,
+      changeEdit,
       selectionEdit,
       webConfig,
-      onChangeLanguages,
+      changeLanguages,
       selectionLanguage,
       isUploadDisplay,
-      onUploadDisplay,
+      uploadDisplay,
       editorLanguages
     } = store.globalStore;
     const {
@@ -67,10 +67,10 @@ interface IToolbarState {
       restore
     } = store.articleStore;
     return {
-      onChangeEdit,
+      changeEdit,
       selectionEdit,
       webConfig,
-      onChangeLanguages,
+      changeLanguages,
       selectionLanguage,
       classification,
       addClassification,
@@ -83,7 +83,7 @@ interface IToolbarState {
       publishArticle,
       restore,
       isUploadDisplay,
-      onUploadDisplay,
+      uploadDisplay,
       editorLanguages
     };
   }
@@ -94,12 +94,12 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
     visible: false
   };
 
-  public onChangeLanguages = (value: SelectValue) => {
-    this.props.onChangeLanguages(value as string);
+  public changeLanguages = (value: SelectValue) => {
+    this.props.changeLanguages(value as string);
   };
 
   public onChangeEditor = (e: RadioChangeEvent) => {
-    this.props.onChangeEdit(e.target.value);
+    this.props.changeEdit(e.target.value);
   };
 
   public openClassificationModal = () => {
@@ -170,7 +170,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
               defaultValue={this.props.selectionLanguage}
               style={{ width: 120 }}
               placeholder="Select a language"
-              onChange={this.onChangeLanguages}
+              onChange={this.changeLanguages}
             >
               {this.props.editorLanguages.map((i, idx) => (
                 <Option key={idx} value={i}>
@@ -222,7 +222,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
                 type={this.props.isUploadDisplay ? 'danger' : 'primary'}
                 icon="upload"
                 ghost
-                onClick={() => this.props.onUploadDisplay()}
+                onClick={() => this.props.uploadDisplay()}
               />
             </ActionItem>
           </ActionGroup>
