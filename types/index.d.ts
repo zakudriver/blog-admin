@@ -3,6 +3,10 @@ import { History, Location } from 'history';
 declare global {
   const APP_ENV: string;
 
+  interface Window {
+    less: any;
+  }
+
   interface IClassName {
     className?: string;
   }
