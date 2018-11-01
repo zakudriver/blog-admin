@@ -23,7 +23,7 @@ const lessLoader = {
       '@text-color-secondary': '#eb2f96',
       '@heading-color': '#fa8c16'
     },
-    // enableJavascript: true
+    enableJavascript: true
   }
 };
 
