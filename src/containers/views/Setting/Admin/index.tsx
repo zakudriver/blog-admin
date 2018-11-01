@@ -26,12 +26,12 @@ class SettingAdmin extends React.Component<ISettingAdminProps> {
     super(props);
     const initialValue = {
       '@primary-color': '#fffff',
-      // '@secondary-color': '#0000ff',
-      // '@text-color': '#000000',
-      // '@text-color-secondary': '#eb2f96',
-      // '@heading-color': '#fa8c16',
-      // '@layout-header-background': '#b36e94',
-      // '@btn-primary-bg': '#397dcc'
+      '@secondary-color': '#0000ff',
+      '@text-color': '#000000',
+      '@text-color-secondary': '#eb2f96',
+      '@heading-color': '#fa8c16',
+      '@layout-header-background': '#b36e94',
+      '@btn-primary-bg': '#397dcc'
     };
     let vars = {};
 
@@ -41,8 +41,8 @@ class SettingAdmin extends React.Component<ISettingAdminProps> {
       this.state = { vars, initialValue };
       window.less
         .modifyVars(vars)
-        .then(() => {
-          console.log('ok');
+        .then((d:any) => {
+          console.log(d);
         })
         .catch((err: any) => {
           // message.error(`Failed to update theme`);
