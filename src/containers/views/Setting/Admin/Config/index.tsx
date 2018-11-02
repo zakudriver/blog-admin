@@ -17,6 +17,9 @@ class Config extends React.Component<IConfigProps> {
   public onChangePrimaryColor = (color: ColorResult) => {
     console.log(color);
     this.props.changeWebConfig({ primaryColor: color.hex });
+    window.less.modifyVars({
+      '@primary-color': color.hex
+    });
   };
 
   public render() {

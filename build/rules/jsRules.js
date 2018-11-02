@@ -1,6 +1,7 @@
-const tsImportPluginFactory = require('ts-import-plugin')
+const tsImportPluginFactory = require('ts-import-plugin');
 
-const { resolve } = require('./../utils')
+const { resolve } = require('./../utils');
+const { extractCss } = require('../config');
 
 module.exports = [
   {
@@ -15,7 +16,17 @@ module.exports = [
           useBabel: true,
           babelOptions: {
             babelrc: false,
-            plugins: ['transform-class-properties', 'syntax-dynamic-import']
+            plugins: [
+              'transform-class-properties',
+              'syntax-dynamic-import',
+              [
+                'babel-plugin-styled-components',
+                {
+                  pure: true,
+                  minify: extractCss
+                }
+              ]
+            ]
           },
           getCustomTransformers: () => ({
             before: [
@@ -31,4 +42,4 @@ module.exports = [
     ],
     exclude: /node_modules/
   }
-]
+];

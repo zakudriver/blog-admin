@@ -2,9 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const config = require('./../config');
-const {
-  resolve
-} = require('./../utils');
+const { resolve } = require('./../utils');
 const theme = require('./../../theme');
 
 const sassLoader = {
@@ -17,12 +15,10 @@ const sassLoader = {
 const lessLoader = {
   loader: 'less-loader',
   options: {
+    // modifyVars: {
+    //   '@primary-color': '#000'
+    // },
     javascriptEnabled: true,
-    modifyVars: {
-      '@primary-color': '#000',
-      '@text-color-secondary': '#eb2f96',
-      '@heading-color': '#fa8c16'
-    },
     enableJavascript: true
   }
 };
@@ -45,10 +41,11 @@ const cacheLoader = {
   }
 };
 
-module.exports = [{
+module.exports = [
+  {
     test: /\.css$/,
     include: [resolve('node_modules')],
-    use: [config.extractCss ? MiniCssExtractPlugin.loader : 'style-loader', cacheLoader, 'css-loader', 'postcss-loader']
+    use: [config.extractCss ? MiniCssExtractPlugin.loader : 'style-loader', cacheLoader, 'css-loader']
   },
   // {
   //   test: /\.scss$/,
@@ -65,13 +62,16 @@ module.exports = [{
   {
     // for ant design
     test: /\.less$/,
-    rules: [{
-      use: [
-        config.extractCss ? MiniCssExtractPlugin.loader : 'style-loader',
-        'css-loader',
-        'postcss-loader',
-        lessLoader
-      ]
-    }]
+    rules: [
+      {
+        use: [
+          config.extractCss ? MiniCssExtractPlugin.loader : 'style-loader',
+          'css-loader',
+          // 'postcss-loader',
+          lessLoader
+        ]
+      }
+    ]
+    // use: [config.extractCss ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader', 'postcss-loader', lessLoader]
   }
 ];

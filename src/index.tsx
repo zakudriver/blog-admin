@@ -10,11 +10,10 @@ import { IStyleInterface } from '@/styles/variable';
 import GlobalStyleComponent from '@/styles/global';
 import registerServiceWorker from './registerServiceWorker';
 
-// import '@/assets/sass/reset.scss'
+import '@/styles/less/index.less';
 configure({ enforceActions: 'always' });
 
 const render = (Component: React.ComponentClass) => {
-  
   const InjectComponent = inject((s: IStore) => {
     const { webConfig } = s.globalStore;
     return { primaryColor: webConfig.primaryColor, drawerColor: webConfig.drawerColor };

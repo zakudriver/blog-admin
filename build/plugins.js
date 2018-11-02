@@ -22,14 +22,14 @@ const options = {
   mainLessFile: resolve('src/styles/less/index.less'),
   themeVariables: [
     '@primary-color',
-    '@secondary-color',
-    '@text-color',
-    '@text-color-secondary',
-    '@heading-color',
-    '@layout-body-background',
-    '@btn-primary-bg',
-    '@layout-header-background',
-    '@border-color-base'
+    // '@secondary-color',
+    // '@text-color',
+    // '@text-color-secondary',
+    // '@heading-color',
+    // '@layout-body-background',
+    // '@btn-primary-bg',
+    // '@layout-header-background',
+    // '@border-color-base'
   ],
   indexFileName: 'index.html',
   generateOnce: false // generate color.less on each compilation

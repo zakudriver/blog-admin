@@ -34,6 +34,7 @@
     "awesome-typescript-loader": "^5.2.0",
     "babel-core": "^6.26.3",
     "babel-plugin-import": "^1.8.0",
+    "babel-plugin-styled-components": "^1.8.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-polyfill": "^6.26.0",
@@ -49,7 +50,7 @@
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
-    "mini-css-extract-plugin": "^0.4.2",
+    "mini-css-extract-plugin": "^0.4.4",
     "moment-locales-webpack-plugin": "^1.0.7",
     "monaco-editor-webpack-plugin": "^1.5.2",
     "node-sass": "^4.9.3",
@@ -91,5 +92,5 @@
     "react-syntax-highlighter": "^8.0.1",
     "styled-components": "^4.0.2"
   },
-  "typings": "types/global.d.ts"
+  "typings": "types/index.d.ts"
 }
