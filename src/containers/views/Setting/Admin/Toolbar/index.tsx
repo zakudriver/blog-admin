@@ -9,12 +9,14 @@ import { ComponentExtends } from '@/utils/extends';
 
 interface IToolbarProps extends IClassName {
   updateUserInfo: () => void;
+  updateConfig: () => void;
 }
 
 @inject(
   (store: IStore): IToolbarProps => {
     const { updateUserInfo } = store.userStore;
-    return { updateUserInfo };
+    const { updateConfig } = store.globalStore;
+    return { updateUserInfo, updateConfig };
   }
 )
 @observer
@@ -25,7 +27,7 @@ class Toolbar extends ComponentExtends<IToolbarProps> {
         <Button type="primary" onClick={this.props.updateUserInfo}>
           Save
         </Button>
-        <Button>Save</Button>
+        <Button onClick={this.props.updateConfig}>Save</Button>
       </div>
     );
   }

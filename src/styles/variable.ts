@@ -1,6 +1,6 @@
 import { globalStore } from '@/store';
 
-const { primaryColor, drawerColor } = globalStore.webConfig;
+const { primaryColor, drawerColor } = globalStore.config;
 export interface IStyleInterface {
   primaryColor?: string;
   drawerColor?: string;

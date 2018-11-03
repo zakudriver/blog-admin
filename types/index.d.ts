@@ -4,7 +4,7 @@ declare global {
   const APP_ENV: string;
 
   interface Window {
-    less: any;
+    less: LessStatic;
   }
 
   interface IClassName {

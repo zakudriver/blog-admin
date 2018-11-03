@@ -5,25 +5,35 @@ import { BlockPicker, TwitterPicker, ColorResult } from 'react-color';
 const FormItem = Form.Item;
 
 interface IConfigProps extends IClassName {
-  webConfig: GlobalStore.IWebConfig;
-  changeWebConfig: GlobalStore.IChangeWebConfig;
+  config: GlobalStore.IConfig;
+  changeConfig: GlobalStore.IChangeConfig;
 }
 
-class Config extends React.Component<IConfigProps> {
-  constructor(props: IConfigProps) {
-    super(props);
-  }
-
+export default class Config extends React.Component<IConfigProps> {
   public onChangePrimaryColor = (color: ColorResult) => {
-    console.log(color);
-    this.props.changeWebConfig({ primaryColor: color.hex });
-    window.less.modifyVars({
-      '@primary-color': color.hex
-    });
+    window.less
+      .modifyVars({
+        '@primary-color': color.hex
+      })
+      .then(() => {
+        this.props.changeConfig({ primaryColor: color.hex });
+      });
+  };
+
+  public onChangeConfig = (key: string) => (
+    value: React.ChangeEvent<HTMLInputElement> | string | number | undefined | ColorResult
+  ) => {
+    if (typeof value === 'object') {
+      this.props.changeConfig({
+        [key]: (value as ColorResult).hex || (value as React.ChangeEvent<HTMLInputElement>).target.value
+      });
+    } else {
+      this.props.changeConfig({ [key]: value });
+    }
   };
 
   public render() {
-    const { primaryColor } = this.props.webConfig;
+    const { config } = this.props;
 
     const formItemLayout = {
       labelCol: {
@@ -40,21 +50,19 @@ class Config extends React.Component<IConfigProps> {
         <h6>Config</h6>
         <Form className={this.props.className}>
           <FormItem {...formItemLayout} label="Title">
-            <Input placeholder="" />
+            <Input placeholder="" defaultValue={config.title} onChange={this.onChangeConfig('title')} />
           </FormItem>
           <FormItem {...formItemLayout} label="PrimaryColor">
-            <BlockPicker triangle="hide" color={primaryColor} onChange={this.onChangePrimaryColor} />
+            <BlockPicker triangle="hide" color={config.primaryColor} onChange={this.onChangePrimaryColor} />
           </FormItem>
           <FormItem {...formItemLayout} label="DrawerWidth">
-            <InputNumber />
+            <InputNumber max={100} min={0} defaultValue={config.drawerWidth} onChange={this.onChangeConfig('drawerWidth')} />
           </FormItem>
           <FormItem {...formItemLayout} label="DrawerColor">
-            <TwitterPicker triangle="hide" />
+            <TwitterPicker triangle="hide" color={config.drawerColor} onChange={this.onChangeConfig('drawerColor')} />
           </FormItem>
         </Form>
       </div>
     );
   }
 }
-
-export default Config;

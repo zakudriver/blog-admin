@@ -8,33 +8,30 @@ interface ISettingAdminProps extends IClassName {
   userInfo: UserStore.IUserInfo;
   token: string;
   changeUserInfo: UserStore.IChangeUserInfo;
-  webConfig: GlobalStore.IWebConfig;
-  changeWebConfig: GlobalStore.IChangeWebConfig;
+  config: GlobalStore.IConfig;
+  changeConfig: GlobalStore.IChangeConfig;
 }
 
 @inject(
   (store: IStore): ISettingAdminProps => {
     const { userInfo, changeUserInfo } = store.userStore;
     const { token } = store.userStore.tokenStore;
-    const { webConfig, changeWebConfig } = store.globalStore;
-    return { userInfo, token, changeUserInfo, webConfig, changeWebConfig };
+    const { config, changeConfig } = store.globalStore;
+    return { userInfo, token, changeUserInfo, config, changeConfig };
   }
 )
 @observer
 class SettingAdmin extends React.Component<ISettingAdminProps> {
-  constructor(props: ISettingAdminProps) {
-    super(props);
-  }
 
   public render() {
-    const { className, userInfo, token, changeUserInfo, webConfig, changeWebConfig } = this.props;
+    const { className, userInfo, token, changeUserInfo, config, changeConfig } = this.props;
     return (
       <div className={className}>
         <div>
           <User userInfo={userInfo} token={token} changeUserInfo={changeUserInfo} />
         </div>
         <div>
-          <Config webConfig={webConfig} changeWebConfig={changeWebConfig} />
+          <Config config={config} changeConfig={changeConfig} />
         </div>
       </div>
     );

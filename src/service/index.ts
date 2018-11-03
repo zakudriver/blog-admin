@@ -2,6 +2,7 @@ import http, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
 import { autorun } from 'mobx';
 import { message } from 'antd';
 import tokenStore from '@/store/user/token';
+import history from '@/utils/history';
 
 export const API = APP_ENV === 'dev' ? 'http://127.0.0.1:8999' : '';
 
@@ -64,7 +65,8 @@ function handleStatusCode(res: IResponse) {
 
     case 110:
       message.error(res.msg, 4, () => {
-        location.href = '/login';
+        // location.href = '/login';
+        history.push('/login');
       });
       break;
 

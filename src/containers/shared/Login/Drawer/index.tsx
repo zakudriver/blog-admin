@@ -8,7 +8,7 @@ const FormItem = Form.Item;
 
 interface IDrawerProps extends IClassName, IWithRouterProps {
   isDrawer: boolean;
-  width: number;
+  config: GlobalStore.IConfig;
   login: UserStore.IOnLogin;
 }
 
@@ -25,8 +25,8 @@ class LoginDrawer extends React.Component<IDrawerProps> {
     const res = await this.props.login(form);
     this.onBtnState(false);
     if (res) {
-      // this.props.history!.push('/');
-      location.href = '/';
+      this.props.history!.push('/');
+      // location.href = '/';
     }
   };
 
@@ -56,9 +56,9 @@ interface LoginDrawerWrapperProps extends IDrawerProps {}
 const LoginDrawerWrapper = styled<LoginDrawerWrapperProps, 'div'>('div')`
   height: 100vh;
   background-color: ${props => props.theme.drawerColor};
-  width: 30%;
+  width: ${props => `${props.config.drawerWidth}%`};
   float: left;
-  margin-left: ${props => (props.isDrawer ? 0 : `-${props.width}%`)};
+  margin-left: ${props => (props.isDrawer ? 0 : `-${props.config.drawerWidth}%`)};
   transition: margin-left 0.8s;
   padding: 40px 5% 40px;
   & > main {

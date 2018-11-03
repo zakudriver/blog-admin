@@ -101,7 +101,7 @@ class SortableItem extends React.Component<ISortableItemProps> {
       isEdit: !isEdit
     });
     if (this.state.isEdit) {
-      const oldValue = immer(this.props.value, () => undefined);
+      const oldValue = Object.assign({}, this.props.value);
       const newValue = immer(this.props.value, draft => {
         draft.name = editInput;
       });

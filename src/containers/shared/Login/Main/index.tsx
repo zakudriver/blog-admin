@@ -6,7 +6,7 @@ interface IStoreProps extends IClassName {
   isDrawer: boolean;
   closeDrawer: () => void;
   clientWidth: number;
-  webConfig: GlobalStore.IWebConfig;
+  config: GlobalStore.IConfig;
 }
 
 class LoginMain extends React.Component<IStoreProps> {
@@ -19,7 +19,7 @@ class LoginMain extends React.Component<IStoreProps> {
             <img src={require('@/assets/img/J0003_m.97851d87.png')} alt="headpic" />
           </HeadPic>
 
-          <h1>{this.props.webConfig.title}</h1>
+          <h1>{this.props.config.title}</h1>
 
           <LinkGroup>
             <a href="https://zyhua.cn">
@@ -57,7 +57,7 @@ export default styled(LoginMain)`
   height: 100vh;
   background-color: ${props => props.theme.primaryColor};
   width: ${props => `${props.clientWidth}px`};
-  margin-left: ${props => props.isDrawer && `${props.webConfig.drawerWidth}%`};
+  margin-left: ${props => props.isDrawer && `${props.config.drawerWidth}%`};
   transition: margin-left 0.8s;
   position: relative;
 

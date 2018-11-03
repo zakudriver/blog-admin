@@ -20,7 +20,7 @@ const ActionLine = ActionGroup.ActionLine;
 interface IToolbarProps extends IClassName {
   changeEdit: GlobalStore.IChangeEdit;
   selectionEdit: string;
-  webConfig: GlobalStore.IWebConfig;
+  config: GlobalStore.IConfig;
   changeLanguages: GlobalStore.IChangeLanguages;
   selectionLanguage: string;
   isUploadDisplay: boolean;
@@ -47,7 +47,7 @@ interface IToolbarState {
     const {
       changeEdit,
       selectionEdit,
-      webConfig,
+      config,
       changeLanguages,
       selectionLanguage,
       isUploadDisplay,
@@ -69,7 +69,7 @@ interface IToolbarState {
     return {
       changeEdit,
       selectionEdit,
-      webConfig,
+      config,
       changeLanguages,
       selectionLanguage,
       classification,

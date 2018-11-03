@@ -7,6 +7,12 @@ const handleloadableComponent = (component: () => Promise<any>) =>
     loading: Loading
   });
 
+const handleloadableToolbarComponent = (component: () => Promise<any>) =>
+  Loadable({
+    loader: component,
+    loading: () => null
+  });
+
 export const loadableComponents = {
   Home: handleloadableComponent(() => import(/* webpackChunkName: "home" */ '@/containers/views/Home')),
   SettingBlog: handleloadableComponent(() => import(/* webpackChunkName: "settingBlog" */ '@/containers/views/Setting/Blog')),
@@ -19,14 +25,14 @@ export const loadableComponents = {
 // import EditorToolbar from '@/containers/views/Editor/Toolbar'
 
 export const loadableToolbarComponents = {
-  EditorToolbar: handleloadableComponent(() =>
+  EditorToolbar: handleloadableToolbarComponent(() =>
     import(/* webpackChunkName: "editorToolbar" */ '@/containers/views/Editor/Toolbar')
   ),
-  ArticleToolbar: handleloadableComponent(() =>
-    import(/* webpackChunkName: "editorToolbar" */ '@/containers/views/Article/Toolbar')
+  ArticleToolbar: handleloadableToolbarComponent(() =>
+    import(/* webpackChunkName: "articleToolbar" */ '@/containers/views/Article/Toolbar')
   ),
-  SettingAdminToolbar: handleloadableComponent(() =>
-    import(/* webpackChunkName: "editorToolbar" */ '@/containers/views/Setting/Admin/Toolbar')
+  SettingAdminToolbar: handleloadableToolbarComponent(() =>
+    import(/* webpackChunkName: "settingAdminToolbar" */ '@/containers/views/Setting/Admin/Toolbar')
   )
 };
 
@@ -42,6 +48,7 @@ export interface IMenu {
   component?: loadableComponentsTypeKeys;
   toolbarComponent?: loadableToolbarComponentsTypeKeys;
   exact?: boolean;
+  children?: any[];
 }
 
 export interface IMenuTree extends IMenu {
@@ -86,7 +93,8 @@ export const menu: IMenu[] = [
   {
     key: '5',
     title: 'Setting',
-    icon: 'setting'
+    icon: 'setting',
+    children: []
   },
   {
     key: '51',

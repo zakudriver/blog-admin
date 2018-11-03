@@ -1,5 +1,3 @@
-import immer from 'immer';
-
 /**
  * 生成菜单树
  *
@@ -12,21 +10,21 @@ import immer from 'immer';
  * @returns {A[]}
  */
 export function buildTree<T, A>(menu: T[], key: string = 'key', parentKey: string = 'parentKey'): A[] {
-  const _menu = immer(menu, () => undefined);
   const result: any[] = [];
+  const children: any[] = [];
+  const _menu = JSON.parse(JSON.stringify(menu));
 
-  _menu.forEach(i => {
-    if (!i[parentKey]) {
+  _menu.concat().forEach((i: any) => {
+    if (i[parentKey]) {
+      children.push(i);
+    } else {
       result.push(i);
     }
   });
 
-  _menu.forEach(i => {
+  children.forEach(i => {
     result.forEach(j => {
       if (i[parentKey] === j[key]) {
-        if (!j.children) {
-          j.children = [];
-        }
         j.children.push(i);
       }
     });
@@ -63,7 +61,7 @@ export function moveArray(source: any[], from: number, to: number) {
   source = source.concat();
   const target = source.splice(from, 1)[0];
   source.splice(to, 0, target);
-  console.log(source)
+  console.log(source);
   return source;
 }
 

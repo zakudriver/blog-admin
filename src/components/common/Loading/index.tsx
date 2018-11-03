@@ -1,17 +1,23 @@
-import * as React from 'react'
-import { Spin } from 'antd'
-import styled from '@/styles'
+import * as React from 'react';
+import { Spin, Icon } from 'antd';
+import styled from '@/styles';
 
-const Loading = () => (
-  <SpinWrap>
-    <Spin />
-  </SpinWrap>
-)
+const antIcon = <Icon type="loading-3-quarters" spin />;
 
 const SpinWrap = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
-`
+`;
 
-export default Loading
+export const Loading = () => (
+  <SpinWrap>
+    <Spin size="large" />
+  </SpinWrap>
+);
+
+export const AppLoading = () => (
+  <SpinWrap>
+    <Spin indicator={antIcon} tip="Loading..." />
+  </SpinWrap>
+);

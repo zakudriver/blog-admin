@@ -13,10 +13,10 @@ import registerServiceWorker from './registerServiceWorker';
 import '@/styles/less/index.less';
 configure({ enforceActions: 'always' });
 
-const render = (Component: React.ComponentClass) => {
+const render = (Component: React.ComponentClass<any>) => {
   const InjectComponent = inject((s: IStore) => {
-    const { webConfig } = s.globalStore;
-    return { primaryColor: webConfig.primaryColor, drawerColor: webConfig.drawerColor };
+    const { config } = s.globalStore;
+    return { primaryColor: config.primaryColor, drawerColor: config.drawerColor };
   })(
     observer((props: IStyleInterface) => (
       <ThemeProvider theme={props}>

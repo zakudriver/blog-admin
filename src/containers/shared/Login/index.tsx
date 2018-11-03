@@ -6,7 +6,7 @@ import LoginDrawer from '@/containers/shared/Login/Drawer';
 import LoginMain from '@/containers/shared/Login/Main';
 
 interface ILoginProps extends IClassName {
-  webConfig: GlobalStore.IWebConfig;
+  config: GlobalStore.IConfig;
   onLogin: UserStore.IOnLogin;
 }
 
@@ -17,9 +17,9 @@ interface ILoginState {
 
 @inject(
   (store: IStore): ILoginProps => {
-    const { webConfig } = store.globalStore;
+    const { config } = store.globalStore;
     const { onLogin } = store.userStore;
-    return { webConfig, onLogin };
+    return { config, onLogin };
   }
 )
 @observer
@@ -64,10 +64,10 @@ class Login extends React.Component<ILoginProps, ILoginState> {
       <div className={this.props.className}>
         <LoginDrawer
           isDrawer={this.state.isDrawer}
-          width={this.props.webConfig.drawerWidth}
+          config={this.props.config}
           login={this.props.onLogin}
         />
-        <LoginMain webConfig={this.props.webConfig} onDrawer={this.onDrawer} closeDrawer={this.closeDrawer} {...this.state} />
+        <LoginMain config={this.props.config} onDrawer={this.onDrawer} closeDrawer={this.closeDrawer} {...this.state} />
       </div>
     );
   }

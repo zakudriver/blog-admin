@@ -131,9 +131,6 @@ export class ArticleStore extends StoreExtends {
     console.log('changeArticle');
     console.log(value);
     const key = Object.keys(value)[0];
-    // Object.keys(value).forEach(i => {
-    //   this.article[i] = value[i];
-    // });
     this.article[key] = value[key];
   };
 

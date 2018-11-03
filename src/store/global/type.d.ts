@@ -4,7 +4,7 @@ export as namespace GlobalStore;
 
 export interface IGlobalStore extends globalStore {}
 
-export interface IWebConfig {
+export interface IConfig {
   primaryColor: string;
   drawerColor: string;
   title: string;
@@ -24,6 +24,6 @@ export interface IUploadDisplay {
 }
 
 type Indexes<T> = { [P in keyof T]?: T[P] };
-export interface IChangeWebConfig {
-  (value: Indexes<IWebConfig>): void;
+export interface IChangeConfig {
+  (value: Indexes<IConfig>): void;
 }
