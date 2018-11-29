@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { Input, Form, InputNumber } from 'antd';
 import { BlockPicker, TwitterPicker, ColorResult } from 'react-color';
+import { Upload } from '@/components/common';
+import { API } from '@/service';
 
 const FormItem = Form.Item;
 
 interface IConfigProps extends IClassName {
   config: GlobalStore.IConfig;
   changeConfig: GlobalStore.IChangeConfig;
+  token: string;
 }
 
 export default class Config extends React.Component<IConfigProps> {
@@ -32,8 +35,10 @@ export default class Config extends React.Component<IConfigProps> {
     }
   };
 
+  public onChangeAvatar = (url: string) => {};
+
   public render() {
-    const { config } = this.props;
+    const { config, token } = this.props;
 
     const formItemLayout = {
       labelCol: {
@@ -49,6 +54,9 @@ export default class Config extends React.Component<IConfigProps> {
       <div>
         <h6>Config</h6>
         <Form className={this.props.className}>
+          <FormItem {...formItemLayout} label="Logo">
+            <Upload token={token} action={`${API}/upload/avatar`} onChange={this.onChangeAvatar} avatarUrl={''} />
+          </FormItem>
           <FormItem {...formItemLayout} label="Title">
             <Input placeholder="" defaultValue={config.title} onChange={this.onChangeConfig('title')} />
           </FormItem>

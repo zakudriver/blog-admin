@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Input, Upload, Icon, Form } from 'antd';
+import { Input, Form } from 'antd';
 import { API } from '@/service';
-import { UploadChangeParam } from 'antd/lib/upload/interface';
+import { Upload } from '@/components/common';
 
 // import { FormComponentProps } from 'antd/lib/form';
 // import styled from '@/styles';
@@ -28,20 +28,26 @@ class User extends React.Component<IUserProps, IUserState> {
     };
   }
 
-  public onChangeAvatar = (info: UploadChangeParam) => {
-    console.log('info');
-    console.log(info);
-    if (info.file.status === 'uploading') {
-      this.setState({ loading: true });
-      return;
-    }
-    if (info.file.status === 'done') {
-      this.props.changeUserInfo({ avatar: info.file.response.data });
-      this.setState({
-        avatarUrl: info.file.response.data,
-        loading: false
-      });
-    }
+  // public onChangeAvatar = (info: UploadChangeParam) => {
+  //   console.log('info');
+  //   console.log(info);
+  //   if (info.file.status === 'uploading') {
+  //     this.setState({ loading: true });
+  //     return;
+  //   }
+  //   if (info.file.status === 'done') {
+  //     this.props.changeUserInfo({ avatar: info.file.response.data });
+  //     this.setState({
+  //       avatarUrl: info.file.response.data,
+  //       loading: false
+  //     });
+  //   }
+  // };
+
+  public onChangeAvatar = (url: string) => {
+    console.log('url');
+    console.log(url);
+    this.props.changeUserInfo({ avatar: url });
   };
 
   public onChangeUser = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,14 +55,6 @@ class User extends React.Component<IUserProps, IUserState> {
   };
 
   public render() {
-    const uploadButton = (
-      <div>
-        <Icon type={this.state.loading ? 'loading' : 'plus'} />
-        <div className="ant-upload-text">Upload</div>
-      </div>
-    );
-    const avatarUrl = this.state.avatarUrl;
-
     const { userInfo, token } = this.props;
 
     const formItemLayout = {
@@ -75,19 +73,7 @@ class User extends React.Component<IUserProps, IUserState> {
           <h6>User</h6>
           <Form>
             <FormItem {...formItemLayout} label="Avatar">
-              <Upload
-                className="avatar__uplaod"
-                name="avatar"
-                listType="picture-card"
-                showUploadList={false}
-                action={`${API}/upload/avatar`}
-                headers={{
-                  Authorization: token
-                }}
-                onChange={this.onChangeAvatar}
-              >
-                {avatarUrl ? <img src={avatarUrl} alt="avatar" /> : uploadButton}
-              </Upload>
+              <Upload action={`${API}/upload/avatar`} token={token} onChange={this.onChangeAvatar} avatarUrl={userInfo.avatar} />
             </FormItem>
             <FormItem {...formItemLayout} label="Username">
               <Input placeholder="" defaultValue={userInfo.username} onChange={this.onChangeUser('username')} />

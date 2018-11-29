@@ -83,7 +83,7 @@ class Upload extends React.Component<IUploadProps, IUploadState> {
         >
           <div>
             <Icon type="plus" />
-            <div className="ant-upload-text">Upload</div>
+            <div>Upload</div>
           </div>
         </Uploading>
         <Modal visible={previewVisible} footer={null} onCancel={this.onCancelPreview}>

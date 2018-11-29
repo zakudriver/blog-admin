@@ -31,7 +31,7 @@ class SettingAdmin extends React.Component<ISettingAdminProps> {
           <User userInfo={userInfo} token={token} changeUserInfo={changeUserInfo} />
         </div>
         <div>
-          <Config config={config} changeConfig={changeConfig} />
+          <Config config={config} token={token} changeConfig={changeConfig} />
         </div>
       </div>
     );
