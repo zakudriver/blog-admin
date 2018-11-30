@@ -6,7 +6,7 @@ export as namespace ArticleStore;
 
 export interface IArticleStore extends articleStore {}
 
-// Classification
+// Category
 export interface IClassNames {
   key?: string;
   _id: string;
@@ -14,19 +14,19 @@ export interface IClassNames {
   name: string;
 }
 
-export interface IAddClassification {
+export interface IAddCategory {
   (value: { name: string }): Promise<IResponse>;
 }
 
-export interface ISortClassification {
+export interface ISortCategory {
   (value: IClassNames[]): void;
 }
 
-export interface IUpdateClassification {
+export interface IUpdateCategory {
   (value?: IClassNames): void;
 }
 
-export interface IRemoveClassification {
+export interface IRemoveCategory {
   (value: IClassNames): void;
 }
 

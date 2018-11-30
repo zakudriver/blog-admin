@@ -65,7 +65,7 @@ class Article extends ComponentExtends<IArticleProps> {
   public render() {
     const columns: Array<ColumnProps<ArticleStore.IArticle>> = [
       { title: 'Title', dataIndex: 'title', key: 'title' },
-      { title: 'Classification', dataIndex: 'className.name', key: 'className._id' },
+      { title: 'Category', dataIndex: 'className.name', key: 'className._id' },
       {
         title: 'UpdateTime',
         dataIndex: 'updateTime',

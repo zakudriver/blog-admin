@@ -12,20 +12,20 @@ const ActionItem = ActionGroup.ActionItem;
 const ActionLine = ActionGroup.ActionLine;
 
 interface IToolbarProps extends IClassName {
-  classification: ArticleStore.IClassNames[];
+  category: ArticleStore.IClassNames[];
   changeFilterCondition: ArticleStore.IChangeFilterCondition;
   changeClassNameCondition: ArticleStore.IChangeClassNameCondition;
 }
 
 interface IToolbarState {
-  classification: ArticleStore.IClassNames[];
+  category: ArticleStore.IClassNames[];
   checkboxOptions: string[];
 }
 
 @inject((store: IStore) => {
-  const { classification, changeFilterCondition, changeClassNameCondition } = store.articleStore;
+  const { category, changeFilterCondition, changeClassNameCondition } = store.articleStore;
   return {
-    classification,
+    category,
     changeFilterCondition,
     changeClassNameCondition
   };
@@ -35,18 +35,18 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   constructor(props: IToolbarProps) {
     super(props);
     this.state = {
-      classification: [{ name: 'All', _id: '' } as any].concat(props.classification),
+      category: [{ name: 'All', _id: '' } as any].concat(props.category),
       checkboxOptions: ['prod', 'dev']
     };
   }
 
   // public static getDerivedStateFromProps(nextProps: any) {
   //   return {
-  //     classification: nextProps.classification.concat([{ name: '全部', _id: 'all' }])
+  //     category: nextProps.category.concat([{ name: '全部', _id: 'all' }])
   //   };
   // }
 
-  public onChangeClassification = (value: SelectValue) => {
+  public onChangeCategory = (value: SelectValue) => {
     this.props.changeClassNameCondition(value as string);
   };
 
@@ -60,7 +60,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   };
 
   public render() {
-    console.log(this.state.classification);
+    console.log(this.state.category);
     return (
       <div className={this.props.className}>
         <ActionGroup direction="right">
@@ -68,11 +68,11 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
             <Select
               showSearch
               style={{ width: 130 }}
-              placeholder="classification"
+              placeholder="category"
               defaultValue={'all'}
-              onChange={this.onChangeClassification}
+              onChange={this.onChangeCategory}
             >
-              {this.state.classification.map((i, idx) => (
+              {this.state.category.map((i, idx) => (
                 <Option key={idx} value={i._id}>
                   {i.name}
                 </Option>

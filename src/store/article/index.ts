@@ -6,9 +6,9 @@ import { ArticlePage } from '@/constants/enum';
 import { UploadFile } from 'antd/lib/upload/interface';
 
 export class ArticleStore extends StoreExtends {
-  // classification
+  // category
   @observable
-  classification: ArticleStore.IClassNames[] = [];
+  category: ArticleStore.IClassNames[] = [];
 
   // article
   @observable
@@ -56,71 +56,71 @@ export class ArticleStore extends StoreExtends {
   }
 
   init = () => {
-    this.getClassification();
+    this.getCategory();
   };
 
-  // Classification
+  // Category
   @action
-  getClassification = async () => {
-    const res = await this.classificationApi$$.getClassification();
+  getCategory = async () => {
+    const res = await this.categoryApi$$.getCategory();
     runInAction(() => {
       if (res.code === 0) {
-        this.classification = res.data;
+        this.category = res.data;
         this.article.className = res.data[0]._id;
       }
     });
   };
 
   @action
-  addClassification: ArticleStore.IAddClassification = async req => {
-    const res = await this.classificationApi$$.addClassification(req);
+  addCategory: ArticleStore.IAddCategory = async req => {
+    const res = await this.categoryApi$$.addCategory(req);
     return runInAction(() => {
       if (res.code === 0) {
         this.$message.success(res.msg);
-        this.classification = res.data;
+        this.category = res.data;
       }
       return Promise.resolve(res);
     });
   };
 
   @action
-  sortClassification: ArticleStore.ISortClassification = value => {
+  sortCategory: ArticleStore.ISortCategory = value => {
     // value.forEach((i, idx) => {
     //   i.order = idx;
     // });
 
-    this.classification = value.map((i, idx) => {
+    this.category = value.map((i, idx) => {
       i.order = idx;
       return i;
     });
   };
 
   @action
-  updateClassification: ArticleStore.IUpdateClassification = async value => {
+  updateCategory: ArticleStore.IUpdateCategory = async value => {
     let req;
     if (value) {
       req = value;
     } else {
-      req = this.classification.map(i => {
+      req = this.category.map(i => {
         return { _id: i._id, order: i.order };
       });
     }
-    const res = await this.classificationApi$$.updateClassification(req);
+    const res = await this.categoryApi$$.updateCategory(req);
     runInAction(() => {
       if (res.code === 0) {
         this.$message.success(res.msg);
-        this.classification = res.data;
+        this.category = res.data;
       }
     });
   };
 
   @action
-  removeClassification: ArticleStore.IRemoveClassification = async value => {
-    const res = await this.classificationApi$$.removeClassification({ _id: value._id });
+  removeCategory: ArticleStore.IRemoveCategory = async value => {
+    const res = await this.categoryApi$$.removeCategory({ _id: value._id });
     runInAction(() => {
       if (res.code === 0) {
         this.$message.success(res.msg);
-        this.classification = res.data;
+        this.category = res.data;
       }
     });
   };
@@ -234,7 +234,7 @@ export class ArticleStore extends StoreExtends {
     this.article = {
       title: '// title',
       content: '// . . . content',
-      className: this.classification[0] ? this.classification[0]._id : '',
+      className: this.category[0] ? this.category[0]._id : '',
       isFormal: false,
       uploads: [],
       createTime: '',

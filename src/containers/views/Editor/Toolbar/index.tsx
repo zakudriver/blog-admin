@@ -3,7 +3,7 @@ import { Select, Radio, Button, Modal } from 'antd';
 import { inject, observer } from 'mobx-react';
 import styled from '@/styles';
 import { ActionGroup } from '@/components/common';
-import ClassificationModal from './ClassificationModal';
+import CategoryModal from './CategoryModal';
 
 import { SelectValue } from 'antd/lib/select';
 import { RadioChangeEvent } from 'antd/lib/radio';
@@ -25,11 +25,11 @@ interface IToolbarProps extends IClassName {
   selectionLanguage: string;
   isUploadDisplay: boolean;
   uploadDisplay: GlobalStore.IUploadDisplay;
-  classification: ArticleStore.IClassNames[];
-  addClassification: ArticleStore.IAddClassification;
-  sortClassification: ArticleStore.ISortClassification;
-  updateClassification: ArticleStore.IUpdateClassification;
-  removeClassification: ArticleStore.IRemoveClassification;
+  category: ArticleStore.IClassNames[];
+  addCategory: ArticleStore.IAddCategory;
+  sortCategory: ArticleStore.ISortCategory;
+  updateCategory: ArticleStore.IUpdateCategory;
+  removeCategory: ArticleStore.IRemoveCategory;
   article: ArticleStore.IArticle;
   changeArticle: ArticleStore.IChangeArticle;
   saveArticle: () => void;
@@ -55,11 +55,11 @@ interface IToolbarState {
       editorLanguages
     } = store.globalStore;
     const {
-      classification,
-      addClassification,
-      sortClassification,
-      updateClassification,
-      removeClassification,
+      category,
+      addCategory,
+      sortCategory,
+      updateCategory,
+      removeCategory,
       article,
       changeArticle,
       saveArticle,
@@ -72,11 +72,11 @@ interface IToolbarState {
       config,
       changeLanguages,
       selectionLanguage,
-      classification,
-      addClassification,
-      sortClassification,
-      updateClassification,
-      removeClassification,
+      category,
+      addCategory,
+      sortCategory,
+      updateCategory,
+      removeCategory,
       article,
       changeArticle,
       saveArticle,
@@ -102,13 +102,13 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
     this.props.changeEdit(e.target.value);
   };
 
-  public openClassificationModal = () => {
+  public openCategoryModal = () => {
     this.setState({
       visible: !this.state.visible
     });
   };
 
-  public onChangeClassification = (value: SelectValue) => {
+  public onChangeCategory = (value: SelectValue) => {
     this.props.changeArticle({ className: value as string });
   };
 
@@ -188,11 +188,11 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
               <Select
                 showSearch
                 style={{ width: 130 }}
-                placeholder="classification"
+                placeholder="category"
                 value={this.props.article.className}
-                onChange={this.onChangeClassification}
+                onChange={this.onChangeCategory}
               >
-                {this.props.classification.map((i, idx) => (
+                {this.props.category.map((i, idx) => (
                   <Option key={idx} value={i._id}>
                     {i.name}
                   </Option>
@@ -200,7 +200,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
               </Select>
             </ActionItem>
             <ActionItem>
-              <Button type="primary" ghost onClick={this.openClassificationModal}>
+              <Button type="primary" ghost onClick={this.openCategoryModal}>
                 Edit
               </Button>
             </ActionItem>
@@ -244,14 +244,14 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
           </ActionItem>
         </ActionGroup>
 
-        <ClassificationModal
+        <CategoryModal
           visible={this.state.visible}
-          classification={this.props.classification}
-          onClassificationModal={this.openClassificationModal}
-          sortClassification={this.props.sortClassification}
-          addClassification={this.props.addClassification}
-          updateClassification={this.props.updateClassification}
-          removeClassification={this.props.removeClassification}
+          category={this.props.category}
+          onCategoryModal={this.openCategoryModal}
+          sortCategory={this.props.sortCategory}
+          addCategory={this.props.addCategory}
+          updateCategory={this.props.updateCategory}
+          removeCategory={this.props.removeCategory}
         />
       </div>
     );

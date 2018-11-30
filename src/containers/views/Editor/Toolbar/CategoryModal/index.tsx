@@ -4,17 +4,17 @@ import styled from '@/styles';
 import SortableList from './SortableList';
 // import { Draggable } from '@/components/common';
 
-interface IClassificationModalProps extends IClassName {
+interface ICategoryModalProps extends IClassName {
   visible: boolean;
-  onClassificationModal: () => void;
-  classification: ArticleStore.IClassNames[];
-  sortClassification: ArticleStore.ISortClassification;
-  addClassification: ArticleStore.IAddClassification;
-  updateClassification: ArticleStore.IUpdateClassification;
-  removeClassification: ArticleStore.IRemoveClassification;
+  onCategoryModal: () => void;
+  category: ArticleStore.IClassNames[];
+  sortCategory: ArticleStore.ISortCategory;
+  addCategory: ArticleStore.IAddCategory;
+  updateCategory: ArticleStore.IUpdateCategory;
+  removeCategory: ArticleStore.IRemoveCategory;
 }
 
-class ClassificationModal extends React.Component<IClassificationModalProps> {
+class CategoryModal extends React.Component<ICategoryModalProps> {
   public state = {
     addClassName: '',
     isAddBtn: false
@@ -22,7 +22,7 @@ class ClassificationModal extends React.Component<IClassificationModalProps> {
 
   public onAddClassName = async () => {
     this.onBtnState(true);
-    const res = await this.props.addClassification({ name: this.state.addClassName });
+    const res = await this.props.addCategory({ name: this.state.addClassName });
     this.onBtnState(false);
     if (res.code === 0) {
       this.setState({
@@ -45,37 +45,37 @@ class ClassificationModal extends React.Component<IClassificationModalProps> {
 
   public onChangeSort = (value: ArticleStore.IClassNames[]) => {
     console.log(value);
-    this.props.sortClassification(value);
+    this.props.sortCategory(value);
   };
 
   public onEdit = async (newRow: ArticleStore.IClassNames, oldRow: ArticleStore.IClassNames) => {
     if (newRow.name !== oldRow.name) {
-      await this.props.updateClassification(newRow);
+      await this.props.updateCategory(newRow);
     }
   };
 
   public onRemove = async (row: ArticleStore.IClassNames) => {
-    await this.props.removeClassification(row);
+    await this.props.removeCategory(row);
   };
 
-  public onSaveClassificationModal = async () => {
-    await this.props.updateClassification();
+  public onSaveCategoryModal = async () => {
+    await this.props.updateCategory();
   };
 
   public render() {
     return (
       <Modal
         visible={this.props.visible}
-        onCancel={this.props.onClassificationModal}
+        onCancel={this.props.onCategoryModal}
         footer={[
-          <Button key="ok" type="primary" onClick={this.onSaveClassificationModal}>
+          <Button key="ok" type="primary" onClick={this.onSaveCategoryModal}>
             ok
           </Button>,
-          <Button key="no" onClick={this.props.onClassificationModal}>
+          <Button key="no" onClick={this.props.onCategoryModal}>
             no
           </Button>
         ]}
-        title="Classification"
+        title="Category"
         className={this.props.className}
       >
         <div>
@@ -91,14 +91,14 @@ class ClassificationModal extends React.Component<IClassificationModalProps> {
           </div>
 
           {/* <Draggable
-            dataSource={this.props.classification}
+            dataSource={this.props.category}
             dataIndex="name"
             onChange={this.onChangeSort}
             onEdit={this.onEdit}
             onRemove={this.onRemove}
           /> */}
           <SortableList
-            dataSource={this.props.classification}
+            dataSource={this.props.category}
             onChange={this.onChangeSort}
             onEdit={this.onEdit}
             onRemove={this.onRemove}
@@ -109,7 +109,7 @@ class ClassificationModal extends React.Component<IClassificationModalProps> {
   }
 }
 
-export default styled(ClassificationModal)`
+export default styled(CategoryModal)`
   .modal__inp {
     margin-bottom: 20px;
   }

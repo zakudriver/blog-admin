@@ -1,12 +1,12 @@
 import axios, { IAxiosResponse } from '@/service';
 import { prefix, GET, POST, DELETE, PUT } from '@/service/decorators';
 
-@prefix('/classification')
-class ClassificationApi {
+@prefix('/category')
+class CategoryApi {
   @GET({
     url: ''
   })
-  async getClassification(opt?: any) {
+  async getCategory(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
     return Promise.resolve(res.data);
   }
@@ -14,7 +14,7 @@ class ClassificationApi {
   @POST({
     url: ''
   })
-  async addClassification(opt?: any) {
+  async addCategory(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
     return Promise.resolve(res.data);
   }
@@ -22,7 +22,7 @@ class ClassificationApi {
   @DELETE({
     url: ''
   })
-  async removeClassification(opt?: any) {
+  async removeCategory(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
     return Promise.resolve(res.data);
   }
@@ -30,10 +30,10 @@ class ClassificationApi {
   @PUT({
     url: ''
   })
-  async updateClassification(opt?: any) {
+  async updateCategory(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
     return Promise.resolve(res.data);
   }
 }
 
-export default new ClassificationApi();
+export default new CategoryApi();
