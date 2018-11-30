@@ -8,7 +8,7 @@ import { UploadFile } from 'antd/lib/upload/interface';
 export class ArticleStore extends StoreExtends {
   // category
   @observable
-  category: ArticleStore.IClassNames[] = [];
+  category: ArticleStore.ICategory[] = [];
 
   // article
   @observable

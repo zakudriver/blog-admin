@@ -8,13 +8,13 @@ import styled from '@/styles';
 
 const ActionItem = ActionGroup.ActionItem;
 
-type IClassNames = ArticleStore.IClassNames;
+type ICategory = ArticleStore.ICategory;
 
 interface ISortableListProps extends IClassName {
-  dataSource: IClassNames[];
-  onChange?: (newValue: IClassNames[], from: number, to: number) => void;
-  onRemove?: (value: IClassNames) => void;
-  onEdit?: (newValue: IClassNames, oldValue: IClassNames) => void;
+  dataSource: ICategory[];
+  onChange?: (newValue: ICategory[], from: number, to: number) => void;
+  onRemove?: (value: ICategory) => void;
+  onEdit?: (newValue: ICategory, oldValue: ICategory) => void;
 }
 
 class SortableList extends React.Component<ISortableListProps, any> {
@@ -39,9 +39,9 @@ class SortableList extends React.Component<ISortableListProps, any> {
 }
 
 interface ISortableProps {
-  dataSource: IClassNames[];
-  onRemove?: (value: IClassNames) => void;
-  onEdit?: (newValue: IClassNames, oldValue: IClassNames) => void;
+  dataSource: ICategory[];
+  onRemove?: (value: ICategory) => void;
+  onEdit?: (newValue: ICategory, oldValue: ICategory) => void;
 }
 
 const SortableWrapper = SortableContainer<ISortableProps>(({ dataSource, onRemove, onEdit }) => {
@@ -49,7 +49,7 @@ const SortableWrapper = SortableContainer<ISortableProps>(({ dataSource, onRemov
     <List
       bordered
       dataSource={dataSource}
-      renderItem={(i: IClassNames, idx: number) => (
+      renderItem={(i: ICategory, idx: number) => (
         <SortableItemWrapper value={i} index={idx} key={idx} onEdit={onEdit} onRemove={onRemove} />
       )}
     />
@@ -57,9 +57,9 @@ const SortableWrapper = SortableContainer<ISortableProps>(({ dataSource, onRemov
 });
 
 interface ISortableElementProps {
-  value: IClassNames;
-  onRemove?: (value: IClassNames) => void;
-  onEdit?: (newValue: IClassNames, oldValue: IClassNames) => void;
+  value: ICategory;
+  onRemove?: (value: ICategory) => void;
+  onEdit?: (newValue: ICategory, oldValue: ICategory) => void;
 }
 // interface ISortableItemProps extends ISortableElementProps{}
 

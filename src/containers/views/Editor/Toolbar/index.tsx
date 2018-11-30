@@ -25,7 +25,7 @@ interface IToolbarProps extends IClassName {
   selectionLanguage: string;
   isUploadDisplay: boolean;
   uploadDisplay: GlobalStore.IUploadDisplay;
-  category: ArticleStore.IClassNames[];
+  category: ArticleStore.ICategory[];
   addCategory: ArticleStore.IAddCategory;
   sortCategory: ArticleStore.ISortCategory;
   updateCategory: ArticleStore.IUpdateCategory;

@@ -7,7 +7,7 @@ import SortableList from './SortableList';
 interface ICategoryModalProps extends IClassName {
   visible: boolean;
   onCategoryModal: () => void;
-  category: ArticleStore.IClassNames[];
+  category: ArticleStore.ICategory[];
   sortCategory: ArticleStore.ISortCategory;
   addCategory: ArticleStore.IAddCategory;
   updateCategory: ArticleStore.IUpdateCategory;
@@ -43,18 +43,18 @@ class CategoryModal extends React.Component<ICategoryModalProps> {
     });
   };
 
-  public onChangeSort = (value: ArticleStore.IClassNames[]) => {
+  public onChangeSort = (value: ArticleStore.ICategory[]) => {
     console.log(value);
     this.props.sortCategory(value);
   };
 
-  public onEdit = async (newRow: ArticleStore.IClassNames, oldRow: ArticleStore.IClassNames) => {
+  public onEdit = async (newRow: ArticleStore.ICategory, oldRow: ArticleStore.ICategory) => {
     if (newRow.name !== oldRow.name) {
       await this.props.updateCategory(newRow);
     }
   };
 
-  public onRemove = async (row: ArticleStore.IClassNames) => {
+  public onRemove = async (row: ArticleStore.ICategory) => {
     await this.props.removeCategory(row);
   };
 

@@ -7,7 +7,7 @@ export as namespace ArticleStore;
 export interface IArticleStore extends articleStore {}
 
 // Category
-export interface IClassNames {
+export interface ICategory {
   key?: string;
   _id: string;
   order: number;
@@ -19,15 +19,15 @@ export interface IAddCategory {
 }
 
 export interface ISortCategory {
-  (value: IClassNames[]): void;
+  (value: ICategory[]): void;
 }
 
 export interface IUpdateCategory {
-  (value?: IClassNames): void;
+  (value?: ICategory): void;
 }
 
 export interface IRemoveCategory {
-  (value: IClassNames): void;
+  (value: ICategory): void;
 }
 
 // Article

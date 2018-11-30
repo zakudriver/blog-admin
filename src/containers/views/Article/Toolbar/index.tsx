@@ -12,13 +12,13 @@ const ActionItem = ActionGroup.ActionItem;
 const ActionLine = ActionGroup.ActionLine;
 
 interface IToolbarProps extends IClassName {
-  category: ArticleStore.IClassNames[];
+  category: ArticleStore.ICategory[];
   changeFilterCondition: ArticleStore.IChangeFilterCondition;
   changeClassNameCondition: ArticleStore.IChangeClassNameCondition;
 }
 
 interface IToolbarState {
-  category: ArticleStore.IClassNames[];
+  category: ArticleStore.ICategory[];
   checkboxOptions: string[];
 }
 
