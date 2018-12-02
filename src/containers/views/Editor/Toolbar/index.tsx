@@ -25,7 +25,7 @@ interface IToolbarProps extends IClassName {
   selectionLanguage: string;
   isUploadDisplay: boolean;
   uploadDisplay: GlobalStore.IUploadDisplay;
-  category: ArticleStore.ICategory[];
+  categories: ArticleStore.ICategories[];
   addCategory: ArticleStore.IAddCategory;
   sortCategory: ArticleStore.ISortCategory;
   updateCategory: ArticleStore.IUpdateCategory;
@@ -55,7 +55,7 @@ interface IToolbarState {
       editorLanguages
     } = store.globalStore;
     const {
-      category,
+      categories,
       addCategory,
       sortCategory,
       updateCategory,
@@ -72,7 +72,7 @@ interface IToolbarState {
       config,
       changeLanguages,
       selectionLanguage,
-      category,
+      categories,
       addCategory,
       sortCategory,
       updateCategory,
@@ -109,7 +109,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   };
 
   public onChangeCategory = (value: SelectValue) => {
-    this.props.changeArticle({ className: value as string });
+    this.props.changeArticle({ category: value as string });
   };
 
   // public onChangeTime = (date: Moment, dateString: string) => {
@@ -189,10 +189,10 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
                 showSearch
                 style={{ width: 130 }}
                 placeholder="category"
-                value={this.props.article.className}
+                value={this.props.article.category}
                 onChange={this.onChangeCategory}
               >
-                {this.props.category.map((i, idx) => (
+                {this.props.categories.map((i, idx) => (
                   <Option key={idx} value={i._id}>
                     {i.name}
                   </Option>
@@ -246,7 +246,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 
         <CategoryModal
           visible={this.state.visible}
-          category={this.props.category}
+          categories={this.props.categories}
           onCategoryModal={this.openCategoryModal}
           sortCategory={this.props.sortCategory}
           addCategory={this.props.addCategory}

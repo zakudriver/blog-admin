@@ -7,7 +7,7 @@ import SortableList from './SortableList';
 interface ICategoryModalProps extends IClassName {
   visible: boolean;
   onCategoryModal: () => void;
-  category: ArticleStore.ICategory[];
+  categories: ArticleStore.ICategories[];
   sortCategory: ArticleStore.ISortCategory;
   addCategory: ArticleStore.IAddCategory;
   updateCategory: ArticleStore.IUpdateCategory;
@@ -16,24 +16,24 @@ interface ICategoryModalProps extends IClassName {
 
 class CategoryModal extends React.Component<ICategoryModalProps> {
   public state = {
-    addClassName: '',
+    addCategory: '',
     isAddBtn: false
   };
 
   public onAddClassName = async () => {
     this.onBtnState(true);
-    const res = await this.props.addCategory({ name: this.state.addClassName });
+    const res = await this.props.addCategory({ name: this.state.addCategory });
     this.onBtnState(false);
     if (res.code === 0) {
       this.setState({
-        addClassName: ''
+        addCategory: ''
       });
     }
   };
 
   public onChangeAddClassName = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      addClassName: e.target.value
+      addCategory: e.target.value
     });
   };
 
@@ -43,18 +43,18 @@ class CategoryModal extends React.Component<ICategoryModalProps> {
     });
   };
 
-  public onChangeSort = (value: ArticleStore.ICategory[]) => {
+  public onChangeSort = (value: ArticleStore.ICategories[]) => {
     console.log(value);
     this.props.sortCategory(value);
   };
 
-  public onEdit = async (newRow: ArticleStore.ICategory, oldRow: ArticleStore.ICategory) => {
+  public onEdit = async (newRow: ArticleStore.ICategories, oldRow: ArticleStore.ICategories) => {
     if (newRow.name !== oldRow.name) {
       await this.props.updateCategory(newRow);
     }
   };
 
-  public onRemove = async (row: ArticleStore.ICategory) => {
+  public onRemove = async (row: ArticleStore.ICategories) => {
     await this.props.removeCategory(row);
   };
 
@@ -81,7 +81,7 @@ class CategoryModal extends React.Component<ICategoryModalProps> {
         <div>
           <div className="modal__inp">
             <Input
-              value={this.state.addClassName}
+              value={this.state.addCategory}
               onChange={this.onChangeAddClassName}
               style={{ width: '200px', marginRight: '10px' }}
             />
@@ -98,7 +98,7 @@ class CategoryModal extends React.Component<ICategoryModalProps> {
             onRemove={this.onRemove}
           /> */}
           <SortableList
-            dataSource={this.props.category}
+            dataSource={this.props.categories}
             onChange={this.onChangeSort}
             onEdit={this.onEdit}
             onRemove={this.onRemove}

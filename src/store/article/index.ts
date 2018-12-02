@@ -8,14 +8,14 @@ import { UploadFile } from 'antd/lib/upload/interface';
 export class ArticleStore extends StoreExtends {
   // category
   @observable
-  category: ArticleStore.ICategory[] = [];
+  categories: ArticleStore.ICategories[] = [];
 
   // article
   @observable
   article: ArticleStore.IArticle = {
     title: '// title',
     content: '// . . . content',
-    className: '',
+    category: '',
     isFormal: false,
     uploads: [],
     updateTime: '',
@@ -35,7 +35,7 @@ export class ArticleStore extends StoreExtends {
   filterCondition: number = 0;
 
   @observable
-  classNameCondition: string = '';
+  categoryCondition: string = '';
 
   constructor() {
     super();
@@ -43,14 +43,14 @@ export class ArticleStore extends StoreExtends {
     reaction(
       () => this.filterCondition,
       condition => {
-        this.getArticleList(ArticlePage.Index, ArticlePage.Limit, condition, this.classNameCondition);
+        this.getArticleList(ArticlePage.Index, ArticlePage.Limit, condition, this.categoryCondition);
       }
     );
 
     reaction(
-      () => this.classNameCondition,
-      className => {
-        this.getArticleList(ArticlePage.Index, ArticlePage.Limit, this.filterCondition, className);
+      () => this.categoryCondition,
+      category => {
+        this.getArticleList(ArticlePage.Index, ArticlePage.Limit, this.filterCondition, category);
       }
     );
   }
@@ -65,8 +65,8 @@ export class ArticleStore extends StoreExtends {
     const res = await this.categoryApi$$.getCategory();
     runInAction(() => {
       if (res.code === 0) {
-        this.category = res.data;
-        this.article.className = res.data[0]._id;
+        this.categories = res.data;
+        this.article.category = res.data[0]._id;
       }
     });
   };
@@ -77,7 +77,7 @@ export class ArticleStore extends StoreExtends {
     return runInAction(() => {
       if (res.code === 0) {
         this.$message.success(res.msg);
-        this.category = res.data;
+        this.categories = res.data;
       }
       return Promise.resolve(res);
     });
@@ -89,7 +89,7 @@ export class ArticleStore extends StoreExtends {
     //   i.order = idx;
     // });
 
-    this.category = value.map((i, idx) => {
+    this.categories = value.map((i, idx) => {
       i.order = idx;
       return i;
     });
@@ -101,7 +101,7 @@ export class ArticleStore extends StoreExtends {
     if (value) {
       req = value;
     } else {
-      req = this.category.map(i => {
+      req = this.categories.map(i => {
         return { _id: i._id, order: i.order };
       });
     }
@@ -109,7 +109,7 @@ export class ArticleStore extends StoreExtends {
     runInAction(() => {
       if (res.code === 0) {
         this.$message.success(res.msg);
-        this.category = res.data;
+        this.categories = res.data;
       }
     });
   };
@@ -120,7 +120,7 @@ export class ArticleStore extends StoreExtends {
     runInAction(() => {
       if (res.code === 0) {
         this.$message.success(res.msg);
-        this.category = res.data;
+        this.categories = res.data;
       }
     });
   };
@@ -192,10 +192,10 @@ export class ArticleStore extends StoreExtends {
     index = ArticlePage.Index,
     limit = ArticlePage.Limit,
     condition,
-    className
+    category
   ) => {
     this.isArticleListLoading = true;
-    const res = await this.articleApi$$.getArticleList({ index, limit, condition, className });
+    const res = await this.articleApi$$.getArticleList({ index, limit, condition, category });
     runInAction(() => {
       this.isArticleListLoading = false;
       if (res.code === 0) {
@@ -213,8 +213,8 @@ export class ArticleStore extends StoreExtends {
   };
 
   @action
-  changeClassNameCondition: ArticleStore.IChangeClassNameCondition = className => {
-    this.classNameCondition = className;
+  changeClassNameCondition: ArticleStore.IChangeCategoryCondition = category => {
+    this.categoryCondition = category;
   };
 
   @action
@@ -234,7 +234,7 @@ export class ArticleStore extends StoreExtends {
     this.article = {
       title: '// title',
       content: '// . . . content',
-      className: this.category[0] ? this.category[0]._id : '',
+      category: this.categories[0] ? this.categories[0]._id : '',
       isFormal: false,
       uploads: [],
       createTime: '',

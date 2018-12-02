@@ -45,7 +45,7 @@ class Article extends ComponentExtends<IArticleProps> {
         const res = await this.articleApi$$.removeArticle({ _id: row._id });
         if (res.code === 0) {
           this.$message.success(res.msg);
-          await this.articleApi$$.getArticleList(this.state.index);
+          await this.props.getArticleList(this.state.index);
         }
       }
     });
@@ -65,7 +65,7 @@ class Article extends ComponentExtends<IArticleProps> {
   public render() {
     const columns: Array<ColumnProps<ArticleStore.IArticle>> = [
       { title: 'Title', dataIndex: 'title', key: 'title' },
-      { title: 'Category', dataIndex: 'className.name', key: 'className._id' },
+      { title: 'Category', dataIndex: 'category.name', key: 'category._id' },
       {
         title: 'UpdateTime',
         dataIndex: 'updateTime',

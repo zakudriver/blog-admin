@@ -12,20 +12,20 @@ const ActionItem = ActionGroup.ActionItem;
 const ActionLine = ActionGroup.ActionLine;
 
 interface IToolbarProps extends IClassName {
-  category: ArticleStore.ICategory[];
+  categories: ArticleStore.ICategories[];
   changeFilterCondition: ArticleStore.IChangeFilterCondition;
-  changeClassNameCondition: ArticleStore.IChangeClassNameCondition;
+  changeClassNameCondition: ArticleStore.IChangeCategoryCondition;
 }
 
 interface IToolbarState {
-  category: ArticleStore.ICategory[];
+  categories: ArticleStore.ICategories[];
   checkboxOptions: string[];
 }
 
 @inject((store: IStore) => {
-  const { category, changeFilterCondition, changeClassNameCondition } = store.articleStore;
+  const { categories, changeFilterCondition, changeClassNameCondition } = store.articleStore;
   return {
-    category,
+    categories,
     changeFilterCondition,
     changeClassNameCondition
   };
@@ -35,7 +35,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   constructor(props: IToolbarProps) {
     super(props);
     this.state = {
-      category: [{ name: 'All', _id: '' } as any].concat(props.category),
+      categories: [{ name: 'All', _id: '' } as any].concat(props.categories),
       checkboxOptions: ['prod', 'dev']
     };
   }
@@ -60,7 +60,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   };
 
   public render() {
-    console.log(this.state.category);
+    console.log(this.state.categories);
     return (
       <div className={this.props.className}>
         <ActionGroup direction="right">
@@ -72,7 +72,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
               defaultValue={'all'}
               onChange={this.onChangeCategory}
             >
-              {this.state.category.map((i, idx) => (
+              {this.state.categories.map((i, idx) => (
                 <Option key={idx} value={i._id}>
                   {i.name}
                 </Option>

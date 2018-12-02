@@ -7,7 +7,7 @@ export as namespace ArticleStore;
 export interface IArticleStore extends articleStore {}
 
 // Category
-export interface ICategory {
+export interface ICategories {
   key?: string;
   _id: string;
   order: number;
@@ -19,15 +19,15 @@ export interface IAddCategory {
 }
 
 export interface ISortCategory {
-  (value: ICategory[]): void;
+  (value: ICategories[]): void;
 }
 
 export interface IUpdateCategory {
-  (value?: ICategory): void;
+  (value?: ICategories): void;
 }
 
 export interface IRemoveCategory {
-  (value: ICategory): void;
+  (value: ICategories): void;
 }
 
 // Article
@@ -36,7 +36,7 @@ export interface IArticle {
   key?: string;
   _id?: string;
   title: string;
-  className: string;
+  category: string;
   content: string;
   isFormal: boolean;
   uploads: Array<UploadFile | UploadedFile | string>;
@@ -61,15 +61,15 @@ export interface IGetArticle {
 }
 
 export interface IGetArticleList {
-  (index?: number, limit?: number, condition?: number, className?: string): void;
+  (index?: number, limit?: number, condition?: number, category?: string): void;
 }
 
 export interface IChangeFilterCondition {
   (condition: number): void;
 }
 
-export interface IChangeClassNameCondition {
-  (className: string): void;
+export interface IChangeCategoryCondition {
+  (category: string): void;
 }
 
 export interface IRemoveUploadFile {
