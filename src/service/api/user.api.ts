@@ -1,5 +1,5 @@
 import axios, { IAxiosResponse } from '@/service';
-import { prefix, POST, GET, PUT } from '@/service/decorators';
+import { prefix, POST, GET, PUT, DELETE } from '@/service/decorators';
 
 @prefix('/user')
 class UserApi {
@@ -31,6 +31,22 @@ class UserApi {
     url: ''
   })
   async updateUser(opt?: any) {
+    const res: IAxiosResponse = await axios(opt);
+    return Promise.resolve(res.data);
+  }
+
+  @GET({
+    url: '/list'
+  })
+  async getUserList(opt?: any) {
+    const res: IAxiosResponse = await axios(opt);
+    return Promise.resolve(res.data);
+  }
+
+  @DELETE({
+    url: '/'
+  })
+  async removeUser(opt?: any) {
     const res: IAxiosResponse = await axios(opt);
     return Promise.resolve(res.data);
   }

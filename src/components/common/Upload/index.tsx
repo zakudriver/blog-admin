@@ -16,13 +16,10 @@ interface IUploadState {
 }
 
 class Upload extends React.Component<IUploadProps, IUploadState> {
-  constructor(props: IUploadProps) {
-    super(props);
-    this.state = {
-      loading: false,
-      avatarUrl: props.avatarUrl || ''
-    };
-  }
+  public state = {
+    loading: false,
+    avatarUrl: ''
+  };
 
   public onChangeUpload = (info: UploadChangeParam) => {
     console.log('info');
@@ -43,8 +40,8 @@ class Upload extends React.Component<IUploadProps, IUploadState> {
   };
 
   public render() {
-    const { action, token, className } = this.props;
-    const { loading, avatarUrl } = this.state;
+    const { action, token, className, avatarUrl } = this.props;
+    const { loading } = this.state;
 
     const uploadButton = (
       <div>

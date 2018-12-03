@@ -11,21 +11,22 @@ interface IStoreProps extends IClassName {
 
 class LoginMain extends React.Component<IStoreProps> {
   public render() {
+    const { className, closeDrawer, isDrawer, config, onDrawer } = this.props;
     return (
-      <div className={this.props.className} onClick={this.props.closeDrawer}>
-        {this.props.isDrawer && <div className="login-mask" />}
+      <div className={className} onClick={closeDrawer}>
+        {isDrawer && <div className="login-mask" />}
         <main>
           <HeadPic>
-            <img src={require('@/assets/img/J0003_m.97851d87.png')} alt="headpic" />
+            <img src={config.logo} alt="headpic" />
           </HeadPic>
 
-          <h1>{this.props.config.title}</h1>
+          <h1>{config.title}</h1>
 
           <LinkGroup>
             <a href="https://zyhua.cn">
               <i className="fa fa-home fa-3x fa-fw" />
             </a>
-            <a onClick={this.props.onDrawer}>
+            <a onClick={onDrawer}>
               <i className="fa fa-user-circle fa-3x fa-fw" />
             </a>
           </LinkGroup>

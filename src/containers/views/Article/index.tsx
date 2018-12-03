@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from '@/styles';
 import { Table, Button, Modal } from 'antd';
-import { ActionGroup, Preview } from '@/components/common';
+import { ActionGroup } from '@/components/common';
 import { withRouterProps } from '@/components/utils/withComponents';
 import { ComponentExtends } from '@/utils/extends';
 import { formatDateTime } from '@/utils';
@@ -35,6 +35,23 @@ class Article extends ComponentExtends<IArticleProps> {
   };
 
   public onDelete = (row: any) => (e: React.MouseEvent<HTMLButtonElement>) => {
+    Modal.confirm({
+      title: 'Warning',
+      content: 'Bla bla ...',
+      okText: 'ok',
+      okType: 'danger',
+      cancelText: 'no',
+      onOk: async () => {
+        const res = await this.articleApi$$.removeArticle({ _id: row._id });
+        if (res.code === 0) {
+          this.$message.success(res.msg);
+          await this.props.getArticleList(this.state.index);
+        }
+      }
+    });
+  };
+
+  public onDeleteMessage = (row: any) => (e: React.MouseEvent<HTMLButtonElement>) => {
     Modal.confirm({
       title: 'Warning',
       content: 'Bla bla ...',
@@ -105,7 +122,8 @@ class Article extends ComponentExtends<IArticleProps> {
         <Table
           className="article__table"
           columns={columns}
-          expandedRowRender={record => <Preview value={record.content} />}
+          // expandedRowRender={record => <Preview value={record.content} />}
+          expandedRowRender={record => <ExpandedTable data={record.message!} onDelete={this.onDeleteMessage} />}
           dataSource={this.props.articleList.rows}
           pagination={{
             current: this.state.index,
@@ -117,6 +135,30 @@ class Article extends ComponentExtends<IArticleProps> {
       </div>
     );
   }
+}
+
+interface IExpandedTableProps {
+  data: ArticleStore.IArticleMessage[];
+  onDelete: (row: ArticleStore.IArticleMessage) => void;
+}
+
+function ExpandedTable(props: IExpandedTableProps) {
+  const columns = [
+    { title: 'Name', dataIndex: 'name', key: 'name' },
+    { title: 'Email', dataIndex: 'email', key: 'email' },
+    { title: 'Text', dataIndex: 'text', key: 'text' },
+    {
+      title: 'Action',
+      dataIndex: '',
+      key: 'x',
+      render: (text: any, record: any, index: any) => (
+        <Button type="danger" onClick={() => props.onDelete(text)}>
+          Delete
+        </Button>
+      )
+    }
+  ];
+  return <Table columns={columns} pagination={false} expandedRowRender={record => <p>{record.text}</p>} />;
 }
 
 export default styled(Article)`

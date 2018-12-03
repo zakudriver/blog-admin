@@ -4,6 +4,7 @@ import { StoreExtends } from '@/utils/extends';
 export class GlobalStore extends StoreExtends {
   @observable
   config: GlobalStore.IConfig = {
+    logo: '',
     primaryColor: '#1da57a',
     drawerColor: '#5ee2b9',
     title: `Welcome, Zyhua's Admin`,

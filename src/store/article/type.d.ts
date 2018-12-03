@@ -43,6 +43,15 @@ export interface IArticle {
   isEdit?: boolean;
   updateTime: string;
   createTime: string;
+  message?: IArticleMessage[];
+}
+
+export interface IArticleMessage {
+  _id?: string;
+  name: string;
+  email: string;
+  text: string;
+  key?: string;
 }
 
 type Indexes<T> = { [P in keyof T]?: T[P] };

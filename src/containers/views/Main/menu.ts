@@ -33,6 +33,9 @@ export const loadableToolbarComponents = {
   ),
   SettingAdminToolbar: handleloadableToolbarComponent(() =>
     import(/* webpackChunkName: "settingAdminToolbar" */ '@/containers/views/Setting/Admin/Toolbar')
+  ),
+  SettingBlogToolbar: handleloadableToolbarComponent(() =>
+    import(/* webpackChunkName: "settingAdminToolbar" */ '@/containers/views/Setting/Blog/Toolbar')
   )
 };
 
@@ -103,6 +106,7 @@ export const menu: IMenu[] = [
     icon: 'home',
     path: '/setting/blog',
     component: 'SettingBlog',
+    toolbarComponent: 'SettingBlogToolbar',
     exact: true
   },
   {

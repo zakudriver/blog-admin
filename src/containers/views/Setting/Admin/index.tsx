@@ -10,25 +10,26 @@ interface ISettingAdminProps extends IClassName {
   changeUserInfo: UserStore.IChangeUserInfo;
   config: GlobalStore.IConfig;
   changeConfig: GlobalStore.IChangeConfig;
+  userList: UserStore.IUserInfo[];
+  getUserList: () => void;
 }
 
 @inject(
   (store: IStore): ISettingAdminProps => {
-    const { userInfo, changeUserInfo } = store.userStore;
+    const { userInfo, changeUserInfo, userList, getUserList } = store.userStore;
     const { token } = store.userStore.tokenStore;
     const { config, changeConfig } = store.globalStore;
-    return { userInfo, token, changeUserInfo, config, changeConfig };
+    return { userInfo, token, changeUserInfo, config, changeConfig, userList, getUserList };
   }
 )
 @observer
 class SettingAdmin extends React.Component<ISettingAdminProps> {
-
   public render() {
-    const { className, userInfo, token, changeUserInfo, config, changeConfig } = this.props;
+    const { className, userInfo, token, changeUserInfo, config, changeConfig, userList, getUserList } = this.props;
     return (
       <div className={className}>
         <div>
-          <User userInfo={userInfo} token={token} changeUserInfo={changeUserInfo} />
+          <User userInfo={userInfo} token={token} changeUserInfo={changeUserInfo} userList={userList} getUserList={getUserList} />
         </div>
         <div>
           <Config config={config} token={token} changeConfig={changeConfig} />
@@ -56,7 +57,11 @@ export default styled(SettingAdmin)`
 
     .userline {
       border-top: 1px solid #eee;
-      margin: 40px 0;
+      margin: 30px 0;
+    }
+    .userlist{
+      height: 250px;
+      overflow: auto;
     }
   }
 

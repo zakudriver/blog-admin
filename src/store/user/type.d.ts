@@ -5,9 +5,11 @@ export as namespace UserStore;
 export interface IUserStore extends userStore {}
 
 export interface IUserInfo {
+  _id?: string;
   username: string;
   permission: number;
   avatar: string;
+  key?: string | number;
 }
 
 export interface IOnLogin {

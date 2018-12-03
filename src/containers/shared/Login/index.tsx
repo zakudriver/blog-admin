@@ -60,14 +60,11 @@ class Login extends React.Component<ILoginProps, ILoginState> {
   }
 
   public render() {
+    const { className, config, onLogin } = this.props;
     return (
-      <div className={this.props.className}>
-        <LoginDrawer
-          isDrawer={this.state.isDrawer}
-          config={this.props.config}
-          login={this.props.onLogin}
-        />
-        <LoginMain config={this.props.config} onDrawer={this.onDrawer} closeDrawer={this.closeDrawer} {...this.state} />
+      <div className={className}>
+        <LoginDrawer isDrawer={this.state.isDrawer} config={config} login={onLogin} />
+        <LoginMain config={config} onDrawer={this.onDrawer} closeDrawer={this.closeDrawer} {...this.state} />
       </div>
     );
   }

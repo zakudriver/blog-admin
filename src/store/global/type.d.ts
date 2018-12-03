@@ -5,6 +5,7 @@ export as namespace GlobalStore;
 export interface IGlobalStore extends globalStore {}
 
 export interface IConfig {
+  logo: string;
   primaryColor: string;
   drawerColor: string;
   title: string;

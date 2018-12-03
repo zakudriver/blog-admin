@@ -35,7 +35,7 @@ export default class Config extends React.Component<IConfigProps> {
     }
   };
 
-  public onChangeAvatar = (url: string) => {};
+  public onChangeLogo = (url: string) => {};
 
   public render() {
     const { config, token } = this.props;
@@ -55,7 +55,12 @@ export default class Config extends React.Component<IConfigProps> {
         <h6>Config</h6>
         <Form className={this.props.className}>
           <FormItem {...formItemLayout} label="Logo">
-            <Upload token={token} action={`${API}/upload/avatar`} onChange={this.onChangeAvatar} avatarUrl={''} />
+            <Upload
+              token={token}
+              action={`${API}/upload/avatar`}
+              onChange={this.onChangeConfig('logo')}
+              avatarUrl={config.logo}
+            />
           </FormItem>
           <FormItem {...formItemLayout} label="Title">
             <Input placeholder="" defaultValue={config.title} onChange={this.onChangeConfig('title')} />

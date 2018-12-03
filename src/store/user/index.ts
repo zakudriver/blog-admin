@@ -10,7 +10,11 @@ export class UserStore extends StoreExtends {
     permission: 3
   };
 
+  @observable
   userInfoForm: UserStore.IUserInfoForm | object = {};
+
+  @observable
+  userList: UserStore.IUserInfo[] = [];
 
   tokenStore: TokenStore;
   constructor(tStore: TokenStore) {
@@ -20,6 +24,7 @@ export class UserStore extends StoreExtends {
 
   init() {
     this.getUserInfo();
+    this.getUserList();
   }
 
   @action
@@ -45,6 +50,19 @@ export class UserStore extends StoreExtends {
       if (res.code === 0) {
         this.userInfo = res.data;
         this.userInfoForm = res.data;
+      }
+    });
+  };
+
+  @action
+  getUserList = async () => {
+    const res = await this.userApi$$.getUserList();
+    runInAction(() => {
+      if (res.code === 0) {
+        this.userList = res.data.rows.map((i: UserStore.IUserInfo, idx: number) => {
+          i.key = idx;
+          return i;
+        });
       }
     });
   };

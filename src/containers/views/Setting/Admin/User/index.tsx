@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { Input, Form } from 'antd';
+import { Input, Form, Table, Button, Avatar, Modal } from 'antd';
 import { API } from '@/service';
 import { Upload } from '@/components/common';
-
-// import { FormComponentProps } from 'antd/lib/form';
-// import styled from '@/styles';
+import { PermissionMap } from '@/constants/map';
+import { ComponentExtends } from '@/utils/extends';
 
 const FormItem = Form.Item;
 
@@ -12,6 +11,8 @@ interface IUserProps extends IClassName {
   userInfo: UserStore.IUserInfo;
   token: string;
   changeUserInfo: UserStore.IChangeUserInfo;
+  userList: UserStore.IUserInfo[];
+  getUserList: () => void;
 }
 
 interface IUserState {
@@ -19,7 +20,7 @@ interface IUserState {
   avatarUrl: string;
 }
 
-class User extends React.Component<IUserProps, IUserState> {
+class User extends ComponentExtends<IUserProps, IUserState> {
   constructor(props: IUserProps) {
     super(props);
     this.state = {
@@ -27,22 +28,6 @@ class User extends React.Component<IUserProps, IUserState> {
       avatarUrl: props.userInfo.avatar
     };
   }
-
-  // public onChangeAvatar = (info: UploadChangeParam) => {
-  //   console.log('info');
-  //   console.log(info);
-  //   if (info.file.status === 'uploading') {
-  //     this.setState({ loading: true });
-  //     return;
-  //   }
-  //   if (info.file.status === 'done') {
-  //     this.props.changeUserInfo({ avatar: info.file.response.data });
-  //     this.setState({
-  //       avatarUrl: info.file.response.data,
-  //       loading: false
-  //     });
-  //   }
-  // };
 
   public onChangeAvatar = (url: string) => {
     console.log('url');
@@ -54,8 +39,27 @@ class User extends React.Component<IUserProps, IUserState> {
     this.props.changeUserInfo({ [key]: e.target.value });
   };
 
+  public onDelete = (row: UserStore.IUserInfo) => async () => {
+    Modal.confirm({
+      title: 'Warning',
+      content: 'Bla bla ...',
+      okText: 'ok',
+      okType: 'danger',
+      cancelText: 'no',
+      onOk: async () => {
+        const res = await this.userApi$$.removeUser({ _id: row._id });
+        if (res.code === 0) {
+          this.$message.success(res.msg);
+          this.props.getUserList();
+        } else {
+          this.$message.error(res.msg);
+        }
+      }
+    });
+  };
+
   public render() {
-    const { userInfo, token } = this.props;
+    const { userInfo, token, userList } = this.props;
 
     const formItemLayout = {
       labelCol: {
@@ -67,6 +71,42 @@ class User extends React.Component<IUserProps, IUserState> {
         sm: { span: 14 }
       }
     };
+
+    const columns = [
+      {
+        title: 'Avatar',
+        dataIndex: 'avatar',
+        key: 'avatar',
+        render: (text: any, record: any, index: any) => <Avatar shape="square" icon="user" src={text} />
+      },
+      {
+        title: 'Name',
+        dataIndex: 'username',
+        key: 'name'
+      },
+      {
+        title: 'Permission',
+        dataIndex: 'permission',
+        key: 'permission',
+        render: (text: any, record: any, index: any) => PermissionMap.get(text)
+      },
+      {
+        title: 'Action',
+        dataIndex: '',
+        key: 'x',
+        render: (text: any, record: any, index: any) => {
+          if (text.permission === 0) {
+            return <span>-</span>;
+          } else {
+            return (
+              <Button type="danger" onClick={this.onDelete(text)}>
+                Delete
+              </Button>
+            );
+          }
+        }
+      }
+    ];
     return (
       <div>
         <div>
@@ -87,6 +127,10 @@ class User extends React.Component<IUserProps, IUserState> {
           </Form>
         </div>
         <div className="userline" />
+
+        <div className="userlist">
+          <Table columns={columns} dataSource={userList} pagination={false} />
+        </div>
       </div>
     );
   }
