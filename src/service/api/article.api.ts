@@ -12,7 +12,7 @@ class ArticleApi {
   }
 
   @GET({
-    url: ''
+    url: '/pro'
   })
   async getArticle(opt?: any) {
     const res: IAxiosResponse = await axios(opt);

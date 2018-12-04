@@ -146,7 +146,6 @@ function ExpandedTable(props: IExpandedTableProps) {
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Email', dataIndex: 'email', key: 'email' },
-    { title: 'Text', dataIndex: 'text', key: 'text' },
     {
       title: 'Action',
       dataIndex: '',
@@ -158,7 +157,9 @@ function ExpandedTable(props: IExpandedTableProps) {
       )
     }
   ];
-  return <Table columns={columns} pagination={false} expandedRowRender={record => <p>{record.text}</p>} />;
+  return (
+    <Table columns={columns} pagination={false} dataSource={props.data} expandedRowRender={record => <p>{record.text}</p>} />
+  );
 }
 
 export default styled(Article)`
