@@ -40,7 +40,7 @@ export class GlobalStore extends StoreExtends {
 
   @action
   getConfig = async () => {
-    const res = await this.configApi$$.getConfig();
+    const res = await this.configApi$$.getAdminConfig();
     runInAction(() => {
       if (res.code === 0) {
         this.config = res.data;
@@ -84,7 +84,7 @@ export class GlobalStore extends StoreExtends {
 
   @action
   updateConfig = async () => {
-    const res = await this.configApi$$.updateConfig(this.config);
+    const res = await this.configApi$$.updateAdminConfig(this.config);
     runInAction(() => {
       if (res.code === 0) {
         this.$message.success(res.msg);

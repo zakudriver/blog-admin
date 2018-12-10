@@ -23,6 +23,7 @@ declare global {
     articleStore: ArticleStore.IArticleStore;
     messageStore: MessageStore.IMessageStore;
     routerStore: RouterStore.IRouterStore;
+    frontStore: FrontStore.IFrontStore;
   }
 }
 

@@ -95,7 +95,7 @@ class User extends ComponentExtends<IUserProps, IUserState> {
         dataIndex: '',
         key: 'x',
         render: (text: any, record: any, index: any) => {
-          if (text.permission === 0) {
+          if (text.permission === 0 || userInfo.permission < text.permission) {
             return <span>-</span>;
           } else {
             return (

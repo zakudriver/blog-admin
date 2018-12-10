@@ -15,7 +15,7 @@ const handleloadableToolbarComponent = (component: () => Promise<any>) =>
 
 export const loadableComponents = {
   Home: handleloadableComponent(() => import(/* webpackChunkName: "home" */ '@/containers/views/Home')),
-  SettingBlog: handleloadableComponent(() => import(/* webpackChunkName: "settingBlog" */ '@/containers/views/Setting/Blog')),
+  SettingFront: handleloadableComponent(() => import(/* webpackChunkName: "settingFront" */ '@/containers/views/Setting/Front')),
   SettingAdmin: handleloadableComponent(() => import(/* webpackChunkName: "settingAdmin" */ '@/containers/views/Setting/Admin')),
   Editor: handleloadableComponent(() => import(/* webpackChunkName: "editor" */ '@/containers/views/Editor')),
   Message: handleloadableComponent(() => import(/* webpackChunkName: "message" */ '@/containers/views/Message')),
@@ -34,8 +34,8 @@ export const loadableToolbarComponents = {
   SettingAdminToolbar: handleloadableToolbarComponent(() =>
     import(/* webpackChunkName: "settingAdminToolbar" */ '@/containers/views/Setting/Admin/Toolbar')
   ),
-  SettingBlogToolbar: handleloadableToolbarComponent(() =>
-    import(/* webpackChunkName: "settingAdminToolbar" */ '@/containers/views/Setting/Blog/Toolbar')
+  SettingFrontToolbar: handleloadableToolbarComponent(() =>
+    import(/* webpackChunkName: "settingAdminToolbar" */ '@/containers/views/Setting/Front/Toolbar')
   )
 };
 
@@ -102,11 +102,11 @@ export const menu: IMenu[] = [
   {
     key: '51',
     parentKey: '5',
-    title: 'Blog',
+    title: 'Front',
     icon: 'home',
-    path: '/setting/blog',
-    component: 'SettingBlog',
-    toolbarComponent: 'SettingBlogToolbar',
+    path: '/setting/front',
+    component: 'SettingFront',
+    toolbarComponent: 'SettingFrontToolbar',
     exact: true
   },
   {
