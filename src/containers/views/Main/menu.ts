@@ -18,7 +18,7 @@ export const loadableComponents = {
   SettingFront: handleloadableComponent(() => import(/* webpackChunkName: "settingFront" */ '@/containers/views/Setting/Front')),
   SettingAdmin: handleloadableComponent(() => import(/* webpackChunkName: "settingAdmin" */ '@/containers/views/Setting/Admin')),
   Editor: handleloadableComponent(() => import(/* webpackChunkName: "editor" */ '@/containers/views/Editor')),
-  Message: handleloadableComponent(() => import(/* webpackChunkName: "message" */ '@/containers/views/Message')),
+  // Message: handleloadableComponent(() => import(/* webpackChunkName: "message" */ '@/containers/views/Message')),
   Article: handleloadableComponent(() => import(/* webpackChunkName: "article" */ '@/containers/views/Article'))
 };
 
@@ -85,14 +85,14 @@ export const menu: IMenu[] = [
     toolbarComponent: 'ArticleToolbar',
     exact: true
   },
-  {
-    key: '4',
-    title: 'Message',
-    icon: 'message',
-    path: '/message',
-    component: 'Message',
-    exact: true
-  },
+  // {
+  //   key: '4',
+  //   title: 'Message',
+  //   icon: 'message',
+  //   path: '/message',
+  //   component: 'Message',
+  //   exact: true
+  // },
   {
     key: '5',
     title: 'Setting',

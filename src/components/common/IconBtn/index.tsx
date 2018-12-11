@@ -8,7 +8,7 @@ interface IIconBtnProps extends IClassName {
   hoverColor?: string | boolean;
   type: string;
   iconTheme?: 'filled' | 'outlined' | 'twoTone';
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const IconBtn = ({ type, iconTheme, onClick, className }: IIconBtnProps) => (
@@ -18,6 +18,7 @@ const IconBtn = ({ type, iconTheme, onClick, className }: IIconBtnProps) => (
 export default styled(IconBtn)`
   font-size: ${props => `${props.size}px`};
   color: ${props => `${props.color === false || props.theme.primaryColor}`};
+  cursor: pointer;
   &:hover {
     color: ${props => `${props.hoverColor === false || props.theme.primaryColor}`};
   }

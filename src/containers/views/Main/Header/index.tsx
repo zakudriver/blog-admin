@@ -6,6 +6,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import styled from '@/styles';
 import { IconBtn } from '@/components/common';
 import { TokenField } from '@/constants';
+import Badgetip from './Badgetip';
 
 interface IHeaderProps extends IClassName {
   isCollapsed?: boolean;
@@ -24,6 +25,7 @@ const Header = ({ className, isCollapsed, onCollapsed, history, children, avatar
       </div>
       <div className="header__center">{children}</div>
       <div className="header__right">
+        <Badgetip />
         <Avatar className={'avatar'} shape="square" size={32} icon="user" src={avatar} />
         <IconBtn
           type="logout"
@@ -64,7 +66,7 @@ export default styled(InjectHeader)`
       padding: 0 20px;
     }
     &__right {
-      width: 80px;
+      width: 120px;
       display: flex;
       justify-content: space-between;
       align-items: center;

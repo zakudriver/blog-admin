@@ -1,25 +1,23 @@
-import { observable, action, runInAction } from 'mobx';
+import { observable } from 'mobx';
 import { StoreExtends } from '@/utils/extends';
-import { MessagePage } from '@/constants/enum';
+import { io } from '@/service/socketio';
 
 export class MessageStore extends StoreExtends {
   @observable
-  message: MessageStore.IMessageList = { count: 0, rows: [] };
+  message: MessageStore.IMessage[] = [];
 
-  @observable
-  isMessageLoading: boolean = false;
+  constructor() {
+    super();
 
-  @action
-  getMessage: MessageStore.IGetMessage = async (index = MessagePage.Index, limit = MessagePage.Limit) => {
-    this.isMessageLoading = true;
-    const res = await this.messageApi$$.getMessage({ index, limit });
-    runInAction(() => {
-      this.isMessageLoading = false;
-      if (res.code === 0) {
-        this.message = res.data;
-      }
+    this.init();
+  }
+
+  init() {
+    io.emit('Message');
+    io.on('Message', d => {
+      console.log(d);
     });
-  };
+  }
 }
 
 export default new MessageStore();

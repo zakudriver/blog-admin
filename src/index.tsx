@@ -38,13 +38,3 @@ const render = (Component: React.ComponentClass<any>) => {
 
 render(App);
 registerServiceWorker();
-
-import { socket } from '@/service/socketIO';
-
-socket.on('connect', () => {
-  console.log('connect');
-});
-
-socket.on('news', (data: string) => {
-  console.log(data);
-});
