@@ -13,7 +13,7 @@ export class MessageStore extends StoreExtends {
   }
 
   init() {
-    io.emit('Message');
+    io.emit('SubscribeMessage');
     io.on('Message', d => {
       console.log(d);
     });

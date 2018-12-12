@@ -5,7 +5,7 @@ const token = tokenStore.token;
 
 const socketUrl = 'http://localhost:9999';
 
-type Event = 'Message';
+type Event = 'Message' | 'SubscribeMessage';
 
 export class SocketIO {
   private _socket: SocketIOClient.Socket;
