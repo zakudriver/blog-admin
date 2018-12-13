@@ -5,6 +5,8 @@ export class TokenStore {
   @observable
   token = 'Bearer ' + localStorage.getItem(TokenField) || '';
 
+  constructor() {}
+
   @action
   changeToken = (token: string) => {
     this.token = 'Bearer ' + token;

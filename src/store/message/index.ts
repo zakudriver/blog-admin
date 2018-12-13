@@ -8,13 +8,12 @@ export class MessageStore extends StoreExtends {
 
   constructor() {
     super();
-
     this.init();
   }
 
   init() {
     io.emit('SubscribeMessage');
-    io.on('Message', d => {
+    io.on('Message', (d: any) => {
       console.log(d);
     });
   }

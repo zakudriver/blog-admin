@@ -1,21 +1,20 @@
 import * as socketio from 'socket.io-client';
 import tokenStore from '@/store/user/token';
 
-const token = tokenStore.token;
-
 const socketUrl = 'http://localhost:9999';
 
 type Event = 'Message' | 'SubscribeMessage';
 
 export class SocketIO {
+  private _socketUrl = socketUrl;
   private _socket: SocketIOClient.Socket;
-  constructor(url: string) {
-    this._socket = socketio(url);
+  constructor() {
+    this._socket = socketio(this._socketUrl);
   }
 
   emit(event: Event, params?: any) {
     const arg = {
-      token,
+      token: tokenStore.token,
       params
     };
     this._socket.emit(event, arg);
@@ -28,4 +27,4 @@ export class SocketIO {
   }
 }
 
-export const io = new SocketIO(socketUrl);
+export const io = new SocketIO();
