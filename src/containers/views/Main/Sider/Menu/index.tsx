@@ -39,7 +39,6 @@ class SiderMenu extends React.Component<ISiderMenuProps, ISiderMenuState> {
     reaction(
       () => this.props.currentRouter!,
       currentRouter => {
-        console.log(currentRouter.pathname);
         this.onCurrentMenu(currentRouter.pathname);
       }
     );

@@ -8,6 +8,7 @@ export interface IMessageStore extends messageStore {}
 // Message
 export interface IMessage {
   _id?: string;
+  name: string;
   email: string;
   time: string;
   text: string;

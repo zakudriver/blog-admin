@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { observable, runInAction } from 'mobx';
 import { StoreExtends } from '@/utils/extends';
 import { io } from '@/service/socketio';
 
@@ -8,13 +8,15 @@ export class MessageStore extends StoreExtends {
 
   constructor() {
     super();
-    this.init();
   }
 
   init() {
     io.emit('SubscribeMessage');
     io.on('Message', (d: any) => {
       console.log(d);
+      runInAction(() => {
+        this.message = d;
+      });
     });
   }
 }

@@ -11,13 +11,14 @@ import Badgetip from './Badgetip';
 interface IHeaderProps extends IClassName {
   isCollapsed?: boolean;
   onCollapsed?: () => void;
+  message?: MessageStore.IMessage[];
   children: JSX.Element;
   avatar: string;
 }
 
 interface IHeaderRouteProps extends IHeaderProps, RouteComponentProps<any> {}
 
-const Header = ({ className, isCollapsed, onCollapsed, history, children, avatar }: IHeaderRouteProps) => {
+const Header = ({ className, isCollapsed, onCollapsed, history, children, avatar, message }: IHeaderRouteProps) => {
   return (
     <Layout.Header className={className} style={{ background: '#fff', padding: '0 24px' }}>
       <div className="header__left">
@@ -25,7 +26,7 @@ const Header = ({ className, isCollapsed, onCollapsed, history, children, avatar
       </div>
       <div className="header__center">{children}</div>
       <div className="header__right">
-        <Badgetip />
+        <Badgetip source={message!} />
         <Avatar className={'avatar'} shape="square" size={32} icon="user" src={avatar} />
         <IconBtn
           type="logout"
@@ -44,9 +45,12 @@ const Header = ({ className, isCollapsed, onCollapsed, history, children, avatar
 
 const InjectHeader = inject((store: IStore) => {
   const { isCollapsed, onCollapsed } = store.globalStore;
+  const { message } = store.messageStore;
+
   return {
     isCollapsed,
-    onCollapsed
+    onCollapsed,
+    message
   };
 })(observer(withRouter(Header)));
 
