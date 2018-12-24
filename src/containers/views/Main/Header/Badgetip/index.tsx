@@ -1,23 +1,29 @@
 import * as React from 'react';
-import { Badge, Popover, List } from 'antd';
+import { Badge, Popover } from 'antd';
 import styled from '@/styles';
 import { IconBtn } from '@/components/common';
 
 interface IBadgetipProps extends IClassName {
   source: MessageStore.IMessage[];
+  config: GlobalStore.IConfig;
+  onAlready: () => void;
 }
 
 class Badgetip extends React.Component<IBadgetipProps> {
   public onCheck = () => {};
 
   public render() {
-    const { source } = this.props;
-    const text = <span>Message</span>;
+    const { source, config, onAlready } = this.props;
 
     return (
       <div className={this.props.className}>
-        <Badge dot={false}>
-          <Popover placement="bottom" title={text} content={<Content source={source} />} trigger="click">
+        <Badge dot={source.length ? true : false}>
+          <Popover
+            placement="bottom"
+            title={<span>Message</span>}
+            content={<Content source={source} config={config} onAlready={onAlready} />}
+            trigger="click"
+          >
             <IconBtn type="notification" onClick={this.onCheck} />
           </Popover>
         </Badge>
@@ -26,35 +32,56 @@ class Badgetip extends React.Component<IBadgetipProps> {
   }
 }
 
-interface IContent {
+interface IContent extends IClassName {
   source: MessageStore.IMessage[];
+  config: GlobalStore.IConfig;
+  onAlready: () => void;
 }
 
-const ContentWrapper = styled('div')`
+const Content = styled(({ source, className, onAlready }: IContent) => (
+  <div className={className}>
+    {source.length ? (
+      <ul>
+        {source.map((i, idx) => (
+          <li key={idx}>
+            <label className="message__name">{i.name}:</label>
+            <p className="message__text">{i.text} </p>
+            <a href="https://ant.design">
+              <h6>《{i.article.title}》</h6>
+            </a>
+            <time>{i.time}</time>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <div>no more</div>
+    )}
+    {source.length ? <a onClick={onAlready}>Already</a> : null}
+  </div>
+))`
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+  }
+  li {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e1e1e1;
+  }
+
+  h6 {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
   .message {
     &__name {
-      text-align: right;
+      color: ${props => props.config.primaryColor};
+    }
+    &__text {
+      color: rgba(0, 0, 0, 0.45);
+      margin-bottom: 4px;
     }
   }
 `;
-
-const Content = ({ source }: IContent) => (
-  <ContentWrapper>
-    <List
-      itemLayout="vertical"
-      dataSource={source}
-      renderItem={(i: MessageStore.IMessage) => (
-        <List.Item>
-          <List.Item.Meta title={<a href="https://ant.design">《{i.article.title}》</a>} description={i.text} />
-          <div className="message__name">
-            <label>—— {i.name}</label>
-          </div>
-          <time>{i.time}</time>
-        </List.Item>
-      )}
-    />
-    <a>Already</a>
-  </ContentWrapper>
-);
 
 export default Badgetip;

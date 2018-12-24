@@ -1,6 +1,7 @@
 import { observable, runInAction } from 'mobx';
 import { StoreExtends } from '@/utils/extends';
 import { io } from '@/service/socketio';
+import { Event } from '@/constants/enum';
 
 export class MessageStore extends StoreExtends {
   @observable
@@ -11,14 +12,26 @@ export class MessageStore extends StoreExtends {
   }
 
   init() {
-    io.emit('SubscribeMessage');
-    io.on('Message', (d: any) => {
-      console.log(d);
+    io.emit(Event.SubscribeMessage);
+    io.on(Event.Message, res => {
+      console.log(res);
       runInAction(() => {
-        this.message = d;
+        if (res.code === 0) {
+          if (Array.isArray(res.data)) {
+            this.message = res.data;
+          } else {
+            this.message = [];
+          }
+        }
       });
     });
   }
+
+  onAlready = () => {
+    if (this.message.length) {
+      io.emit(Event.AlreadyMessage);
+    }
+  };
 }
 
 export default new MessageStore();
