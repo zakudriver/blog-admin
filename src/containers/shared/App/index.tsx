@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import * as Loadable from 'react-loadable';
 import PrivateRoute from '@/containers/shared/PrivateRoute';
@@ -40,6 +40,8 @@ class App extends React.Component<IAppProps> {
       <Router>
         <Switch>
           <Route exact path="/login" component={Login} />
+          {/* <PrivateRoute path="/" component={Main} /> */}
+          <Route path="/" exact render={() => <Redirect to={'/article'} />} />
           <PrivateRoute path="/" component={Main} />
           <Route component={NotFound} />
         </Switch>

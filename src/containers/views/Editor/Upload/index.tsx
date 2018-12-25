@@ -28,9 +28,8 @@ class Upload extends React.Component<IUploadProps, IUploadState> {
   public onCancelPreview = () => this.setState({ previewVisible: false });
 
   public onPreviewUpload = (file: UploadFile) => {
-    console.log(file);
     this.setState({
-      previewImage: file.thumbUrl || file.url!,
+      previewImage: file.url || file.response.data.url,
       previewVisible: true
     });
   };
@@ -88,6 +87,7 @@ class Upload extends React.Component<IUploadProps, IUploadState> {
         </Uploading>
         <Modal visible={previewVisible} footer={null} onCancel={this.onCancelPreview}>
           <img style={{ width: '100%' }} src={previewImage} />
+          <p>{previewImage}</p>
         </Modal>
       </div>
     );

@@ -7,7 +7,7 @@ import { formatDateTime } from '@/utils';
 import { Preview } from '@/components/common';
 import styled from '@/styles';
 
-import Edit from './Edit';
+import CodeMirror from './Edit/CodeMirror';
 import Upload from './Upload';
 
 interface IEditorProps extends IClassName, IWithRouterProps {
@@ -107,12 +107,17 @@ class Editor extends React.Component<IEditorProps> {
 
         <Row gutter={10} className="edit__preview">
           <Col span={12} className="edit__wrapper">
-            <Edit
+            {/* <Edit
               className="edit"
               value={this.props.article.content}
               onChange={this.onChangeArticleContent}
               type={this.props.selectionEdit}
               language={this.props.selectionLanguage}
+            /> */}
+            <CodeMirror
+              value={this.props.article.content}
+              language={this.props.selectionLanguage}
+              onChange={this.onChangeArticleContent}
             />
           </Col>
           <Col span={12} className="preview__wrapper">

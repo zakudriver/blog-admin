@@ -59,10 +59,13 @@ const Content = styled(({ source, className, onAlready }: IContent) => (
     {source.length ? <a onClick={onAlready}>Already</a> : null}
   </div>
 ))`
+  width: 180px;
   ul {
     list-style-type: none;
     padding: 0;
     margin: 0 0 10px 0;
+    overflow-y: scroll;
+    max-height: 300px;
   }
   li {
     padding-bottom: 10px;
@@ -80,6 +83,7 @@ const Content = styled(({ source, className, onAlready }: IContent) => (
     &__text {
       color: rgba(0, 0, 0, 0.45);
       margin-bottom: 4px;
+      word-wrap: break-word;
     }
   }
 `;

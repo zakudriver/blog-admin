@@ -14,7 +14,7 @@ const handleloadableToolbarComponent = (component: () => Promise<any>) =>
   });
 
 export const loadableComponents = {
-  Home: handleloadableComponent(() => import(/* webpackChunkName: "home" */ '@/containers/views/Home')),
+  // Home: handleloadableComponent(() => import(/* webpackChunkName: "home" */ '@/containers/views/Home')),
   SettingFront: handleloadableComponent(() => import(/* webpackChunkName: "settingFront" */ '@/containers/views/Setting/Front')),
   SettingAdmin: handleloadableComponent(() => import(/* webpackChunkName: "settingAdmin" */ '@/containers/views/Setting/Admin')),
   Editor: handleloadableComponent(() => import(/* webpackChunkName: "editor" */ '@/containers/views/Editor')),
@@ -59,14 +59,14 @@ export interface IMenuTree extends IMenu {
 }
 
 export const menu: IMenu[] = [
-  {
-    key: '1',
-    title: 'Home',
-    icon: 'home',
-    path: '/',
-    component: 'Home',
-    exact: true
-  },
+  // {
+  //   key: '1',
+  //   title: 'Home',
+  //   icon: 'home',
+  //   path: '/',
+  //   component: 'Home',
+  //   exact: true
+  // },
   {
     key: '2',
     title: 'Editor',

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Select, Radio, Button, Modal } from 'antd';
+import { Select, Button, Modal } from 'antd';
 import { inject, observer } from 'mobx-react';
 import styled from '@/styles';
 import { ActionGroup } from '@/components/common';
@@ -11,8 +11,8 @@ import { RadioChangeEvent } from 'antd/lib/radio';
 // import * as moment from 'moment';
 
 const Option = Select.Option;
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
+// const RadioButton = Radio.Button;
+// const RadioGroup = Radio.Group;
 
 const ActionItem = ActionGroup.ActionItem;
 const ActionLine = ActionGroup.ActionLine;
@@ -157,12 +157,12 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
     return (
       <div className={this.props.className}>
         <ActionGroup direction="right">
-          <ActionItem>
+          {/* <ActionItem>
             <RadioGroup onChange={this.onChangeEditor} defaultValue={this.props.selectionEdit}>
               <RadioButton value="Monaco">Monaco</RadioButton>
               <RadioButton value="CodeMirror">CodeMirror</RadioButton>
             </RadioGroup>
-          </ActionItem>
+          </ActionItem> */}
 
           <ActionItem>
             <Select

@@ -45,7 +45,7 @@ const basePlugins = [
     to: config.assetsDirectory,
     ignore: ['.*']
   }]),
-  new MonacoWebpackPlugin(),
+  // new MonacoWebpackPlugin(),
   new AntDesignThemePlugin(options)
 ];
 
