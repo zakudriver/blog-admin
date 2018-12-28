@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import { ComponentExtends } from '@/utils/extends';
 import { withRouterProps } from '@/components/utils/withComponents';
 import { TokenField } from '@/constants';
+// import messageStore from '@/store/message';
 
 interface IPrivateRouteProps extends IClassName, IWithRouterProps {
   component: any;
@@ -21,7 +22,9 @@ export default class PrivateRoute extends ComponentExtends<IPrivateRouteProps> {
 
     if (token) {
       const res = await this.userApi$$.auth();
-      if (res.code !== 0) {
+      if (res.code === 0) {
+        // messageStore.init();
+      } else {
         this.backLogin();
       }
     } else {
