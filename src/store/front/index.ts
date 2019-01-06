@@ -23,7 +23,7 @@ export class FrontStore extends StoreExtends {
   getFrontConfig = async () => {
     const res = await this.configApi$$.getFrontConfig();
     runInAction(() => {
-      if (res.code === 0) {
+      if (res.code === 0 && res.data) {
         this.frontConfig = res.data;
       }
     });

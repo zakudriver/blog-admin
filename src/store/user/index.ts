@@ -11,7 +11,13 @@ export class UserStore extends StoreExtends {
   };
 
   @observable
-  userInfoForm: UserStore.IUserInfoForm | object = {};
+  userInfoForm: UserStore.IUserInfoForm = {
+    username: '',
+    avatar: '',
+    permission: 3,
+    oldPassword: '',
+    newPassword: ''
+  };
 
   @observable
   userList: UserStore.IUserInfo[] = [];
@@ -75,7 +81,7 @@ export class UserStore extends StoreExtends {
 
   @action
   updateUserInfo = async () => {
-    const form = this.userInfoForm as UserStore.IUserInfoForm;
+    const form = this.userInfoForm;
 
     if ((form.oldPassword && form.newPassword) || (!form.oldPassword && !form.newPassword)) {
       const res = await this.userApi$$.updateUser(this.userInfoForm);
@@ -83,7 +89,8 @@ export class UserStore extends StoreExtends {
         if (res.code === 0) {
           this.$message.success(res.msg);
           this.userInfo = res.data;
-          this.userInfoForm = {};
+          this.userInfoForm = res.data;
+          this.getUserList();
         }
       });
     } else {

@@ -5,7 +5,7 @@ import User from './User';
 import Config from './Config';
 
 interface ISettingAdminProps extends IClassName {
-  userInfo: UserStore.IUserInfo;
+  userInfoForm: UserStore.IUserInfoForm;
   token: string;
   changeUserInfo: UserStore.IChangeUserInfo;
   config: GlobalStore.IConfig;
@@ -16,20 +16,20 @@ interface ISettingAdminProps extends IClassName {
 
 @inject(
   (store: IStore): ISettingAdminProps => {
-    const { userInfo, changeUserInfo, userList, getUserList } = store.userStore;
+    const { userInfoForm, changeUserInfo, userList, getUserList } = store.userStore;
     const { token } = store.userStore.tokenStore;
     const { config, changeConfig } = store.globalStore;
-    return { userInfo, token, changeUserInfo, config, changeConfig, userList, getUserList };
+    return { userInfoForm, token, changeUserInfo, config, changeConfig, userList, getUserList };
   }
 )
 @observer
 class SettingAdmin extends React.Component<ISettingAdminProps> {
   public render() {
-    const { className, userInfo, token, changeUserInfo, config, changeConfig, userList, getUserList } = this.props;
+    const { className, userInfoForm, token, changeUserInfo, config, changeConfig, userList, getUserList } = this.props;
     return (
       <div className={className}>
         <div>
-          <User userInfo={userInfo} token={token} changeUserInfo={changeUserInfo} userList={userList} getUserList={getUserList} />
+          <User userInfoForm={userInfoForm} token={token} changeUserInfo={changeUserInfo} userList={userList} getUserList={getUserList} />
         </div>
         <div>
           <Config config={config} token={token} changeConfig={changeConfig} />

@@ -4,34 +4,21 @@ import { API } from '@/service';
 import { Upload } from '@/components/common';
 import { PermissionMap } from '@/constants/map';
 import { ComponentExtends } from '@/utils/extends';
+import { observer } from 'mobx-react';
 
 const FormItem = Form.Item;
 
 interface IUserProps extends IClassName {
-  userInfo: UserStore.IUserInfo;
+  userInfoForm: UserStore.IUserInfoForm;
   token: string;
   changeUserInfo: UserStore.IChangeUserInfo;
   userList: UserStore.IUserInfo[];
   getUserList: () => void;
 }
 
-interface IUserState {
-  loading: boolean;
-  avatarUrl: string;
-}
-
-class User extends ComponentExtends<IUserProps, IUserState> {
-  constructor(props: IUserProps) {
-    super(props);
-    this.state = {
-      loading: false,
-      avatarUrl: props.userInfo.avatar
-    };
-  }
-
+@observer
+class User extends ComponentExtends<IUserProps> {
   public onChangeAvatar = (url: string) => {
-    console.log('url');
-    console.log(url);
     this.props.changeUserInfo({ avatar: url });
   };
 
@@ -59,7 +46,8 @@ class User extends ComponentExtends<IUserProps, IUserState> {
   };
 
   public render() {
-    const { userInfo, token, userList } = this.props;
+    const { userInfoForm, token, userList } = this.props;
+    console.log(userInfoForm);
 
     const formItemLayout = {
       labelCol: {
@@ -95,7 +83,7 @@ class User extends ComponentExtends<IUserProps, IUserState> {
         dataIndex: '',
         key: 'x',
         render: (text: any, record: any, index: any) => {
-          if (text.permission === 0 || userInfo.permission < text.permission) {
+          if (text.permission === 0 || userInfoForm.permission < text.permission) {
             return <span>-</span>;
           } else {
             return (
@@ -113,10 +101,15 @@ class User extends ComponentExtends<IUserProps, IUserState> {
           <h6>User</h6>
           <Form>
             <FormItem {...formItemLayout} label="Avatar">
-              <Upload action={`${API}/upload/avatar`} token={token} onChange={this.onChangeAvatar} avatarUrl={userInfo.avatar} />
+              <Upload
+                action={`${API}/upload/avatar`}
+                token={token}
+                onChange={this.onChangeAvatar}
+                avatarUrl={userInfoForm.avatar}
+              />
             </FormItem>
             <FormItem {...formItemLayout} label="Username">
-              <Input placeholder="" defaultValue={userInfo.username} onChange={this.onChangeUser('username')} />
+              <Input placeholder="" defaultValue={userInfoForm.username} onChange={this.onChangeUser('username')} />
             </FormItem>
             <FormItem {...formItemLayout} label="Old Password">
               <Input type="password" placeholder="" onChange={this.onChangeUser('oldPassword')} />

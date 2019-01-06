@@ -22,8 +22,6 @@ class Upload extends React.Component<IUploadProps, IUploadState> {
   };
 
   public onChangeUpload = (info: UploadChangeParam) => {
-    console.log('info');
-    console.log(info);
     if (info.file.status === 'uploading') {
       this.setState({ loading: true });
       return;

@@ -42,7 +42,7 @@ export class GlobalStore extends StoreExtends {
   getConfig = async () => {
     const res = await this.configApi$$.getAdminConfig();
     runInAction(() => {
-      if (res.code === 0) {
+      if (res.code === 0 && res.data) {
         this.config = res.data;
         window.less.modifyVars({
           '@primary-color': res.data.primaryColor || '#1da57a'

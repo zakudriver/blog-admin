@@ -55,7 +55,16 @@ class CategoryModal extends React.Component<ICategoryModalProps> {
   };
 
   public onRemove = async (row: ArticleStore.ICategories) => {
-    await this.props.removeCategory(row);
+    Modal.confirm({
+      title: 'Warning',
+      content: 'Bla bla ...',
+      okText: 'ok',
+      okType: 'danger',
+      cancelText: 'no',
+      onOk: async () => {
+        await this.props.removeCategory(row);
+      }
+    });
   };
 
   public onSaveCategoryModal = async () => {
