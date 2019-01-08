@@ -9,7 +9,7 @@ import { inject, observer } from 'mobx-react';
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 
-interface ISettingFrontProps extends IClassName {
+interface IFrontProps extends IClassName {
   frontConfig: FrontStore.IFrontConfig;
   changeFrontConfig: FrontStore.IChangeFrontConfig;
   token: string;
@@ -21,12 +21,14 @@ interface ISettingFrontProps extends IClassName {
   return { frontConfig, changeFrontConfig, token };
 })
 @observer
-class SettingFront extends React.Component<ISettingFrontProps> {
-  constructor(props: ISettingFrontProps) {
+class Front extends React.Component<IFrontProps> {
+  constructor(props: IFrontProps) {
     super(props);
   }
 
-  public onChangeConfig = (key: string) => (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+  public onChangeConfig = (key: string) => (
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     this.props.changeFrontConfig({ [key]: e.target.value });
   };
 
@@ -52,7 +54,12 @@ class SettingFront extends React.Component<ISettingFrontProps> {
       <div className={className}>
         <Form>
           <FormItem {...formItemLayout} label="Avatar">
-            <Upload action={`${API}/upload/avatar`} avatarUrl={frontConfig.avatar} token={token} onChange={this.onChangeAvatar}/>
+            <Upload
+              action={`${API}/upload/avatar`}
+              avatarUrl={frontConfig.avatar}
+              token={token}
+              onChange={this.onChangeAvatar}
+            />
           </FormItem>
           <FormItem {...formItemLayout} label="Name">
             <Input placeholder="" value={frontConfig.name} onChange={this.onChangeConfig('name')} />
@@ -69,7 +76,7 @@ class SettingFront extends React.Component<ISettingFrontProps> {
   }
 }
 
-export default styled(SettingFront)`
+export default styled(Front)`
   background-color: #fff;
   height: 100%;
   padding: 30px;

@@ -4,7 +4,7 @@ import styled from '@/styles';
 import User from './User';
 import Config from './Config';
 
-interface ISettingAdminProps extends IClassName {
+interface IAdminProps extends IClassName {
   userInfoForm: UserStore.IUserInfoForm;
   token: string;
   changeUserInfo: UserStore.IChangeUserInfo;
@@ -15,7 +15,7 @@ interface ISettingAdminProps extends IClassName {
 }
 
 @inject(
-  (store: IStore): ISettingAdminProps => {
+  (store: IStore): IAdminProps => {
     const { userInfoForm, changeUserInfo, userList, getUserList } = store.userStore;
     const { token } = store.userStore.tokenStore;
     const { config, changeConfig } = store.globalStore;
@@ -23,13 +23,19 @@ interface ISettingAdminProps extends IClassName {
   }
 )
 @observer
-class SettingAdmin extends React.Component<ISettingAdminProps> {
+class Admin extends React.Component<IAdminProps> {
   public render() {
     const { className, userInfoForm, token, changeUserInfo, config, changeConfig, userList, getUserList } = this.props;
     return (
       <div className={className}>
         <div>
-          <User userInfoForm={userInfoForm} token={token} changeUserInfo={changeUserInfo} userList={userList} getUserList={getUserList} />
+          <User
+            userInfoForm={userInfoForm}
+            token={token}
+            changeUserInfo={changeUserInfo}
+            userList={userList}
+            getUserList={getUserList}
+          />
         </div>
         <div>
           <Config config={config} token={token} changeConfig={changeConfig} />
@@ -39,7 +45,7 @@ class SettingAdmin extends React.Component<ISettingAdminProps> {
   }
 }
 
-export default styled(SettingAdmin)`
+export default styled(Admin)`
   display: flex;
   justify-content: space-between;
   height: 100%;

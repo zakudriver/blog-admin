@@ -15,8 +15,13 @@ const handleloadableToolbarComponent = (component: () => Promise<any>) =>
 
 export const loadableComponents = {
   // Home: handleloadableComponent(() => import(/* webpackChunkName: "home" */ '@/containers/views/Home')),
-  SettingFront: handleloadableComponent(() => import(/* webpackChunkName: "settingFront" */ '@/containers/views/Setting/Front')),
-  SettingAdmin: handleloadableComponent(() => import(/* webpackChunkName: "settingAdmin" */ '@/containers/views/Setting/Admin')),
+  FrontProfile: handleloadableComponent(() =>
+    import(/* webpackChunkName: "settingFront" */ '@/containers/views/Front/Profile')
+  ),
+  FrontCover: handleloadableComponent(() =>
+    import(/* webpackChunkName: "settingFront" */ '@/containers/views/Front/Cover')
+  ),
+  Admin: handleloadableComponent(() => import(/* webpackChunkName: "settingAdmin" */ '@/containers/views/Admin')),
   Editor: handleloadableComponent(() => import(/* webpackChunkName: "editor" */ '@/containers/views/Editor')),
   // Message: handleloadableComponent(() => import(/* webpackChunkName: "message" */ '@/containers/views/Message')),
   Article: handleloadableComponent(() => import(/* webpackChunkName: "article" */ '@/containers/views/Article'))
@@ -31,11 +36,14 @@ export const loadableToolbarComponents = {
   ArticleToolbar: handleloadableToolbarComponent(() =>
     import(/* webpackChunkName: "articleToolbar" */ '@/containers/views/Article/Toolbar')
   ),
-  SettingAdminToolbar: handleloadableToolbarComponent(() =>
-    import(/* webpackChunkName: "settingAdminToolbar" */ '@/containers/views/Setting/Admin/Toolbar')
+  AdminToolbar: handleloadableToolbarComponent(() =>
+    import(/* webpackChunkName: "settingAdminToolbar" */ '@/containers/views/Admin/Toolbar')
   ),
-  SettingFrontToolbar: handleloadableToolbarComponent(() =>
-    import(/* webpackChunkName: "settingAdminToolbar" */ '@/containers/views/Setting/Front/Toolbar')
+  FrontProfileToolbar: handleloadableToolbarComponent(() =>
+    import(/* webpackChunkName: "settingAdminToolbar" */ '@/containers/views/Front/Profile/Toolbar')
+  ),
+  FrontCoverToolbar: handleloadableToolbarComponent(() =>
+    import(/* webpackChunkName: "settingAdminToolbar" */ '@/containers/views/Front/Cover/Toolbar')
   )
 };
 
@@ -85,38 +93,39 @@ export const menu: IMenu[] = [
     toolbarComponent: 'ArticleToolbar',
     exact: true
   },
-  // {
-  //   key: '4',
-  //   title: 'Message',
-  //   icon: 'message',
-  //   path: '/message',
-  //   component: 'Message',
-  //   exact: true
-  // },
+  {
+    key: '4',
+    title: 'Admin',
+    icon: 'setting',
+    path: '/admin',
+    component: 'Admin',
+    toolbarComponent: 'AdminToolbar',
+    exact: true
+  },
   {
     key: '5',
-    title: 'Setting',
+    title: 'Front',
     icon: 'setting',
     children: []
   },
   {
     key: '51',
     parentKey: '5',
-    title: 'Front',
+    title: 'Profile',
     icon: 'home',
-    path: '/setting/front',
-    component: 'SettingFront',
-    toolbarComponent: 'SettingFrontToolbar',
+    path: '/front/profile',
+    component: 'FrontProfile',
+    toolbarComponent: 'FrontProfileToolbar',
     exact: true
   },
   {
     key: '52',
     parentKey: '5',
-    title: 'Admin',
+    title: 'Cover',
     icon: 'home',
-    path: '/setting/admin',
-    component: 'SettingAdmin',
-    toolbarComponent: 'SettingAdminToolbar',
+    path: '/front/cover',
+    component: 'FrontCover',
+    toolbarComponent: 'FrontCoverToolbar',
     exact: true
   }
 ];

@@ -75,6 +75,7 @@ class SiderMenu extends React.Component<ISiderMenuProps, ISiderMenuState> {
   };
 
   public createMenu = (menuTree: IMenuTree[]) => {
+    console.log(menuTree);
     return menuTree.map(i => {
       if (i.children) {
         return (
