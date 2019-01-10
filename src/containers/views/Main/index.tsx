@@ -3,8 +3,9 @@ import { Switch, Route } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { Layout } from 'antd';
 import styled from '@/styles';
-import { withRouterProps } from '@/components/utils/withComponents';
 
+import { InitLoading } from '@/components/common';
+import { withRouterProps } from '@/components/utils/withComponents';
 import { menu, loadableComponents, loadableToolbarComponents } from './menu';
 
 import Sidber from './Sider';
@@ -13,13 +14,15 @@ import Header from './Header';
 interface IMainProps extends IClassName, IWithRouterProps {
   updateRouter: RouterStore.IUpdateCurrentRouter;
   userInfo: UserStore.IUserInfo;
+  isInitLoading: boolean;
 }
 
 @withRouterProps
 @inject((store: IStore) => {
   const { updateRouter } = store.routerStore;
+  const { isInitLoading } = store.globalStore;
   const { userInfo } = store.userStore;
-  return { updateRouter, userInfo };
+  return { updateRouter, userInfo, isInitLoading };
 })
 @observer
 class Main extends React.Component<IMainProps> {
@@ -33,11 +36,14 @@ class Main extends React.Component<IMainProps> {
   }
 
   public render() {
-    return (
-      <Layout className={this.props.className}>
+    const { className, userInfo, isInitLoading } = this.props;
+    return isInitLoading ? (
+      <InitLoading />
+    ) : (
+      <Layout className={className}>
         <Sidber />
         <Layout className="layout__right">
-          <Header avatar={this.props.userInfo.avatar}>
+          <Header avatar={userInfo.avatar}>
             <Switch>
               {menu.map(i => {
                 if (i.toolbarComponent) {

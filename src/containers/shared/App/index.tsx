@@ -3,19 +3,19 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import { inject, observer } from 'mobx-react';
 import * as Loadable from 'react-loadable';
 import PrivateRoute from '@/containers/shared/PrivateRoute';
-import { AppLoading } from '@/components/common';
+// import { AppLoading } from '@/components/common';
 
 const Login = Loadable({
   loader: () => import(/* webpackChunkName: "login" */ '@/containers/shared/Login'),
-  loading: AppLoading
+  loading: () => null
 });
 const Main = Loadable({
   loader: () => import(/* webpackChunkName: "main" */ '@/containers/views/Main'),
-  loading: AppLoading
+  loading: () => null
 });
 const NotFound = Loadable({
   loader: () => import(/* webpackChunkName: "notFound" */ '@/containers/shared/NotFound'),
-  loading: AppLoading
+  loading: () => null
 });
 
 interface IAppProps {

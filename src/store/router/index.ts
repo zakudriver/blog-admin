@@ -2,6 +2,7 @@ import { observable, action, when } from 'mobx';
 import articleStore, { ArticleStore } from '../article';
 import userStore, { UserStore } from '../user';
 import messageStore, { MessageStore } from '../message';
+import frontStore, { FrontStore } from '../front';
 
 export class RouterStore {
   @observable
@@ -10,10 +11,12 @@ export class RouterStore {
   articleStore: ArticleStore;
   userStore: UserStore;
   messageStore: MessageStore;
-  constructor(aStore: ArticleStore, uStore: UserStore, mStore: MessageStore) {
+  frontStore: FrontStore;
+  constructor(aStore: ArticleStore, uStore: UserStore, mStore: MessageStore, fStore: FrontStore) {
     this.articleStore = aStore;
     this.userStore = uStore;
     this.messageStore = mStore;
+    this.frontStore = fStore;
 
     when(
       () => (this.currentRouter ? true : false),
@@ -22,6 +25,7 @@ export class RouterStore {
         this.articleStore.init();
         this.userStore.init();
         this.messageStore.init();
+        this.frontStore.init();
       }
     );
   }
@@ -33,4 +37,4 @@ export class RouterStore {
   };
 }
 
-export default new RouterStore(articleStore, userStore, messageStore);
+export default new RouterStore(articleStore, userStore, messageStore, frontStore);

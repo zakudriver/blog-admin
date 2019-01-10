@@ -10,11 +10,6 @@ export class FrontStore extends StoreExtends {
     description: ''
   };
 
-  constructor() {
-    super();
-    this.init();
-  }
-
   init() {
     this.getFrontConfig();
   }

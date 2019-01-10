@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { toJS } from 'mobx';
-import { Upload as Uploading, Icon, Modal } from 'antd';
+import { Modal } from 'antd';
 
 import styled from '@/styles';
 import { API } from '@/service';
+import { UploadPro } from '@/components/common';
 import { UploadFile, UploadChangeParam } from 'antd/lib/upload/interface';
 
 interface IUploadProps extends IClassName {
@@ -13,30 +14,8 @@ interface IUploadProps extends IClassName {
   removeUploadFile: ArticleStore.IRemoveUploadFile;
 }
 
-interface IUploadState {
-  previewVisible: boolean;
-  previewImage: string;
-  // fileList: any[];
-}
-
-class Upload extends React.Component<IUploadProps, IUploadState> {
-  public state = {
-    previewVisible: false,
-    previewImage: ''
-  };
-
-  public onCancelPreview = () => this.setState({ previewVisible: false });
-
-  public onPreviewUpload = (file: UploadFile) => {
-    this.setState({
-      previewImage: file.url || file.response.data.url,
-      previewVisible: true
-    });
-  };
-
+class Upload extends React.Component<IUploadProps> {
   public onChangeUpload = (fileInfo: UploadChangeParam) => {
-    console.log('..change');
-    console.log(fileInfo);
     this.props.changeArticle({ uploads: fileInfo.fileList });
   };
 
@@ -62,33 +41,17 @@ class Upload extends React.Component<IUploadProps, IUploadState> {
     });
 
   public render() {
-    const { previewVisible, previewImage } = this.state;
+    const { token, uploads } = this.props;
 
     return (
       <div className={this.props.className}>
-        <Uploading
-          name="uploadFile"
+        <UploadPro
+          token={token}
           action={`${API}/upload`}
-          listType="picture-card"
-          multiple={true}
-          headers={{
-            Authorization: this.props.token
-          }}
-          // fileList={this.state.fileList}
-          fileList={toJS(this.props.uploads as UploadFile[])}
-          onPreview={this.onPreviewUpload}
-          onRemove={this.onRemoveUpload}
+          uploads={toJS<any[]>(uploads)}
           onChange={this.onChangeUpload}
-        >
-          <div>
-            <Icon type="plus" />
-            <div>Upload</div>
-          </div>
-        </Uploading>
-        <Modal visible={previewVisible} footer={null} onCancel={this.onCancelPreview}>
-          <img style={{ width: '100%' }} src={previewImage} />
-          <p>{previewImage}</p>
-        </Modal>
+          onRemove={this.onRemoveUpload}
+        />
       </div>
     );
   }

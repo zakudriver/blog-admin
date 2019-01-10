@@ -1,10 +1,10 @@
 import * as Loadable from 'react-loadable';
-import { Loading } from '@/components/common';
+// import { Loading } from '@/components/common';
 
 const handleloadableComponent = (component: () => Promise<any>) =>
   Loadable({
     loader: component,
-    loading: Loading
+    loading: () => null
   });
 
 const handleloadableToolbarComponent = (component: () => Promise<any>) =>

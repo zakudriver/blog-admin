@@ -1,7 +1,7 @@
-import { Loading, AppLoading } from '@/components/common/Loading';
+import { Loading, AppLoading, InitLoading } from '@/components/common/Loading';
 import IconBtn from '@/components/common/IconBtn';
 import ActionGroup from '@/components/common/ActionGroup';
 import Preview from '@/components/common/Preview';
-import Upload from '@/components/common/Upload';
+import { Upload, UploadPro } from '@/components/common/Upload';
 
-export { Loading, AppLoading, IconBtn, ActionGroup, Preview, Upload };
+export { Loading, AppLoading, InitLoading, IconBtn, ActionGroup, Preview, Upload, UploadPro };

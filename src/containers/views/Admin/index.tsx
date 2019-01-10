@@ -14,38 +14,53 @@ interface IAdminProps extends IClassName {
   getUserList: () => void;
 }
 
-@inject(
-  (store: IStore): IAdminProps => {
-    const { userInfoForm, changeUserInfo, userList, getUserList } = store.userStore;
-    const { token } = store.userStore.tokenStore;
-    const { config, changeConfig } = store.globalStore;
-    return { userInfoForm, token, changeUserInfo, config, changeConfig, userList, getUserList };
-  }
-)
-@observer
-class Admin extends React.Component<IAdminProps> {
-  public render() {
-    const { className, userInfoForm, token, changeUserInfo, config, changeConfig, userList, getUserList } = this.props;
-    return (
-      <div className={className}>
-        <div>
-          <User
-            userInfoForm={userInfoForm}
-            token={token}
-            changeUserInfo={changeUserInfo}
-            userList={userList}
-            getUserList={getUserList}
-          />
-        </div>
-        <div>
-          <Config config={config} token={token} changeConfig={changeConfig} />
-        </div>
-      </div>
-    );
-  }
-}
+// @inject(
+//   (store: IStore): IAdminProps => {
+//     const { userInfoForm, changeUserInfo, userList, getUserList } = store.userStore;
+//     const { token } = store.userStore.tokenStore;
+//     const { config, changeConfig } = store.globalStore;
+//     return { userInfoForm, token, changeUserInfo, config, changeConfig, userList, getUserList };
+//   }
+// )
+// @observer
+// class Admin extends React.Component<IAdminProps> {
+//   public render() {
+//     const { className, userInfoForm, token, changeUserInfo, config, changeConfig, userList, getUserList } = this.props;
+//     return (
+//       <div className={className}>
+//         <User
+//           userInfoForm={userInfoForm}
+//           token={token}
+//           changeUserInfo={changeUserInfo}
+//           userList={userList}
+//           getUserList={getUserList}
+//         />
+//         <Config config={config} token={token} changeConfig={changeConfig} />
+//       </div>
+//     );
+//   }
+// }
+const Admin = ({ className, userInfoForm, token, changeUserInfo, config, changeConfig, userList, getUserList }: IAdminProps) => (
+  <div className={className}>
+    <User
+      userInfoForm={userInfoForm}
+      token={token}
+      changeUserInfo={changeUserInfo}
+      userList={userList}
+      getUserList={getUserList}
+    />
+    <Config config={config} token={token} changeConfig={changeConfig} />
+  </div>
+);
 
-export default styled(Admin)`
+const InjectAdmin = inject((store: IStore) => {
+  const { userInfoForm, changeUserInfo, userList, getUserList } = store.userStore;
+  const { token } = store.userStore.tokenStore;
+  const { config, changeConfig } = store.globalStore;
+  return { userInfoForm, token, changeUserInfo, config, changeConfig, userList, getUserList };
+})(observer(Admin));
+
+export default styled(InjectAdmin)`
   display: flex;
   justify-content: space-between;
   height: 100%;

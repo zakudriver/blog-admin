@@ -3,6 +3,7 @@ import { Input, Form, InputNumber } from 'antd';
 import { BlockPicker, TwitterPicker, ColorResult } from 'react-color';
 import { Upload } from '@/components/common';
 import { API } from '@/service';
+import { FormItemLayout } from '@/constants';
 
 const FormItem = Form.Item;
 
@@ -38,23 +39,13 @@ export default class Config extends React.Component<IConfigProps> {
   public onChangeLogo = (url: string) => {};
 
   public render() {
-    const { config, token } = this.props;
-
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 }
-      }
-    };
+    const { config, token,className } = this.props;
+    
     return (
       <div>
         <h6>Config</h6>
-        <Form className={this.props.className}>
-          <FormItem {...formItemLayout} label="Logo">
+        <Form className={className}>
+          <FormItem {...FormItemLayout} label="Logo">
             <Upload
               token={token}
               action={`${API}/upload/avatar`}
@@ -62,16 +53,16 @@ export default class Config extends React.Component<IConfigProps> {
               avatarUrl={config.logo}
             />
           </FormItem>
-          <FormItem {...formItemLayout} label="Title">
+          <FormItem {...FormItemLayout} label="Title">
             <Input placeholder="" defaultValue={config.title} onChange={this.onChangeConfig('title')} />
           </FormItem>
-          <FormItem {...formItemLayout} label="PrimaryColor">
+          <FormItem {...FormItemLayout} label="PrimaryColor">
             <BlockPicker triangle="hide" color={config.primaryColor} onChange={this.onChangePrimaryColor} />
           </FormItem>
-          <FormItem {...formItemLayout} label="DrawerWidth">
+          <FormItem {...FormItemLayout} label="DrawerWidth">
             <InputNumber max={100} min={0} defaultValue={config.drawerWidth} onChange={this.onChangeConfig('drawerWidth')} />
           </FormItem>
-          <FormItem {...formItemLayout} label="DrawerColor">
+          <FormItem {...FormItemLayout} label="DrawerColor">
             <TwitterPicker triangle="hide" color={config.drawerColor} onChange={this.onChangeConfig('drawerColor')} />
           </FormItem>
         </Form>

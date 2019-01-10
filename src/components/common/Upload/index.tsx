@@ -1,21 +1,22 @@
 import * as React from 'react';
-import { Upload as AntUpload, Icon } from 'antd';
+import { Upload as AntUpload, Icon, Modal } from 'antd';
 import { UploadChangeParam } from 'antd/lib/upload';
 import styled from '@/styles';
+import { UploadFile } from 'antd/lib/upload/interface';
 
-interface IUploadProps extends IClassName {
+interface IUploadComponentProps extends IClassName {
   action?: string;
   token?: string;
   avatarUrl?: string;
   onChange?: (url: string) => void;
 }
 
-interface IUploadState {
+interface IUploadComponentState {
   loading: boolean;
   avatarUrl: string;
 }
 
-class Upload extends React.Component<IUploadProps, IUploadState> {
+class UploadComponent extends React.Component<IUploadComponentProps, IUploadComponentState> {
   public state = {
     loading: false,
     avatarUrl: ''
@@ -66,7 +67,7 @@ class Upload extends React.Component<IUploadProps, IUploadState> {
   }
 }
 
-export default styled(Upload)`
+export const Upload = styled(UploadComponent)`
   .ant-upload {
     width: 110px !important;
     height: 110px !important;
@@ -77,3 +78,108 @@ export default styled(Upload)`
     }
   }
 `;
+
+// =========================================
+
+interface IUploadProComponentProps extends IClassName {
+  uploads?: any[];
+  action?: string;
+  token?: string;
+  onChange?: (fileInfo: UploadChangeParam) => void;
+  onRemove?: (file: UploadFile) => any;
+  limit?: number;
+  multiple?: boolean;
+}
+
+interface IUploadProComponentState {
+  // loading: boolean;
+  previewVisible: boolean;
+  previewImage: string;
+}
+
+class UploadProComponent extends React.Component<IUploadProComponentProps, IUploadProComponentState> {
+  static defaultProps = {
+    limit: 99,
+    multiple: true
+  };
+
+  public state = {
+    previewVisible: false,
+    previewImage: ''
+  };
+
+  public onPreview = (file: UploadFile) => {
+    this.setState({
+      previewImage: file.url || file.response.data.url,
+      previewVisible: true
+    });
+  };
+
+  public onCancelPreview = () => this.setState({ previewVisible: false });
+
+  // public onRemove: any = () => (file: UploadFile) =>
+  //   new Promise((resolve, reject) => {
+  //     Modal.confirm({
+  //       title: 'Warning',
+  //       content: 'Bla bla ...',
+  //       okText: 'ok',
+  //       okType: 'danger',
+  //       cancelText: 'no',
+  //       onOk: () => {
+  //         if (this.props.onRemove) {
+  //           if (file.response) {
+  //             resolve(this.props.onRemove(file.response.data._id));
+  //           } else {
+  //             resolve(this.props.onRemove((file as any)._id));
+  //           }
+  //         }
+  //       },
+  //       onCancel: () => {
+  //         reject(false);
+  //       }
+  //     });
+  //   });
+
+  public onChange = (fileInfo: UploadChangeParam) => {
+    if (this.props.onChange) {
+      this.props.onChange(fileInfo);
+    }
+  };
+
+  public render() {
+    const { action, token, uploads, limit, multiple, onRemove, className } = this.props;
+    const { previewVisible, previewImage } = this.state;
+
+    return (
+      <>
+        <AntUpload
+          className={className}
+          name="uploadFile"
+          action={action}
+          listType="picture-card"
+          multiple={multiple}
+          headers={{
+            Authorization: token || ''
+          }}
+          fileList={uploads}
+          onPreview={this.onPreview}
+          onRemove={onRemove}
+          onChange={this.onChange}
+        >
+          {uploads && uploads.length >= limit! ? null : (
+            <div>
+              <Icon type="plus" />
+              <div>Upload</div>
+            </div>
+          )}
+        </AntUpload>
+        <Modal visible={previewVisible} footer={null} onCancel={this.onCancelPreview}>
+          <img style={{ width: '100%' }} src={previewImage} />
+          <p>{previewImage}</p>
+        </Modal>
+      </>
+    );
+  }
+}
+
+export const UploadPro = UploadProComponent;

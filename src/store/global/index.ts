@@ -29,6 +29,9 @@ export class GlobalStore extends StoreExtends {
   @observable
   isUploadDisplay: boolean = false;
 
+  @observable
+  isInitLoading: boolean = true;
+
   constructor() {
     super();
     this.init();
@@ -39,6 +42,11 @@ export class GlobalStore extends StoreExtends {
   }
 
   @action
+  hideInitLoading = () => {
+    this.isInitLoading = false;
+  };
+
+  @action
   getConfig = async () => {
     const res = await this.configApi$$.getAdminConfig();
     runInAction(() => {
@@ -47,6 +55,8 @@ export class GlobalStore extends StoreExtends {
         window.less.modifyVars({
           '@primary-color': res.data.primaryColor || '#1da57a'
         });
+
+        this.hideInitLoading();
       }
     });
   };

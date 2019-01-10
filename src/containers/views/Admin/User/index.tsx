@@ -5,6 +5,7 @@ import { Upload } from '@/components/common';
 import { PermissionMap } from '@/constants/map';
 import { ComponentExtends } from '@/utils/extends';
 import { observer } from 'mobx-react';
+import { FormItemLayout } from '@/constants';
 
 const FormItem = Form.Item;
 
@@ -47,18 +48,6 @@ class User extends ComponentExtends<IUserProps> {
 
   public render() {
     const { userInfoForm, token, userList } = this.props;
-    console.log(userInfoForm);
-
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 }
-      }
-    };
 
     const columns = [
       {
@@ -100,7 +89,7 @@ class User extends ComponentExtends<IUserProps> {
         <div>
           <h6>User</h6>
           <Form>
-            <FormItem {...formItemLayout} label="Avatar">
+            <FormItem {...FormItemLayout} label="Avatar">
               <Upload
                 action={`${API}/upload/avatar`}
                 token={token}
@@ -108,13 +97,13 @@ class User extends ComponentExtends<IUserProps> {
                 avatarUrl={userInfoForm.avatar}
               />
             </FormItem>
-            <FormItem {...formItemLayout} label="Username">
+            <FormItem {...FormItemLayout} label="Username">
               <Input placeholder="" defaultValue={userInfoForm.username} onChange={this.onChangeUser('username')} />
             </FormItem>
-            <FormItem {...formItemLayout} label="Old Password">
+            <FormItem {...FormItemLayout} label="Old Password">
               <Input type="password" placeholder="" onChange={this.onChangeUser('oldPassword')} />
             </FormItem>
-            <FormItem {...formItemLayout} label="New Password">
+            <FormItem {...FormItemLayout} label="New Password">
               <Input type="password" placeholder="" onChange={this.onChangeUser('newPassword')} />
             </FormItem>
           </Form>
