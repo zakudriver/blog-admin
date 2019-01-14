@@ -9,7 +9,14 @@ export interface IFrontConfig {
   name: string;
   profile: string;
   description: string;
+  cover: ICover;
+  defaultThumb: string[];
   _id?: string;
+}
+
+export interface ICover {
+  home: string;
+  blog: string;
 }
 
 export interface IUpdateFrontConfig {
@@ -18,5 +25,9 @@ export interface IUpdateFrontConfig {
 
 type Indexes<T> = { [P in keyof T]?: T[P] };
 export interface IChangeFrontConfig {
-  (value:Indexes<IFrontConfig>): void;
+  (value: Indexes<IFrontConfig>): void;
+}
+
+export interface IChangeCover {
+  (value: { [i: string]: string }): void;
 }

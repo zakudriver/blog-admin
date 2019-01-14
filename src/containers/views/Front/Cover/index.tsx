@@ -6,18 +6,21 @@ import { inject, observer } from 'mobx-react';
 
 interface ICoverProps extends IClassName {
   token: string;
+  frontConfig: FrontStore.IFrontConfig;
+  changeCover: FrontStore.IChangeCover;
 }
 
-const Cover = ({ className, token }: ICoverProps) => (
+const Cover = ({ className, token, frontConfig, changeCover }: ICoverProps) => (
   <div className={className}>
-    <Page />
-    <Article token={token} />
+    <Page token={token} cover={frontConfig.cover} changeCover={changeCover} />
+    <Article token={token} defaultThumb={frontConfig.defaultThumb} />
   </div>
 );
 
 const InjectCover = inject((store: IStore) => {
   const { token } = store.userStore.tokenStore;
-  return { token };
+  const { frontConfig, changeCover } = store.frontStore;
+  return { token, frontConfig, changeCover };
 })(observer(Cover));
 
 export default styled(InjectCover)`

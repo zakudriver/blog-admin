@@ -47,7 +47,8 @@ class Upload extends React.Component<IUploadProps> {
       <div className={this.props.className}>
         <UploadPro
           token={token}
-          action={`${API}/upload`}
+          action={`${API}/upload/article`}
+          isUrl={true}
           uploads={toJS<any[]>(uploads)}
           onChange={this.onChangeUpload}
           onRemove={this.onRemoveUpload}

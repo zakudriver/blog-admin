@@ -7,7 +7,12 @@ export class FrontStore extends StoreExtends {
     avatar: '',
     name: '',
     profile: '',
-    description: ''
+    description: '',
+    cover: {
+      home: '',
+      blog: ''
+    },
+    defaultThumb: []
   };
 
   init() {
@@ -40,6 +45,12 @@ export class FrontStore extends StoreExtends {
         this.$message.error(res.msg);
       }
     });
+  };
+
+  @action
+  changeCover: FrontStore.IChangeCover = value => {
+    const key = Object.keys(value)[0];
+    this.frontConfig.cover[key] = value[key];
   };
 }
 

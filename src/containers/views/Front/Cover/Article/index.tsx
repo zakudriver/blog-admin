@@ -4,6 +4,7 @@ import { API } from '@/service';
 
 interface IArticleProps extends IClassName {
   token: string;
+  defaultThumb: string[];
 }
 
 class Article extends React.Component<IArticleProps> {
@@ -12,12 +13,17 @@ class Article extends React.Component<IArticleProps> {
   }
 
   public render() {
-    const { token } = this.props;
+    const { token, defaultThumb } = this.props;
+    const uploads = defaultThumb.map((i, idx) => ({
+      url: i,
+      uid: idx,
+      key: idx
+    }));
 
     return (
       <div className="article">
         <h6>Article</h6>
-        <UploadPro className="article__upload" token={token} action={`${API}/upload/avatar`} />
+        <UploadPro className="article__upload" token={token} action={`${API}/upload`} uploads={uploads} />
       </div>
     );
   }

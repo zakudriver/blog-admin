@@ -91,7 +91,7 @@ class User extends ComponentExtends<IUserProps> {
           <Form>
             <FormItem {...FormItemLayout} label="Avatar">
               <Upload
-                action={`${API}/upload/avatar`}
+                action={`${API}/upload`}
                 token={token}
                 onChange={this.onChangeAvatar}
                 avatarUrl={userInfoForm.avatar}

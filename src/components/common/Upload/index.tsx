@@ -22,7 +22,7 @@ class UploadComponent extends React.Component<IUploadComponentProps, IUploadComp
     avatarUrl: ''
   };
 
-  public onChangeUpload = (info: UploadChangeParam) => {
+  public onChange = (info: UploadChangeParam) => {
     if (info.file.status === 'uploading') {
       this.setState({ loading: true });
       return;
@@ -52,14 +52,14 @@ class UploadComponent extends React.Component<IUploadComponentProps, IUploadComp
     return (
       <AntUpload
         className={className}
-        name="avatar"
+        name="uploadFile"
         listType="picture-card"
         showUploadList={false}
         action={action}
         headers={{
           Authorization: token || ''
         }}
-        onChange={this.onChangeUpload}
+        onChange={this.onChange}
       >
         {avatarUrl ? <img src={avatarUrl} alt="avatar" /> : uploadButton}
       </AntUpload>
@@ -89,6 +89,7 @@ interface IUploadProComponentProps extends IClassName {
   onRemove?: (file: UploadFile) => any;
   limit?: number;
   multiple?: boolean;
+  isUrl?: boolean;
 }
 
 interface IUploadProComponentState {
@@ -100,7 +101,8 @@ interface IUploadProComponentState {
 class UploadProComponent extends React.Component<IUploadProComponentProps, IUploadProComponentState> {
   static defaultProps = {
     limit: 99,
-    multiple: true
+    multiple: true,
+    isUrl: false
   };
 
   public state = {
@@ -147,7 +149,7 @@ class UploadProComponent extends React.Component<IUploadProComponentProps, IUplo
   };
 
   public render() {
-    const { action, token, uploads, limit, multiple, onRemove, className } = this.props;
+    const { action, token, uploads, limit, multiple, onRemove, className, isUrl } = this.props;
     const { previewVisible, previewImage } = this.state;
 
     return (
@@ -166,7 +168,14 @@ class UploadProComponent extends React.Component<IUploadProComponentProps, IUplo
           onRemove={onRemove}
           onChange={this.onChange}
         >
-          {uploads && uploads.length >= limit! ? null : (
+          {uploads ? (
+            uploads.length >= limit! ? null : (
+              <div>
+                <Icon type="plus" />
+                <div>Upload</div>
+              </div>
+            )
+          ) : (
             <div>
               <Icon type="plus" />
               <div>Upload</div>
@@ -175,7 +184,7 @@ class UploadProComponent extends React.Component<IUploadProComponentProps, IUplo
         </AntUpload>
         <Modal visible={previewVisible} footer={null} onCancel={this.onCancelPreview}>
           <img style={{ width: '100%' }} src={previewImage} />
-          <p>{previewImage}</p>
+          {isUrl ? <p>{previewImage}</p> : null}
         </Modal>
       </>
     );
