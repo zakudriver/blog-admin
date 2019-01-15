@@ -56,7 +56,7 @@ class Front extends React.Component<IFrontProps> {
           <FormItem {...formItemLayout} label="Avatar">
             <Upload
               action={`${API}/upload`}
-              avatarUrl={frontConfig.avatar}
+              imgURL={frontConfig.avatar}
               token={token}
               onChange={this.onChangeAvatar}
             />

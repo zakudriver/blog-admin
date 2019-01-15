@@ -41,10 +41,10 @@ class Upload extends React.Component<IUploadProps> {
     });
 
   public render() {
-    const { token, uploads } = this.props;
+    const { className, token, uploads } = this.props;
 
     return (
-      <div className={this.props.className}>
+      <div className={className}>
         <UploadPro
           token={token}
           action={`${API}/upload/article`}

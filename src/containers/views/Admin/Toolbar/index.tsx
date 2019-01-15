@@ -22,12 +22,13 @@ interface IToolbarProps extends IClassName {
 @observer
 class Toolbar extends ComponentExtends<IToolbarProps> {
   public render() {
+    const { className, updateUserInfo, updateConfig } = this.props;
     return (
-      <div className={this.props.className}>
-        <Button type="primary" onClick={this.props.updateUserInfo}>
+      <div className={className}>
+        <Button type="primary" onClick={updateUserInfo}>
           Save
         </Button>
-        <Button onClick={this.props.updateConfig}>Save</Button>
+        <Button onClick={updateConfig}>Save</Button>
       </div>
     );
   }

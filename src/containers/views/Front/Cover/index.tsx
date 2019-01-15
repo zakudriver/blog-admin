@@ -8,19 +8,37 @@ interface ICoverProps extends IClassName {
   token: string;
   frontConfig: FrontStore.IFrontConfig;
   changeCover: FrontStore.IChangeCover;
+  changeDefaultThumb: FrontStore.IChangeDefaultThumb;
 }
 
-const Cover = ({ className, token, frontConfig, changeCover }: ICoverProps) => (
+// @inject((store: IStore) => {
+//   const { token } = store.userStore.tokenStore;
+//   const { frontConfig, changeCover } = store.frontStore;
+//   return { token, frontConfig, changeCover };
+// })
+// @observer
+// class InjectCover extends React.Component<ICoverProps> {
+//   render() {
+//     const { className, token, frontConfig, changeCover } = this.props;
+//     return (
+//       <div className={className}>
+//         <Page token={token} cover={frontConfig.cover} changeCover={changeCover} />
+//         <Article token={token} defaultThumb={frontConfig.defaultThumb} />
+//       </div>
+//     );
+//   }
+// }
+const Cover = ({ className, token, frontConfig, changeCover, changeDefaultThumb }: ICoverProps) => (
   <div className={className}>
     <Page token={token} cover={frontConfig.cover} changeCover={changeCover} />
-    <Article token={token} defaultThumb={frontConfig.defaultThumb} />
+    <Article token={token} defaultThumb={frontConfig.defaultThumb} changeDefaultThumb={changeDefaultThumb} />
   </div>
 );
 
 const InjectCover = inject((store: IStore) => {
   const { token } = store.userStore.tokenStore;
-  const { frontConfig, changeCover } = store.frontStore;
-  return { token, frontConfig, changeCover };
+  const { frontConfig, changeCover, changeDefaultThumb } = store.frontStore;
+  return { token, frontConfig, changeCover, changeDefaultThumb };
 })(observer(Cover));
 
 export default styled(InjectCover)`
@@ -58,6 +76,7 @@ export default styled(InjectCover)`
     &__upload {
       display: inline-block;
       margin: 40px auto;
+      text-align: left;
     }
   }
 `;

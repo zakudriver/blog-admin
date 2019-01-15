@@ -34,7 +34,7 @@ const Header = ({
   return (
     <Layout.Header className={className} style={{ background: '#fff', padding: '0 24px' }}>
       <div className="header__left">
-        <IconBtn type={isCollapsed ? 'menu-unfold' : 'menu-fold'} size="18" color={false} onClick={onCollapsed!} />
+        <IconBtn type={isCollapsed ? 'menu-unfold' : 'menu-fold'} size="18" onClick={onCollapsed!} />
       </div>
       <div className="header__center">{children}</div>
       <div className="header__right">
@@ -43,7 +43,6 @@ const Header = ({
         <IconBtn
           type="logout"
           size="18"
-          color={false}
           onClick={() => {
             history.push('/login');
             // location.href = '/login';

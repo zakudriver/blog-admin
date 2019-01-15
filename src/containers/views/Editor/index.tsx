@@ -73,32 +73,28 @@ class Editor extends React.Component<IEditorProps> {
     //   mode: 'markdown',
     //   extraKeys: { Ctrl: 'autocomplete' }
     // }
+    const { className, isUploadDisplay, article, changeArticle, removeUploadFile, token, selectionLanguage } = this.props;
 
     return (
-      <div className={this.props.className}>
-        {this.props.isUploadDisplay && (
-          <Upload
-            uploads={this.props.article.uploads}
-            changeArticle={this.props.changeArticle}
-            removeUploadFile={this.props.removeUploadFile}
-            token={this.props.token}
-          />
+      <div className={className}>
+        {isUploadDisplay && (
+          <Upload uploads={article.uploads} changeArticle={changeArticle} removeUploadFile={removeUploadFile} token={token} />
         )}
         <div className="title">
           <Row>
-            <Col span={this.props.article.isEdit ? 12 : 20} className="title__label">
+            <Col span={article.isEdit ? 12 : 20} className="title__label">
               <label>Title : </label>
-              <Input className="title__input" value={this.props.article.title} onChange={this.onChangeArticleTitle} />
+              <Input className="title__input" value={article.title} onChange={this.onChangeArticleTitle} />
             </Col>
-            {this.props.article.isEdit && (
+            {article.isEdit && (
               <>
                 <Col span={6} className="title__time">
                   <label>UpdateTime : </label>
-                  <span>{formatDateTime(this.props.article.updateTime, false)}</span>
+                  <span>{formatDateTime(article.updateTime, false)}</span>
                 </Col>
                 <Col span={6} className="title__time">
                   <label>CreateTime : </label>
-                  <span>{formatDateTime(this.props.article.createTime, false)}</span>
+                  <span>{formatDateTime(article.createTime, false)}</span>
                 </Col>
               </>
             )}
@@ -114,14 +110,10 @@ class Editor extends React.Component<IEditorProps> {
               type={this.props.selectionEdit}
               language={this.props.selectionLanguage}
             /> */}
-            <CodeMirror
-              value={this.props.article.content}
-              language={this.props.selectionLanguage}
-              onChange={this.onChangeArticleContent}
-            />
+            <CodeMirror value={article.content} language={selectionLanguage} onChange={this.onChangeArticleContent} />
           </Col>
           <Col span={12} className="preview__wrapper">
-            <Preview className="preview" value={this.props.article.content} />
+            <Preview className="preview" value={article.content} />
           </Col>
         </Row>
       </div>

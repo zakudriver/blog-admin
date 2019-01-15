@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { Form } from 'antd';
-import { UploadPro } from '@/components/common';
+import { observer } from 'mobx-react';
+import { Upload } from '@/components/common';
 import { FormItemLayout } from '@/constants';
 import { API } from '@/service';
-import { UploadChangeParam } from 'antd/lib/upload';
-import { UploadFile } from 'antd/lib/upload/interface';
-import { observer } from 'mobx-react';
 
 const FormItem = Form.Item;
 
@@ -17,44 +15,39 @@ interface IPageProps extends IClassName {
 
 @observer
 class Page extends React.Component<IPageProps> {
-  constructor(props: IPageProps) {
-    super(props);
-  }
-
-  public onChangeUpload = (key: string) => (fileInfo: UploadChangeParam) => {
-    console.log(fileInfo);
+  public onChangeUpload = (key: string) => (url: string) => {
+    this.props.changeCover({ [key]: url });
   };
 
-  public onRemoveUpload = (key: string) => (file: UploadFile) => {
-    console.log(file);
+  public onRemoveUpload = (key: string) => () => {
     this.props.changeCover({ [key]: '' });
   };
 
   public render() {
     const { token, cover } = this.props;
-    const homeUploads = cover.home ? [{ url: cover.home, key: 0, uid: '0' }] : [];
-    const blogUploads = cover.blog ? [{ url: cover.blog, key: 0, uid: '0' }] : [];
 
     return (
       <div className="page">
         <h6>Page</h6>
         <Form layout="inline">
           <FormItem {...FormItemLayout} className="form__item" label="Home">
-            <UploadPro
+            <Upload
               token={token}
               action={`${API}/upload`}
-              limit={1}
-              uploads={homeUploads}
+              imgURL={cover.home}
+              isPreview={true}
+              size={200}
               onChange={this.onChangeUpload('home')}
               onRemove={this.onRemoveUpload('home')}
             />
           </FormItem>
           <FormItem {...FormItemLayout} className="form__item" label="Blog">
-            <UploadPro
+            <Upload
               token={token}
               action={`${API}/upload`}
-              limit={1}
-              uploads={blogUploads}
+              imgURL={cover.blog}
+              isPreview={true}
+              size={200}
               onChange={this.onChangeUpload('blog')}
               onRemove={this.onRemoveUpload('blog')}
             />

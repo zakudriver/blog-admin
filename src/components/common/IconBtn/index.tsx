@@ -4,7 +4,7 @@ import styled from '@/styles';
 
 interface IIconBtnProps extends IClassName {
   size?: number | string;
-  color?: string | boolean;
+  color?: string;
   hoverColor?: string | boolean;
   type: string;
   iconTheme?: 'filled' | 'outlined' | 'twoTone';
@@ -17,9 +17,9 @@ const IconBtn = ({ type, iconTheme, onClick, className }: IIconBtnProps) => (
 
 export default styled(IconBtn)`
   font-size: ${props => `${props.size}px`};
-  color: ${props => `${props.color === false || props.theme.primaryColor}`};
+  color: ${props => `${props.color || props.theme.primaryColor}`};
   cursor: pointer;
   &:hover {
-    color: ${props => `${props.hoverColor === false || props.theme.primaryColor}`};
+    color: ${props => `${props.hoverColor || props.theme.primaryColor}`};
   }
 `;

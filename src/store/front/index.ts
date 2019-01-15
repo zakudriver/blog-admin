@@ -24,6 +24,12 @@ export class FrontStore extends StoreExtends {
     const res = await this.configApi$$.getFrontConfig();
     runInAction(() => {
       if (res.code === 0 && res.data) {
+        res.data.defaultThumb = res.data.defaultThumb.map((i: any, idx: any) => ({
+          uid: idx,
+          name: i,
+          url: i,
+          key: idx
+        }));
         this.frontConfig = res.data;
       }
     });
@@ -51,6 +57,12 @@ export class FrontStore extends StoreExtends {
   changeCover: FrontStore.IChangeCover = value => {
     const key = Object.keys(value)[0];
     this.frontConfig.cover[key] = value[key];
+  };
+
+  @action
+  changeDefaultThumb: FrontStore.IChangeDefaultThumb = value => {
+    console.log(value);
+    this.frontConfig.defaultThumb = value;
   };
 }
 

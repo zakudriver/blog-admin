@@ -50,7 +50,7 @@ export default class Config extends React.Component<IConfigProps> {
               token={token}
               action={`${API}/upload`}
               onChange={this.onChangeConfig('logo')}
-              avatarUrl={config.logo}
+              imgURL={config.logo}
             />
           </FormItem>
           <FormItem {...FormItemLayout} label="Title">

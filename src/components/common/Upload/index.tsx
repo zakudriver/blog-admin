@@ -2,24 +2,38 @@ import * as React from 'react';
 import { Upload as AntUpload, Icon, Modal } from 'antd';
 import { UploadChangeParam } from 'antd/lib/upload';
 import styled from '@/styles';
+import { IconBtn } from '@/components/common';
+
 import { UploadFile } from 'antd/lib/upload/interface';
 
 interface IUploadComponentProps extends IClassName {
   action?: string;
   token?: string;
-  avatarUrl?: string;
+  imgURL?: string;
   onChange?: (url: string) => void;
+  onRemove?: () => void;
+  isPreview?: boolean;
+  size?: number;
 }
 
 interface IUploadComponentState {
   loading: boolean;
-  avatarUrl: string;
+  imgURL: string;
+  isShowPreview: boolean;
+  previewVisible: boolean;
 }
 
 class UploadComponent extends React.Component<IUploadComponentProps, IUploadComponentState> {
+  static defaultProps = {
+    isPreview: false,
+    size: 110
+  };
+
   public state = {
     loading: false,
-    avatarUrl: ''
+    imgURL: '',
+    isShowPreview: false,
+    previewVisible: false
   };
 
   public onChange = (info: UploadChangeParam) => {
@@ -32,15 +46,33 @@ class UploadComponent extends React.Component<IUploadComponentProps, IUploadComp
         this.props.onChange(info.file.response.data);
       }
       this.setState({
-        avatarUrl: info.file.response.data,
+        imgURL: info.file.response.data,
         loading: false
       });
     }
   };
 
+  public onMouse = (mode: string) => () => {
+    this.setState({
+      isShowPreview: mode === 'Enter'
+    });
+  };
+
+  public onPreview = () => {
+    this.setState({
+      previewVisible: true
+    });
+  };
+
+  public onCancelPreview = () => {
+    this.setState({
+      previewVisible: false
+    });
+  };
+
   public render() {
-    const { action, token, className, avatarUrl } = this.props;
-    const { loading } = this.state;
+    const { action, token, className, imgURL, isPreview, onRemove } = this.props;
+    const { loading, isShowPreview, previewVisible } = this.state;
 
     const uploadButton = (
       <div>
@@ -50,32 +82,64 @@ class UploadComponent extends React.Component<IUploadComponentProps, IUploadComp
     );
 
     return (
-      <AntUpload
-        className={className}
-        name="uploadFile"
-        listType="picture-card"
-        showUploadList={false}
-        action={action}
-        headers={{
-          Authorization: token || ''
-        }}
-        onChange={this.onChange}
-      >
-        {avatarUrl ? <img src={avatarUrl} alt="avatar" /> : uploadButton}
-      </AntUpload>
+      <div className={className}>
+        <div onMouseEnter={this.onMouse('Enter')} onMouseLeave={this.onMouse('Leave')}>
+          <AntUpload
+            name="uploadFile"
+            listType="picture-card"
+            showUploadList={false}
+            action={action}
+            headers={{
+              Authorization: token || ''
+            }}
+            onChange={this.onChange}
+          >
+            {imgURL ? <img src={imgURL} alt="avatar" /> : uploadButton}
+          </AntUpload>
+          {isPreview && isShowPreview && imgURL && (
+            <div className="masking">
+              <IconBtn className="iconbtn" type="eye" color="#fff" size={26} onClick={this.onPreview} />
+              {onRemove && <IconBtn className="iconbtn" type="delete" color="#fff" size={26} onClick={onRemove} />}
+            </div>
+          )}
+          {isPreview && (
+            <Modal visible={previewVisible} footer={null} onCancel={this.onCancelPreview}>
+              <img style={{ width: '100%' }} src={imgURL} />
+            </Modal>
+          )}
+        </div>
+      </div>
     );
   }
 }
 
 export const Upload = styled(UploadComponent)`
+  & > div {
+    display: inline-block;
+    position: relative;
+  }
   .ant-upload {
-    width: 110px !important;
-    height: 110px !important;
+    width: ${props => props.size || 110}px !important;
+    height: ${props => props.size || 110}px !important;
 
     img {
       width: 100%;
       height: 100%;
     }
+  }
+  .masking {
+    width: ${props => (props.size || 110) - 18}px;
+    height: ${props => (props.size || 110) - 18}px;
+    position: absolute;
+    z-index: 99;
+    top: 50%;
+    left: 50%;
+    margin-top: ${props => -((props.size || 110) - 10) / 2}px;
+    margin-left: ${props => -((props.size || 110) - 10) / 2}px;
+    background-color: rgba(0, 0, 0, 0.65);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
 `;
 
@@ -142,14 +206,14 @@ class UploadProComponent extends React.Component<IUploadProComponentProps, IUplo
   //     });
   //   });
 
-  public onChange = (fileInfo: UploadChangeParam) => {
-    if (this.props.onChange) {
-      this.props.onChange(fileInfo);
-    }
-  };
+  // public onChange = (fileInfo: UploadChangeParam) => {
+  //   if (this.props.onChange) {
+  //     this.props.onChange(fileInfo);
+  //   }
+  // };
 
   public render() {
-    const { action, token, uploads, limit, multiple, onRemove, className, isUrl } = this.props;
+    const { action, token, uploads, limit, multiple, onRemove, onChange, className, isUrl } = this.props;
     const { previewVisible, previewImage } = this.state;
 
     return (
@@ -166,7 +230,7 @@ class UploadProComponent extends React.Component<IUploadProComponentProps, IUplo
           fileList={uploads}
           onPreview={this.onPreview}
           onRemove={onRemove}
-          onChange={this.onChange}
+          onChange={onChange}
         >
           {uploads ? (
             uploads.length >= limit! ? null : (
