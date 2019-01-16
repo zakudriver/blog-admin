@@ -62,15 +62,17 @@ class SiderMenu extends React.Component<ISiderMenuProps, ISiderMenuState> {
 
   public onCurrentMenu = (path: string) => {
     const selectedMenu = menu.find(val => path === val.path)!;
-    if (selectedMenu.parentKey) {
-      this.setState({
-        defaultOpenKeys: [selectedMenu.parentKey],
-        selectedKeys: [selectedMenu.key]
-      });
-    } else {
-      this.setState({
-        selectedKeys: [selectedMenu.key]
-      });
+    if (selectedMenu) {
+      if (selectedMenu.parentKey) {
+        this.setState({
+          defaultOpenKeys: [selectedMenu.parentKey],
+          selectedKeys: [selectedMenu.key]
+        });
+      } else {
+        this.setState({
+          selectedKeys: [selectedMenu.key]
+        });
+      }
     }
   };
 

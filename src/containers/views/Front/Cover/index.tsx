@@ -11,23 +11,6 @@ interface ICoverProps extends IClassName {
   changeDefaultThumb: FrontStore.IChangeDefaultThumb;
 }
 
-// @inject((store: IStore) => {
-//   const { token } = store.userStore.tokenStore;
-//   const { frontConfig, changeCover } = store.frontStore;
-//   return { token, frontConfig, changeCover };
-// })
-// @observer
-// class InjectCover extends React.Component<ICoverProps> {
-//   render() {
-//     const { className, token, frontConfig, changeCover } = this.props;
-//     return (
-//       <div className={className}>
-//         <Page token={token} cover={frontConfig.cover} changeCover={changeCover} />
-//         <Article token={token} defaultThumb={frontConfig.defaultThumb} />
-//       </div>
-//     );
-//   }
-// }
 const Cover = ({ className, token, frontConfig, changeCover, changeDefaultThumb }: ICoverProps) => (
   <div className={className}>
     <Page token={token} cover={frontConfig.cover} changeCover={changeCover} />

@@ -7,6 +7,8 @@ import { TokenField } from '@/constants';
 interface IPrivateRouteProps extends IClassName, IWithRouterProps {
   component: any;
   path: string;
+  exact?: boolean;
+  render?: () => any;
 }
 
 @withRouterProps

@@ -40,7 +40,6 @@ class App extends React.Component<IAppProps> {
       <Router>
         <Switch>
           <Route exact path="/login" component={Login} />
-          {/* <PrivateRoute path="/" component={Main} /> */}
           <Route path="/" exact render={() => <Redirect to={'/article'} />} />
           <PrivateRoute path="/" component={Main} />
           <Route component={NotFound} />

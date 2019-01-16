@@ -42,7 +42,6 @@ class LoginDrawer extends React.Component<IDrawerProps> {
       <LoginDrawerWrapper {...this.props}>
         <main>
           <h6>Sign in</h6>
-
           <WrappedLoginForm {...this.state} onLogin={this.onLogin} />
         </main>
       </LoginDrawerWrapper>
@@ -93,12 +92,12 @@ class LoginForm extends React.Component<ILoginFormProps> {
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.onSubmit}>
-        <FormItem>
+        <FormItem help="Username：guest">
           {getFieldDecorator('username', {
             rules: [{ required: true, message: 'username is required' }]
           })(<Input prefix={<Icon type="user" />} placeholder="Username" />)}
         </FormItem>
-        <FormItem>
+        <FormItem help="Password：guest">
           {getFieldDecorator('password', {
             rules: [{ required: false, message: 'password is required' }]
           })(<Input prefix={<Icon type="lock" />} type="password" placeholder="Password" />)}

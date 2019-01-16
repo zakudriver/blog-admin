@@ -1,4 +1,5 @@
 import { action, observable, runInAction } from 'mobx';
+import immer from 'immer';
 import { StoreExtends } from '@/utils/extends';
 
 export class FrontStore extends StoreExtends {
@@ -41,16 +42,13 @@ export class FrontStore extends StoreExtends {
     this.frontConfig[key] = value[key];
   };
 
-  @action
-  updateFrontConfig: FrontStore.IUpdateFrontConfig = async () => {
-    const res = await this.configApi$$.updateFrontConfig(this.frontConfig);
-    runInAction(() => {
-      if (res.code === 0) {
-        this.$message.success(res.msg);
-      } else {
-        this.$message.error(res.msg);
-      }
+  updateFrontConfig: FrontStore.IUpdateFrontConfig = () => {
+    const config = immer(this.frontConfig, draft => {
+      delete draft.cover;
+      delete draft.defaultThumb;
     });
+    console.log(config);
+    this._updateFront(config);
   };
 
   @action
@@ -63,6 +61,42 @@ export class FrontStore extends StoreExtends {
   changeDefaultThumb: FrontStore.IChangeDefaultThumb = value => {
     console.log(value);
     this.frontConfig.defaultThumb = value;
+  };
+
+  updateFrontCover = () => {
+    const config = immer(this.frontConfig, draft => {
+      delete draft.avatar;
+      delete draft.description;
+      delete draft.name;
+      delete draft.profile;
+      delete draft.defaultThumb;
+    });
+    console.log(config);
+    this._updateFront(config);
+  };
+
+  updateFrontDefaultThumb = () => {
+    const config = immer(this.frontConfig, draft => {
+      delete draft.avatar;
+      delete draft.description;
+      delete draft.name;
+      delete draft.profile;
+      delete draft.cover;
+      draft.defaultThumb = draft.defaultThumb.map(i => i.url);
+    });
+    console.log(config);
+    this._updateFront(config);
+  };
+
+  private _updateFront = async (config: { [i: string]: any }) => {
+    const res = await this.configApi$$.updateFrontConfig(config);
+    runInAction(() => {
+      if (res.code === 0) {
+        this.$message.success(res.msg);
+      } else {
+        this.$message.error(res.msg);
+      }
+    });
   };
 }
 

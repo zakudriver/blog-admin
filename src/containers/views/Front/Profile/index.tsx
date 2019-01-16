@@ -22,13 +22,7 @@ interface IFrontProps extends IClassName {
 })
 @observer
 class Front extends React.Component<IFrontProps> {
-  constructor(props: IFrontProps) {
-    super(props);
-  }
-
-  public onChangeConfig = (key: string) => (
-    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
+  public onChangeConfig = (key: string) => (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     this.props.changeFrontConfig({ [key]: e.target.value });
   };
 
@@ -54,12 +48,7 @@ class Front extends React.Component<IFrontProps> {
       <div className={className}>
         <Form>
           <FormItem {...formItemLayout} label="Avatar">
-            <Upload
-              action={`${API}/upload`}
-              imgURL={frontConfig.avatar}
-              token={token}
-              onChange={this.onChangeAvatar}
-            />
+            <Upload action={`${API}/upload`} imgURL={frontConfig.avatar} token={token} onChange={this.onChangeAvatar} />
           </FormItem>
           <FormItem {...formItemLayout} label="Name">
             <Input placeholder="" value={frontConfig.name} onChange={this.onChangeConfig('name')} />
