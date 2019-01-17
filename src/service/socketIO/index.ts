@@ -3,7 +3,7 @@ import tokenStore from '@/store/user/token';
 import { Event } from '@/constants/enum';
 import { IResponse } from '..';
 
-const socketUrl = 'http://localhost:9999';
+const socketUrl = APP_ENV === 'dev' ? 'http://127.0.0.1:9999' : 'http://ws.zyhua.cn';
 
 // type Event = 'Message' | 'SubscribeMessage';
 
