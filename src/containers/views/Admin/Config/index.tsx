@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Input, Form, InputNumber } from 'antd';
+import { observer } from 'mobx-react';
 import { BlockPicker, TwitterPicker, ColorResult } from 'react-color';
 import { Upload } from '@/components/common';
 import { API } from '@/service';
@@ -13,6 +14,7 @@ interface IConfigProps extends IClassName {
   token: string;
 }
 
+@observer
 export default class Config extends React.Component<IConfigProps> {
   public onChangePrimaryColor = (color: ColorResult) => {
     window.less
@@ -31,7 +33,7 @@ export default class Config extends React.Component<IConfigProps> {
       this.props.changeConfig({
         [key]: (value as ColorResult).hex || (value as React.ChangeEvent<HTMLInputElement>).target.value
       });
-    } else {
+    } else if (typeof value === 'string') {
       this.props.changeConfig({ [key]: value });
     }
   };
@@ -39,19 +41,14 @@ export default class Config extends React.Component<IConfigProps> {
   public onChangeLogo = (url: string) => {};
 
   public render() {
-    const { config, token,className } = this.props;
-    
+    const { config, token, className } = this.props;
+
     return (
       <div>
         <h6>Config</h6>
         <Form className={className}>
           <FormItem {...FormItemLayout} label="Logo">
-            <Upload
-              token={token}
-              action={`${API}/upload`}
-              onChange={this.onChangeConfig('logo')}
-              imgURL={config.logo}
-            />
+            <Upload token={token} action={`${API}/upload`} onChange={this.onChangeConfig('logo')} imgURL={config.logo} />
           </FormItem>
           <FormItem {...FormItemLayout} label="Title">
             <Input placeholder="" defaultValue={config.title} onChange={this.onChangeConfig('title')} />
