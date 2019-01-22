@@ -10,7 +10,7 @@ export interface IFrontConfig {
   profile: string;
   description: string;
   cover: ICover;
-  defaultThumb: any[];
+  articleCover: any[];
   _id?: string;
 }
 
@@ -32,6 +32,6 @@ export interface IChangeCover {
   (value: { [i: string]: any }): void;
 }
 
-export interface IChangeDefaultThumb {
+export interface IChangeArticleCover {
   (value: any[]): void;
 }

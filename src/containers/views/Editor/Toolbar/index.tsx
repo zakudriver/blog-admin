@@ -23,8 +23,8 @@ interface IToolbarProps extends IClassName {
   config: GlobalStore.IConfig;
   changeLanguages: GlobalStore.IChangeLanguages;
   selectionLanguage: string;
-  isUploadDisplay: boolean;
-  uploadDisplay: GlobalStore.IUploadDisplay;
+  display: string;
+  changeDisplay: GlobalStore.IChangeDisplay;
   categories: ArticleStore.ICategories[];
   addCategory: ArticleStore.IAddCategory;
   sortCategory: ArticleStore.ISortCategory;
@@ -50,8 +50,8 @@ interface IToolbarState {
       config,
       changeLanguages,
       selectionLanguage,
-      isUploadDisplay,
-      uploadDisplay,
+      display,
+      changeDisplay,
       editorLanguages
     } = store.globalStore;
     const {
@@ -82,8 +82,8 @@ interface IToolbarState {
       saveArticle,
       publishArticle,
       restore,
-      isUploadDisplay,
-      uploadDisplay,
+      display,
+      changeDisplay,
       editorLanguages
     };
   }
@@ -154,8 +154,9 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   };
 
   public render() {
+    const { className, selectionLanguage, editorLanguages, article, categories, display, changeDisplay } = this.props;
     return (
-      <div className={this.props.className}>
+      <div className={className}>
         <ActionGroup direction="right">
           {/* <ActionItem>
             <RadioGroup onChange={this.onChangeEditor} defaultValue={this.props.selectionEdit}>
@@ -167,12 +168,12 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
           <ActionItem>
             <Select
               showSearch
-              defaultValue={this.props.selectionLanguage}
+              defaultValue={selectionLanguage}
               style={{ width: 120 }}
               placeholder="Select a language"
               onChange={this.changeLanguages}
             >
-              {this.props.editorLanguages.map((i, idx) => (
+              {editorLanguages.map((i, idx) => (
                 <Option key={idx} value={i}>
                   {i}
                 </Option>
@@ -189,10 +190,10 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
                 showSearch
                 style={{ width: 130 }}
                 placeholder="category"
-                value={this.props.article.category}
+                value={article.category}
                 onChange={this.onChangeCategory}
               >
-                {this.props.categories.map((i, idx) => (
+                {categories.map((i, idx) => (
                   <Option key={idx} value={i._id}>
                     {i.name}
                   </Option>
@@ -208,21 +209,20 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 
           <ActionGroup direction="right">
             <ActionLine border="1px solid #eee" spacing="10" height="32" />
-            {/* <ActionItem>
-              <DatePicker
-                showTime
-                format="YYYY-MM-DD HH:mm:ss"
-                placeholder="Time"
-                value={moment(this.props.article.time)}
-                onChange={this.onChangeTime}
-              />
-            </ActionItem> */}
             <ActionItem>
               <Button
-                type={this.props.isUploadDisplay ? 'danger' : 'primary'}
+                type={display === 'Upload' ? 'danger' : 'primary'}
                 icon="upload"
                 ghost
-                onClick={() => this.props.uploadDisplay()}
+                onClick={() => changeDisplay('Upload')}
+              />
+            </ActionItem>
+            <ActionItem>
+              <Button
+                type={display === 'Cover' ? 'danger' : 'primary'}
+                icon="picture"
+                ghost
+                onClick={() => changeDisplay('Cover')}
               />
             </ActionItem>
           </ActionGroup>

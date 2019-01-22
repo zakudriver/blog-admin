@@ -6,28 +6,19 @@ import { toJS } from 'mobx';
 
 interface IArticleProps extends IClassName {
   token: string;
-  defaultThumb: string[];
-  changeDefaultThumb: FrontStore.IChangeDefaultThumb;
+  articleCover: string[];
+  changeArticleCover: FrontStore.IChangeArticleCover;
 }
 
 class Article extends React.Component<IArticleProps> {
   public onChangeUpload = (fileInfo: UploadChangeParam) => {
     console.log('info');
-    this.props.changeDefaultThumb(fileInfo.fileList);
+    this.props.changeArticleCover(fileInfo.fileList);
   };
 
-  // public onRemoveUpload = (file: UploadFile) => {
-  //   console.log(file);
-  //   // this.props.changeDefaultThumb(file.fileList);
-  // };
-
   public render() {
-    const { token, defaultThumb } = this.props;
-    // const uploads = defaultThumb.map((i, idx) => ({
-    //   url: i,
-    //   uid: idx,
-    //   key: idx
-    // }));
+    const { token, articleCover } = this.props;
+    console.log(articleCover)
 
     return (
       <div className="article">
@@ -36,7 +27,7 @@ class Article extends React.Component<IArticleProps> {
           className="article__upload"
           token={token}
           action={`${API}/upload`}
-          uploads={toJS<any[]>(defaultThumb)}
+          uploads={toJS<any[]>(articleCover)}
           onChange={this.onChangeUpload}
         />
       </div>

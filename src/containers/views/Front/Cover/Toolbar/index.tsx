@@ -5,27 +5,23 @@ import { observer, inject } from 'mobx-react';
 
 interface IToolbarProps extends IClassName {
   updateFrontCover: () => void;
-  updateFrontDefaultThumb: () => void;
+  updateFrontArticleCover: () => void;
 }
 
 @inject((store: IStore) => {
-  const { updateFrontCover, updateFrontDefaultThumb } = store.frontStore;
-  return { updateFrontCover, updateFrontDefaultThumb };
+  const { updateFrontCover, updateFrontArticleCover } = store.frontStore;
+  return { updateFrontCover, updateFrontArticleCover };
 })
 @observer
 class Toolbar extends React.Component<IToolbarProps> {
-  constructor(props: IToolbarProps) {
-    super(props);
-  }
-
   public render() {
-    const { className, updateFrontCover, updateFrontDefaultThumb } = this.props;
+    const { className, updateFrontCover, updateFrontArticleCover } = this.props;
     return (
       <div className={className}>
         <Button type="primary" onClick={updateFrontCover}>
           Save
         </Button>
-        <Button onClick={updateFrontDefaultThumb}>Save</Button>
+        <Button onClick={updateFrontArticleCover}>Save</Button>
       </div>
     );
   }

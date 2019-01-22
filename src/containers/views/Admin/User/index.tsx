@@ -6,6 +6,7 @@ import { PermissionMap } from '@/constants/map';
 import { ComponentExtends } from '@/utils/extends';
 import { observer } from 'mobx-react';
 import { FormItemLayout } from '@/constants';
+import { Permission } from '@/constants/enum';
 
 const FormItem = Form.Item;
 
@@ -72,14 +73,14 @@ class User extends ComponentExtends<IUserProps> {
         dataIndex: '',
         key: 'x',
         render: (text: any, record: any, index: any) => {
-          if (text.permission === 0 || userInfoForm.permission < text.permission) {
-            return <span>-</span>;
-          } else {
+          if (userInfoForm.permission === Permission.root && text.permission !== Permission.root) {
             return (
               <Button type="danger" onClick={this.onDelete(text)}>
                 Delete
               </Button>
             );
+          } else {
+            return <span>-</span>;
           }
         }
       }
@@ -90,12 +91,7 @@ class User extends ComponentExtends<IUserProps> {
           <h6>User</h6>
           <Form>
             <FormItem {...FormItemLayout} label="Avatar">
-              <Upload
-                action={`${API}/upload`}
-                token={token}
-                onChange={this.onChangeAvatar}
-                imgURL={userInfoForm.avatar}
-              />
+              <Upload action={`${API}/upload`} token={token} onChange={this.onChangeAvatar} imgURL={userInfoForm.avatar} />
             </FormItem>
             <FormItem {...FormItemLayout} label="Username">
               <Input placeholder="" defaultValue={userInfoForm.username} onChange={this.onChangeUser('username')} />

@@ -13,7 +13,7 @@ export class FrontStore extends StoreExtends {
       home: '',
       blog: ''
     },
-    defaultThumb: []
+    articleCover: []
   };
 
   init() {
@@ -25,7 +25,7 @@ export class FrontStore extends StoreExtends {
     const res = await this.configApi$$.getFrontConfig();
     runInAction(() => {
       if (res.code === 0 && res.data) {
-        res.data.defaultThumb = res.data.defaultThumb.map((i: any, idx: any) => ({
+        res.data.articleCover = res.data.articleCover.map((i: any, idx: any) => ({
           uid: idx,
           name: i,
           url: i,
@@ -45,7 +45,7 @@ export class FrontStore extends StoreExtends {
   updateFrontConfig: FrontStore.IUpdateFrontConfig = () => {
     const config = immer(this.frontConfig, draft => {
       delete draft.cover;
-      delete draft.defaultThumb;
+      delete draft.articleCover;
     });
     console.log(config);
     this._updateFront(config);
@@ -58,9 +58,9 @@ export class FrontStore extends StoreExtends {
   };
 
   @action
-  changeDefaultThumb: FrontStore.IChangeDefaultThumb = value => {
+  changeArticleCover: FrontStore.IChangeArticleCover = value => {
     console.log(value);
-    this.frontConfig.defaultThumb = value;
+    this.frontConfig.articleCover = value;
   };
 
   updateFrontCover = () => {
@@ -69,22 +69,21 @@ export class FrontStore extends StoreExtends {
       delete draft.description;
       delete draft.name;
       delete draft.profile;
-      delete draft.defaultThumb;
+      delete draft.articleCover;
     });
     console.log(config);
     this._updateFront(config);
   };
 
-  updateFrontDefaultThumb = () => {
+  updateFrontArticleCover = () => {
     const config = immer(this.frontConfig, draft => {
       delete draft.avatar;
       delete draft.description;
       delete draft.name;
       delete draft.profile;
       delete draft.cover;
-      draft.defaultThumb = draft.defaultThumb.map(i => i.url);
+      draft.articleCover = draft.articleCover.map(i => i.url || i.response.data);
     });
-    console.log(config);
     this._updateFront(config);
   };
 

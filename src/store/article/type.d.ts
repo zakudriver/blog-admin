@@ -43,6 +43,7 @@ export interface IArticle {
   isEdit?: boolean;
   updateTime: string;
   createTime: string;
+  cover: string;
   message?: IArticleMessage[];
 }
 

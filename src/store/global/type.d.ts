@@ -20,8 +20,8 @@ export interface IChangeLanguages {
   (value: string): void;
 }
 
-export interface IUploadDisplay {
-  (value?: boolean): void;
+export interface IChangeDisplay {
+  (value: string): void;
 }
 
 type Indexes<T> = { [P in keyof T]?: T[P] };

@@ -27,7 +27,7 @@ export class GlobalStore extends StoreExtends {
   selectionLanguage: string = 'javascript';
 
   @observable
-  isUploadDisplay: boolean = false;
+  display: string = '';
 
   @observable
   isInitLoading: boolean = true;
@@ -81,8 +81,12 @@ export class GlobalStore extends StoreExtends {
 
   // 上传模块 on/off
   @action
-  uploadDisplay: GlobalStore.IUploadDisplay = value => {
-    this.isUploadDisplay = value === true || value === false ? value : !this.isUploadDisplay;
+  changeDisplay: GlobalStore.IChangeDisplay = value => {
+    if (value === this.display) {
+      this.display = '';
+    } else {
+      this.display = value;
+    }
   };
 
   // 改变配置

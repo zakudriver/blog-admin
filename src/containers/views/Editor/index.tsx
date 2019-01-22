@@ -9,6 +9,7 @@ import styled from '@/styles';
 
 import CodeMirror from './Edit/CodeMirror';
 import Upload from './Upload';
+import Cover from './Cover';
 
 interface IEditorProps extends IClassName, IWithRouterProps {
   token: string;
@@ -17,29 +18,33 @@ interface IEditorProps extends IClassName, IWithRouterProps {
   article: ArticleStore.IArticle;
   changeArticle: ArticleStore.IChangeArticle;
   getArticle: ArticleStore.IGetArticle;
-  isUploadDisplay: boolean;
+  display: string;
   removeUploadFile: ArticleStore.IRemoveUploadFile;
   restore: () => void;
-  uploadDisplay: GlobalStore.IUploadDisplay;
+  changeDisplay: GlobalStore.IChangeDisplay;
+  articleCover: any[];
 }
 
 @withRouterProps
 @inject(
   (store: IStore): IEditorProps => {
-    const { selectionEdit, selectionLanguage, isUploadDisplay, uploadDisplay } = store.globalStore;
+    const { selectionEdit, selectionLanguage, display, changeDisplay } = store.globalStore;
     const { article, changeArticle, getArticle, removeUploadFile, restore } = store.articleStore;
     const { tokenStore } = store.userStore;
+    const { articleCover } = store.frontStore.frontConfig;
+
     return {
       selectionEdit,
       selectionLanguage,
       article,
       changeArticle,
       getArticle,
-      isUploadDisplay,
+      display,
       token: tokenStore.token,
       removeUploadFile,
       restore,
-      uploadDisplay
+      changeDisplay,
+      articleCover
     };
   }
 )
@@ -63,7 +68,7 @@ class Editor extends React.Component<IEditorProps> {
 
   public componentWillUnmount() {
     this.props.restore();
-    this.props.uploadDisplay(false);
+    this.props.changeDisplay('');
   }
 
   public render() {
@@ -73,13 +78,15 @@ class Editor extends React.Component<IEditorProps> {
     //   mode: 'markdown',
     //   extraKeys: { Ctrl: 'autocomplete' }
     // }
-    const { className, isUploadDisplay, article, changeArticle, removeUploadFile, token, selectionLanguage } = this.props;
+    const { className, display, article, changeArticle, removeUploadFile, token, selectionLanguage, articleCover } = this.props;
 
     return (
       <div className={className}>
-        {isUploadDisplay && (
+        {display === 'Upload' && (
           <Upload uploads={article.uploads} changeArticle={changeArticle} removeUploadFile={removeUploadFile} token={token} />
         )}
+        {display === 'Cover' && <Cover articleCover={articleCover} changeArticle={changeArticle} checkedCover={article.cover} />}
+
         <div className="title">
           <Row>
             <Col span={article.isEdit ? 12 : 20} className="title__label">

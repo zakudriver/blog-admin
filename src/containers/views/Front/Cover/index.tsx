@@ -8,20 +8,20 @@ interface ICoverProps extends IClassName {
   token: string;
   frontConfig: FrontStore.IFrontConfig;
   changeCover: FrontStore.IChangeCover;
-  changeDefaultThumb: FrontStore.IChangeDefaultThumb;
+  changeArticleCover: FrontStore.IChangeArticleCover;
 }
 
-const Cover = ({ className, token, frontConfig, changeCover, changeDefaultThumb }: ICoverProps) => (
+const Cover = ({ className, token, frontConfig, changeCover, changeArticleCover }: ICoverProps) => (
   <div className={className}>
     <Page token={token} cover={frontConfig.cover} changeCover={changeCover} />
-    <Article token={token} defaultThumb={frontConfig.defaultThumb} changeDefaultThumb={changeDefaultThumb} />
+    <Article token={token} articleCover={frontConfig.articleCover} changeArticleCover={changeArticleCover} />
   </div>
 );
 
 const InjectCover = inject((store: IStore) => {
   const { token } = store.userStore.tokenStore;
-  const { frontConfig, changeCover, changeDefaultThumb } = store.frontStore;
-  return { token, frontConfig, changeCover, changeDefaultThumb };
+  const { frontConfig, changeCover, changeArticleCover } = store.frontStore;
+  return { token, frontConfig, changeCover, changeArticleCover };
 })(observer(Cover));
 
 export default styled(InjectCover)`

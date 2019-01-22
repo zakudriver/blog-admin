@@ -18,6 +18,7 @@ export class ArticleStore extends StoreExtends {
     category: '',
     isFormal: false,
     uploads: [],
+    cover: '',
     updateTime: '',
     createTime: ''
   };
@@ -237,6 +238,7 @@ export class ArticleStore extends StoreExtends {
       category: this.categories[0] ? this.categories[0]._id : '',
       isFormal: false,
       uploads: [],
+      cover: '',
       createTime: '',
       updateTime: ''
     };
