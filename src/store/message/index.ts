@@ -1,6 +1,6 @@
 import { observable, runInAction } from 'mobx';
 import { StoreExtends } from '@/utils/extends';
-import { io } from '@/service/socketio';
+import { io } from '@/service/socket';
 import { Event } from '@/constants/enum';
 
 export class MessageStore extends StoreExtends {

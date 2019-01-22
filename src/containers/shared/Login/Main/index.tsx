@@ -57,7 +57,7 @@ const LinkGroup = styled.div`
 export default styled(LoginMain)`
   height: 100vh;
   background-color: ${props => props.theme.primaryColor};
-  width: ${props => `${props.clientWidth}px`};
+  width: ${props => (props.clientWidth ? `${props.clientWidth}px` : '100%')};
   margin-left: ${props => props.isDrawer && `${props.config.drawerWidth}%`};
   transition: margin-left 0.8s;
   position: relative;

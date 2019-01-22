@@ -81,7 +81,6 @@
     "immer": "^1.7.2",
     "mobx": "^5.8.0",
     "mobx-react": "^5.4.3",
-    "monaco-editor": "^0.14.3",
     "react": "^16.6.0",
     "react-codemirror": "^1.0.0",
     "react-color": "^2.14.1",
