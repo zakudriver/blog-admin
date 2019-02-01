@@ -4,7 +4,7 @@ import { message } from 'antd';
 import tokenStore from '@/store/user/token';
 import history from '@/utils/history';
 
-export const API = APP_ENV === 'dev' ? 'http://api.zyhua.cn' : 'http://api.zyhua.cn';
+export const API = APP_ENV === 'dev' ? 'http://127.0.0.1:8999' : 'http://api.zyhua.cn';
 
 const config: AxiosRequestConfig = {};
 config.baseURL = API;
