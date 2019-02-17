@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const AntDesignThemePlugin = require('antd-theme-webpack-plugin');
 
@@ -45,7 +44,6 @@ const basePlugins = [
     to: config.assetsDirectory,
     ignore: ['.*']
   }]),
-  // new MonacoWebpackPlugin(),
   new AntDesignThemePlugin(options)
 ];
 

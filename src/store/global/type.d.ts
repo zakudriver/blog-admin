@@ -16,10 +16,6 @@ export interface IChangeEdit {
   (value: string): void;
 }
 
-export interface IChangeLanguages {
-  (value: string): void;
-}
-
 export interface IChangeDisplay {
   (value: string): void;
 }

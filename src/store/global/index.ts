@@ -21,12 +21,6 @@ export class GlobalStore extends StoreExtends {
   isCollapsed: boolean = false;
 
   @observable
-  selectionEdit: string = 'Monaco';
-
-  @observable
-  selectionLanguage: string = 'javascript';
-
-  @observable
   display: string = '';
 
   @observable
@@ -65,18 +59,6 @@ export class GlobalStore extends StoreExtends {
   @action
   onCollapsed = () => {
     this.isCollapsed = !this.isCollapsed;
-  };
-
-  // 编辑器选择
-  @action
-  changeEdit: GlobalStore.IChangeEdit = value => {
-    this.selectionEdit = value;
-  };
-
-  // 编辑器语言选择
-  @action
-  changeLanguages: GlobalStore.IChangeLanguages = value => {
-    this.selectionLanguage = value;
   };
 
   // 上传模块 on/off

@@ -6,23 +6,14 @@ import { ActionGroup } from '@/components/common';
 import CategoryModal from './CategoryModal';
 
 import { SelectValue } from 'antd/lib/select';
-import { RadioChangeEvent } from 'antd/lib/radio';
-// import { Moment } from 'moment';
-// import * as moment from 'moment';
 
 const Option = Select.Option;
-// const RadioButton = Radio.Button;
-// const RadioGroup = Radio.Group;
 
 const ActionItem = ActionGroup.ActionItem;
 const ActionLine = ActionGroup.ActionLine;
 
 interface IToolbarProps extends IClassName {
-  changeEdit: GlobalStore.IChangeEdit;
-  selectionEdit: string;
   config: GlobalStore.IConfig;
-  changeLanguages: GlobalStore.IChangeLanguages;
-  selectionLanguage: string;
   display: string;
   changeDisplay: GlobalStore.IChangeDisplay;
   categories: ArticleStore.ICategories[];
@@ -44,16 +35,7 @@ interface IToolbarState {
 
 @inject(
   (store: IStore): IToolbarProps => {
-    const {
-      changeEdit,
-      selectionEdit,
-      config,
-      changeLanguages,
-      selectionLanguage,
-      display,
-      changeDisplay,
-      editorLanguages
-    } = store.globalStore;
+    const { config, display, changeDisplay, editorLanguages } = store.globalStore;
     const {
       categories,
       addCategory,
@@ -67,11 +49,7 @@ interface IToolbarState {
       restore
     } = store.articleStore;
     return {
-      changeEdit,
-      selectionEdit,
       config,
-      changeLanguages,
-      selectionLanguage,
       categories,
       addCategory,
       sortCategory,
@@ -92,14 +70,6 @@ interface IToolbarState {
 class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   public state = {
     visible: false
-  };
-
-  public changeLanguages = (value: SelectValue) => {
-    this.props.changeLanguages(value as string);
-  };
-
-  public onChangeEditor = (e: RadioChangeEvent) => {
-    this.props.changeEdit(e.target.value);
   };
 
   public openCategoryModal = () => {
@@ -154,37 +124,11 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   };
 
   public render() {
-    const { className, selectionLanguage, editorLanguages, article, categories, display, changeDisplay } = this.props;
+    const { className, article, categories, display, changeDisplay } = this.props;
     return (
       <div className={className}>
-        <ActionGroup direction="right">
-          {/* <ActionItem>
-            <RadioGroup onChange={this.onChangeEditor} defaultValue={this.props.selectionEdit}>
-              <RadioButton value="Monaco">Monaco</RadioButton>
-              <RadioButton value="CodeMirror">CodeMirror</RadioButton>
-            </RadioGroup>
-          </ActionItem> */}
-
-          <ActionItem>
-            <Select
-              showSearch
-              defaultValue={selectionLanguage}
-              style={{ width: 120 }}
-              placeholder="Select a language"
-              onChange={this.changeLanguages}
-            >
-              {editorLanguages.map((i, idx) => (
-                <Option key={idx} value={i}>
-                  {i}
-                </Option>
-              ))}
-            </Select>
-          </ActionItem>
-        </ActionGroup>
-
         <div className="article_action__grow">
           <ActionGroup direction="right">
-            <ActionLine border="1px solid #eee" height="40" />
             <ActionItem>
               <Select
                 showSearch

@@ -7,14 +7,12 @@ import { formatDateTime } from '@/utils';
 import { Preview } from '@/components/common';
 import styled from '@/styles';
 
-import CodeMirror from './Edit/CodeMirror';
+import Edit from './Edit';
 import Upload from './Upload';
 import Cover from './Cover';
 
 interface IEditorProps extends IClassName, IWithRouterProps {
   token: string;
-  selectionEdit: string;
-  selectionLanguage: string;
   article: ArticleStore.IArticle;
   changeArticle: ArticleStore.IChangeArticle;
   getArticle: ArticleStore.IGetArticle;
@@ -28,14 +26,12 @@ interface IEditorProps extends IClassName, IWithRouterProps {
 @withRouterProps
 @inject(
   (store: IStore): IEditorProps => {
-    const { selectionEdit, selectionLanguage, display, changeDisplay } = store.globalStore;
+    const { display, changeDisplay } = store.globalStore;
     const { article, changeArticle, getArticle, removeUploadFile, restore } = store.articleStore;
     const { tokenStore } = store.userStore;
     const { articleCover } = store.frontStore.frontConfig;
 
     return {
-      selectionEdit,
-      selectionLanguage,
       article,
       changeArticle,
       getArticle,
@@ -72,13 +68,8 @@ class Editor extends React.Component<IEditorProps> {
   }
 
   public render() {
-    // const options = {
-    //   lineNumbers: true,
-    //   theme: 'monokai',
-    //   mode: 'markdown',
-    //   extraKeys: { Ctrl: 'autocomplete' }
-    // }
-    const { className, display, article, changeArticle, removeUploadFile, token, selectionLanguage, articleCover } = this.props;
+    // const { className, display, article, changeArticle, removeUploadFile, token, selectionLanguage, articleCover } = this.props;
+    const { className, display, article, changeArticle, removeUploadFile, token, articleCover } = this.props;
 
     return (
       <div className={className}>
@@ -110,14 +101,7 @@ class Editor extends React.Component<IEditorProps> {
 
         <Row gutter={10} className="edit__preview">
           <Col span={12} className="edit__wrapper">
-            {/* <Edit
-              className="edit"
-              value={this.props.article.content}
-              onChange={this.onChangeArticleContent}
-              type={this.props.selectionEdit}
-              language={this.props.selectionLanguage}
-            /> */}
-            <CodeMirror value={article.content} language={selectionLanguage} onChange={this.onChangeArticleContent} />
+            <Edit onChange={this.onChangeArticleContent} />
           </Col>
           <Col span={12} className="preview__wrapper">
             <Preview className="preview" value={article.content} />

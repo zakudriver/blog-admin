@@ -8,7 +8,7 @@ import * as store from '@/store';
 import { ThemeProvider } from '@/styles';
 import { IStyleInterface } from '@/styles/variable';
 import GlobalStyleComponent from '@/styles/global';
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 
 import '@/styles/less/index.less';
 configure({ enforceActions: 'always' });
@@ -37,4 +37,4 @@ const render = (Component: React.ComponentClass<any>) => {
 };
 
 render(App);
-registerServiceWorker();
+// registerServiceWorker();
