@@ -20,7 +20,7 @@ export class ArticleStore extends StoreExtends {
     uploads: [],
     cover: '',
     updateTime: '',
-    createTime: ''
+    createTime: '',
   };
 
   @observable
@@ -137,7 +137,7 @@ export class ArticleStore extends StoreExtends {
 
   @action
   saveArticle = async () => {
-    const saveArticle = handleArticleSource(this.article, false);
+    const saveArticle = this._articleSourceHandler(this.article, false);
     let res: IResponse;
     if (saveArticle.isEdit) {
       res = await this.articleApi$$.updateArticle(saveArticle);
@@ -154,7 +154,7 @@ export class ArticleStore extends StoreExtends {
 
   @action
   publishArticle = async () => {
-    const publishArticle = handleArticleSource(this.article, true);
+    const publishArticle = this._articleSourceHandler(this.article, true);
     let res: IResponse;
     if (publishArticle.isEdit) {
       res = await this.articleApi$$.updateArticle(publishArticle);
@@ -243,6 +243,13 @@ export class ArticleStore extends StoreExtends {
       updateTime: ''
     };
   };
+
+  private _articleSourceHandler(article: ArticleStore.IArticle, isFormal: boolean) {
+    return immer(article, draft => {
+      draft.isFormal = isFormal;
+      draft.uploads = draft.uploads.map((i: any) => uploadsmap(i));
+    });
+  }
 }
 
 export default new ArticleStore();
@@ -262,11 +269,3 @@ function uploadsmap(params: any): string {
     return params._id;
   }
 }
-function handleArticleSource(article: ArticleStore.IArticle, isFormal: boolean) {
-  return immer(article, draft => {
-    draft.isFormal = isFormal;
-    draft.uploads = draft.uploads.map((i: any) => uploadsmap(i));
-  });
-}
-
-// function uploadsmap(params: UploadFile): string;

@@ -60,7 +60,6 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   };
 
   public render() {
-    console.log(this.state.categories);
     return (
       <div className={this.props.className}>
         <ActionGroup direction="right">
