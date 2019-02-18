@@ -129,8 +129,6 @@ export class ArticleStore extends StoreExtends {
   // Article
   @action
   changeArticle: ArticleStore.IChangeArticle = value => {
-    console.log('changeArticle');
-    console.log(value);
     const key = Object.keys(value)[0];
     this.article[key] = value[key];
   };

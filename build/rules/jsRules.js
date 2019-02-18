@@ -26,6 +26,15 @@ module.exports = [
                   minify: extractCss
                 }
               ]
+              // [
+              //   'prismjs',
+              //   {
+              //     languages: ['javascript', 'css', 'markup', 'go', 'typescript', 'docker', 'clike', 'json', 'rust'],
+              //     plugins: ['line-numbers', 'show-language'],
+              //     theme: 'default',
+              //     css: true
+              //   }
+              // ]
             ]
           },
           getCustomTransformers: () => ({
