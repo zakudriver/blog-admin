@@ -84,6 +84,12 @@ class Article extends ComponentExtends<IArticleProps> {
       { title: 'Title', dataIndex: 'title', key: 'title' },
       { title: 'Category', dataIndex: 'category.name', key: 'category._id' },
       {
+        title: 'Official',
+        dataIndex: 'isFormal',
+        key: 'isFormal',
+        render: (text, record) => <span>{record.isFormal.toString()}</span>
+      },
+      {
         title: 'UpdateTime',
         dataIndex: 'updateTime',
         key: 'updateTime',

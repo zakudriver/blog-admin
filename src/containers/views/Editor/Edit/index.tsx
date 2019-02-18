@@ -7,8 +7,13 @@ interface IEditProps extends IClassName {
   onChange: (val: string) => void;
 }
 
-class Edit extends React.Component<IEditProps> {
+interface IEditState {
+  content: string;
+}
+
+class Edit extends React.Component<IEditProps, IEditState> {
   editRef: React.RefObject<HTMLDivElement>;
+  isUpdate = true;
   constructor(props: IEditProps) {
     super(props);
     this.editRef = React.createRef();
@@ -27,8 +32,16 @@ class Edit extends React.Component<IEditProps> {
     }
   };
 
+  public componentDidUpdate() {
+    if (this.isUpdate && this.props.value) {
+      this.editRef.current!.innerText = this.props.value;
+      this.isUpdate = false;
+    }
+  }
+
   public render() {
     const { className } = this.props;
+
     return (
       <div className={className}>
         <div className="editor" ref={this.editRef} contentEditable={'plaintext-only' as any} onInput={this.onChange} />

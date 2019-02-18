@@ -80,17 +80,17 @@ class Editor extends React.Component<IEditorProps> {
 
         <div className="title">
           <Row>
-            <Col span={article.isEdit ? 12 : 20} className="title__label">
+            <Col span={article.isEdit ? 10 : 20} className="title__label">
               <label>Title : </label>
               <Input className="title__input" value={article.title} onChange={this.onChangeArticleTitle} />
             </Col>
             {article.isEdit && (
               <>
-                <Col span={6} className="title__time">
+                <Col span={7} className="title__time">
                   <label>UpdateTime : </label>
                   <span>{formatDateTime(article.updateTime, false)}</span>
                 </Col>
-                <Col span={6} className="title__time">
+                <Col span={7} className="title__time">
                   <label>CreateTime : </label>
                   <span>{formatDateTime(article.createTime, false)}</span>
                 </Col>
@@ -101,7 +101,7 @@ class Editor extends React.Component<IEditorProps> {
 
         <Row gutter={10} className="edit__preview">
           <Col span={12} className="edit__wrapper">
-            <Edit onChange={this.onChangeArticleContent} />
+            <Edit onChange={this.onChangeArticleContent} value={article.content} />
           </Col>
           <Col span={12} className="preview__wrapper">
             <Preview className="preview" value={article.content} />
