@@ -57,7 +57,7 @@ class CategoryModal extends React.Component<ICategoryModalProps> {
   public onRemove = async (row: ArticleStore.ICategories) => {
     Modal.confirm({
       title: 'Warning',
-      content: 'Bla bla ...',
+      content: `是否删除分类 ${row.name} ？`,
       okText: 'ok',
       okType: 'danger',
       cancelText: 'no',

@@ -28,10 +28,10 @@ class User extends ComponentExtends<IUserProps> {
     this.props.changeUserInfo({ [key]: e.target.value });
   };
 
-  public onDelete = (row: UserStore.IUserInfo) => async () => {
+  public onRemove = (row: UserStore.IUserInfo) => async () => {
     Modal.confirm({
       title: 'Warning',
-      content: 'Bla bla ...',
+      content: `是否删除用户 ${row.username} ？`,
       okText: 'ok',
       okType: 'danger',
       cancelText: 'no',
@@ -75,7 +75,7 @@ class User extends ComponentExtends<IUserProps> {
         render: (text: any, record: any, index: any) => {
           if (userInfoForm.permission === Permission.root && text.permission !== Permission.root) {
             return (
-              <Button type="danger" onClick={this.onDelete(text)}>
+              <Button type="danger" onClick={this.onRemove(text)}>
                 Delete
               </Button>
             );

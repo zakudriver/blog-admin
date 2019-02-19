@@ -23,7 +23,7 @@ class Upload extends React.Component<IUploadProps> {
     new Promise((resolve, reject) => {
       Modal.confirm({
         title: 'Warning',
-        content: 'Bla bla ...',
+        content: '是否删除上传？',
         okText: 'ok',
         okType: 'danger',
         cancelText: 'no',

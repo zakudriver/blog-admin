@@ -42,6 +42,14 @@ class ArticleApi {
     const res: IAxiosResponse = await axios(opt);
     return Promise.resolve(res.data);
   }
+
+  @DELETE({
+    url: '/message'
+  })
+  async removeMessage(opt?: any) {
+    const res: IAxiosResponse = await axios(opt);
+    return Promise.resolve(res.data);
+  }
 }
 
 export default new ArticleApi();

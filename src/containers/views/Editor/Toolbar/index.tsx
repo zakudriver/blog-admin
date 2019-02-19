@@ -89,7 +89,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   public restore = () => {
     Modal.confirm({
       title: 'Warning',
-      content: 'Bla bla ...',
+      content: '是否清空编辑器？',
       okText: 'ok',
       okType: 'danger',
       cancelText: 'no',
@@ -102,7 +102,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   public saveArticle = () => {
     Modal.confirm({
       title: 'Warning',
-      content: 'Bla bla ...',
+      content: `是否保存 《${this.props.article.title}》？`,
       okText: 'ok',
       cancelText: 'no',
       onOk: async () => {
@@ -114,7 +114,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   public publishArticle = () => {
     Modal.confirm({
       title: 'Warning',
-      content: 'Bla bla ...',
+      content: `是否发布 《${this.props.article.title}》？`,
       okText: 'ok',
       cancelText: 'no',
       onOk: async () => {
@@ -125,7 +125,7 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 
   public render() {
     const { className, article, categories, display, changeDisplay } = this.props;
-    console.log(this.props.article.isEdit)
+    console.log(this.props.article.isEdit);
     return (
       <div className={className}>
         <div className="article_action__grow">

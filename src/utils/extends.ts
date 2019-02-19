@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { message } from 'antd';
 import userApi from '@/service/api/user.api';
-import messageApi from '@/service/api/message.api';
 import categoryApi from '@/service/api/category.api';
 import articleApi from '@/service/api/article.api';
 import uploadApi from '@/service/api/upload.api';
@@ -10,7 +9,6 @@ import { applyMixins } from '@/utils';
 
 export class ApiExtends {
   readonly userApi$$ = userApi;
-  readonly messageApi$$ = messageApi;
   readonly categoryApi$$ = categoryApi;
   readonly articleApi$$ = articleApi;
   readonly uploadApi$$ = uploadApi;
@@ -30,7 +28,6 @@ export class ComponentExtends<T = {}, S = {}, SS = any> extends React.Component<
   implements ApiExtends, React.Component<T, S, SS> {
   readonly $message = message;
   readonly userApi$$ = userApi;
-  readonly messageApi$$ = messageApi;
   readonly categoryApi$$ = categoryApi;
   readonly articleApi$$ = articleApi;
   readonly uploadApi$$ = uploadApi;

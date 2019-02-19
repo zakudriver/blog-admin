@@ -8,6 +8,7 @@ import { ComponentExtends } from '@/utils/extends';
 import { formatDateTime } from '@/utils';
 import { ArticlePage } from '@/constants/enum';
 import { ColumnProps } from 'antd/lib/table';
+import { IArticle, IArticleMessage } from '@/store/article/type';
 
 const ActionItem = ActionGroup.ActionItem;
 
@@ -34,10 +35,10 @@ class Article extends ComponentExtends<IArticleProps> {
     this.props.history!.push(`/editor?article=${row._id}`);
   };
 
-  public onDelete = (row: any) => (e: React.MouseEvent<HTMLButtonElement>) => {
+  public onRemove = (row: IArticle) => (e: React.MouseEvent<HTMLButtonElement>) => {
     Modal.confirm({
       title: 'Warning',
-      content: 'Bla bla ...',
+      content: `是否删除《${row.title}》？`,
       okText: 'ok',
       okType: 'danger',
       cancelText: 'no',
@@ -51,20 +52,19 @@ class Article extends ComponentExtends<IArticleProps> {
     });
   };
 
-  public onDeleteMessage = (row: any) => () => {
+  public onRemoveMessage = (row: IArticleMessage) => () => {
     Modal.confirm({
       title: 'Warning',
-      content: 'Bla bla ...',
+      content: `是否删除来自 ${row.email} 的留言？`,
       okText: 'ok',
       okType: 'danger',
       cancelText: 'no',
       onOk: async () => {
-        console.log(row);
-        // const res = await this.articleApi$$.removeArticle({ _id: row._id });
-        // if (res.code === 0) {
-        //   this.$message.success(res.msg);
-        //   await this.props.getArticleList(this.state.index);
-        // }
+        const res = await this.articleApi$$.removeMessage({ _id: row._id });
+        if (res.code === 0) {
+          this.$message.success(res.msg);
+          await this.props.getArticleList(this.state.index);
+        }
       }
     });
   };
@@ -114,7 +114,7 @@ class Article extends ComponentExtends<IArticleProps> {
               </Button>
             </ActionItem>
             <ActionItem>
-              <Button type="danger" onClick={this.onDelete(text)}>
+              <Button type="danger" onClick={this.onRemove(text)}>
                 Delete
               </Button>
             </ActionItem>
@@ -130,7 +130,7 @@ class Article extends ComponentExtends<IArticleProps> {
           className="article__table"
           columns={columns}
           // expandedRowRender={record => <Preview value={record.content} />}
-          expandedRowRender={record => <ExpandedTable data={record.message!} onDelete={this.onDeleteMessage} />}
+          expandedRowRender={record => <ExpandedTable data={record.message!} onRemove={this.onRemoveMessage} />}
           dataSource={this.props.articleList.rows}
           pagination={{
             current: this.state.index,
@@ -146,7 +146,7 @@ class Article extends ComponentExtends<IArticleProps> {
 
 interface IExpandedTableProps {
   data: ArticleStore.IArticleMessage[];
-  onDelete: (row: ArticleStore.IArticleMessage) => () => void;
+  onRemove: (row: ArticleStore.IArticleMessage) => () => void;
 }
 
 function ExpandedTable(props: IExpandedTableProps) {
@@ -158,7 +158,7 @@ function ExpandedTable(props: IExpandedTableProps) {
       dataIndex: '',
       key: 'x',
       render: (text: any, record: any, index: any) => (
-        <Button type="danger" onClick={props.onDelete(text)}>
+        <Button type="danger" onClick={props.onRemove(text)}>
           Delete
         </Button>
       )
@@ -166,6 +166,7 @@ function ExpandedTable(props: IExpandedTableProps) {
   ];
   return (
     <Table
+      rowKey={record => record._id!}
       columns={columns}
       pagination={false}
       dataSource={props.data}
