@@ -32,6 +32,12 @@ class Edit extends React.Component<IEditProps, IEditState> {
     }
   };
 
+  public componentDidMount() {
+    if (this.props.value) {
+      this.editRef.current!.innerText = this.props.value;
+    }
+  }
+
   public componentDidUpdate() {
     if (this.isUpdate && this.props.value) {
       this.editRef.current!.innerText = this.props.value;
