@@ -21,7 +21,6 @@ export class RouterStore {
     when(
       () => (this.currentRouter ? true : false),
       () => {
-        console.log('when');
         this.articleStore.init();
         this.userStore.init();
         this.messageStore.init();

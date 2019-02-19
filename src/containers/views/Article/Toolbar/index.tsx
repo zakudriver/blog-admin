@@ -51,7 +51,6 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
   };
 
   public onChangeFilter = (checkedValue: CheckboxValueType[]) => {
-    console.log(checkedValue);
     if (checkedValue.length === 1) {
       this.props.changeFilterCondition(checkedValue[0] === 'prod' ? 1 : 2);
     } else {

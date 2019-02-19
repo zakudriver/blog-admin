@@ -61,7 +61,6 @@ export function moveArray(source: any[], from: number, to: number) {
   source = source.concat();
   const target = source.splice(from, 1)[0];
   source.splice(to, 0, target);
-  console.log(source);
   return source;
 }
 

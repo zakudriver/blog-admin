@@ -14,7 +14,6 @@ class Cover extends React.Component<ICoverProps> {
   }
 
   onCheck = (v: string) => () => {
-    console.log(v);
     this.props.changeArticle({ cover: v });
   };
 

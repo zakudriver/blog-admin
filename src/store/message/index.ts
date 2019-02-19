@@ -14,7 +14,6 @@ export class MessageStore extends StoreExtends {
   init() {
     io.emit(Event.SubscribeMessage);
     io.on(Event.Message, res => {
-      console.log(res);
       runInAction(() => {
         if (res.code === 0) {
           if (Array.isArray(res.data)) {

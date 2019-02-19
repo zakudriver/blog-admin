@@ -47,7 +47,6 @@ export class FrontStore extends StoreExtends {
       delete draft.cover;
       delete draft.articleCover;
     });
-    console.log(config);
     this._updateFront(config);
   };
 
@@ -59,7 +58,6 @@ export class FrontStore extends StoreExtends {
 
   @action
   changeArticleCover: FrontStore.IChangeArticleCover = value => {
-    console.log(value);
     this.frontConfig.articleCover = value;
   };
 
@@ -71,7 +69,6 @@ export class FrontStore extends StoreExtends {
       delete draft.profile;
       delete draft.articleCover;
     });
-    console.log(config);
     this._updateFront(config);
   };
 

@@ -125,7 +125,6 @@ class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 
   public render() {
     const { className, article, categories, display, changeDisplay } = this.props;
-    console.log(this.props.article.isEdit);
     return (
       <div className={className}>
         <div className="article_action__grow">

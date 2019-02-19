@@ -44,7 +44,6 @@ class CategoryModal extends React.Component<ICategoryModalProps> {
   };
 
   public onChangeSort = (value: ArticleStore.ICategories[]) => {
-    console.log(value);
     this.props.sortCategory(value);
   };
 
