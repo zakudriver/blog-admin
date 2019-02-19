@@ -51,7 +51,7 @@ class Article extends ComponentExtends<IArticleProps> {
     });
   };
 
-  public onDeleteMessage = (row: any) => (e: React.MouseEvent<HTMLButtonElement>) => {
+  public onDeleteMessage = (row: any) => () => {
     Modal.confirm({
       title: 'Warning',
       content: 'Bla bla ...',
@@ -59,11 +59,12 @@ class Article extends ComponentExtends<IArticleProps> {
       okType: 'danger',
       cancelText: 'no',
       onOk: async () => {
-        const res = await this.articleApi$$.removeArticle({ _id: row._id });
-        if (res.code === 0) {
-          this.$message.success(res.msg);
-          await this.props.getArticleList(this.state.index);
-        }
+        console.log(row);
+        // const res = await this.articleApi$$.removeArticle({ _id: row._id });
+        // if (res.code === 0) {
+        //   this.$message.success(res.msg);
+        //   await this.props.getArticleList(this.state.index);
+        // }
       }
     });
   };
@@ -145,7 +146,7 @@ class Article extends ComponentExtends<IArticleProps> {
 
 interface IExpandedTableProps {
   data: ArticleStore.IArticleMessage[];
-  onDelete: (row: ArticleStore.IArticleMessage) => void;
+  onDelete: (row: ArticleStore.IArticleMessage) => () => void;
 }
 
 function ExpandedTable(props: IExpandedTableProps) {
@@ -157,14 +158,19 @@ function ExpandedTable(props: IExpandedTableProps) {
       dataIndex: '',
       key: 'x',
       render: (text: any, record: any, index: any) => (
-        <Button type="danger" onClick={() => props.onDelete(text)}>
+        <Button type="danger" onClick={props.onDelete(text)}>
           Delete
         </Button>
       )
     }
   ];
   return (
-    <Table columns={columns} pagination={false} dataSource={props.data} expandedRowRender={record => <p>{record.text}</p>} />
+    <Table
+      columns={columns}
+      pagination={false}
+      dataSource={props.data}
+      expandedRowRender={record => <p key={record._id}>{record.text}</p>}
+    />
   );
 }
 

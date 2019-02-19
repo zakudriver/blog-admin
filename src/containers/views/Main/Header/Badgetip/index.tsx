@@ -46,9 +46,7 @@ const Content = styled(({ source, className, onAlready }: IContent) => (
           <li key={idx}>
             <label className="message__name">{i.name}:</label>
             <p className="message__text">{i.text} </p>
-            <a href="https://ant.design">
-              <h6>《{i.article.title}》</h6>
-            </a>
+            <h6>《{i.article.title}》</h6>
             <time>{i.time}</time>
           </li>
         ))}
