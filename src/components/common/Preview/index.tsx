@@ -26,6 +26,9 @@ export default styled(Preview)`
   padding: 10px;
   overflow: auto;
   background-color: #fdf6e3;
+  img {
+    max-width: 100%;
+  }
 
   blockquote {
     color: #666;
