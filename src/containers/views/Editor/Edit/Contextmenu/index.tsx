@@ -4,23 +4,68 @@ import { Icon } from 'antd';
 
 interface IContextmenuProps extends IClassName {
   parentRef?: React.RefObject<HTMLDivElement>;
-  onShort: (value: string) => void;
+  onShort: (value: [string, string, string]) => void;
 }
 
 interface IContextmenuState {
   visible: boolean;
 }
 
-const menus = [
+const menus: Array<{ icon: string; name: string; text: [string, string, string] }> = [
+  {
+    icon: 'font-colors',
+    name: 'h1',
+    text: ['# ', 'H1', '']
+  },
+  {
+    icon: 'font-colors',
+    name: 'h2',
+    text: ['## ', 'H2', '']
+  },
+  {
+    icon: 'font-colors',
+    name: 'h3',
+    text: ['### ', 'H3', '']
+  },
+  {
+    icon: 'bold',
+    name: 'bold',
+    text: ['**', 'bold', '**']
+  },
+  {
+    icon: 'italic',
+    name: 'italic',
+    text: ['*', 'italic', '*']
+  },
+  {
+    icon: 'strikethrough',
+    name: 'strikethrough',
+    text: ['~', 'strikethrough', '~']
+  },
+  {
+    icon: 'dash',
+    name: 'dash',
+    text: ['---', '', '']
+  },
   {
     icon: 'code',
     name: 'code',
-    text: '```\r\r```'
+    text: ['```\n', 'code\n', '```']
   },
   {
     icon: 'picture',
     name: 'image',
-    text: '![ ]()'
+    text: ['![image](http://...)', '', '']
+  },
+  {
+    icon: 'link',
+    name: 'link',
+    text: ['[link](http://...)', '', '']
+  },
+  {
+    icon: 'table',
+    name: 'table',
+    text: ['th|th|th\n', ':--:|:--:|:--:\n', 'td|td|td']
   }
 ];
 
@@ -38,6 +83,7 @@ class Contextmenu extends React.Component<IContextmenuProps, IContextmenuState> 
   public onContextMenu = (e: MouseEvent) => {
     e.preventDefault();
     this.setState({ visible: true });
+    window.getSelection().removeAllRanges();
 
     const clickX = e.clientX;
     const clickY = e.clientY;

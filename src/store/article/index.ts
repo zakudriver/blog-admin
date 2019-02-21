@@ -14,7 +14,7 @@ export class ArticleStore extends StoreExtends {
   @observable
   article: ArticleStore.IArticle = {
     title: '// title',
-    content: '// . . . content',
+    content: '',
     category: '',
     isFormal: false,
     uploads: [],
