@@ -14,7 +14,7 @@ interface IEditState {
 class Edit extends React.Component<IEditProps, IEditState> {
   editRef: React.RefObject<HTMLTextAreaElement>;
   editorRef: React.RefObject<HTMLDivElement>;
-  isUpdate = true;
+
   constructor(props: IEditProps) {
     super(props);
     this.editRef = React.createRef();
@@ -27,7 +27,6 @@ class Edit extends React.Component<IEditProps, IEditState> {
   public onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (this.props.onChange) {
       this.props.onChange(e.target.value);
-      this.updateLineNum();
     }
   };
 
@@ -47,7 +46,11 @@ class Edit extends React.Component<IEditProps, IEditState> {
         ref.selectionEnd = end + prefix.length + hint.length;
       } else {
         ref.value =
-          value.substring(0, start) + prefix + value.substring(start, end) + subfix + value.substring(end, value.length);
+          value.substring(0, start) +
+          prefix +
+          value.substring(start, end) +
+          subfix +
+          value.substring(end, value.length);
         ref.selectionStart = start + prefix.length;
         ref.selectionEnd = end + prefix.length;
       }
@@ -57,7 +60,6 @@ class Edit extends React.Component<IEditProps, IEditState> {
         ref.scrollTop = restoreTop;
       }
       this.props.onChange(ref.value);
-      this.updateLineNum();
     }
   };
 
@@ -73,10 +75,9 @@ class Edit extends React.Component<IEditProps, IEditState> {
     this.updateLineNum();
   }
 
-  public componentDidUpdate() {
-    if (this.props.value && this.isUpdate) {
+  public componentDidUpdate(prevProps: IEditProps) {
+    if (this.props.value !== prevProps.value) {
       this.updateLineNum();
-      this.isUpdate = false;
     }
   }
 
