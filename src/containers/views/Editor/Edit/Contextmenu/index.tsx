@@ -50,7 +50,7 @@ const menus: Array<{ icon: string; name: string; text: [string, string, string] 
   {
     icon: 'code',
     name: 'code',
-    text: ['```\n', 'code\n', '```']
+    text: ['```language\n', 'code\n', '```']
   },
   {
     icon: 'picture',

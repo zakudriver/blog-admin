@@ -55,7 +55,7 @@ export default styled(Preview)`
   code {
     display: block;
     padding: 0 8px;
-    background-color: #f1f1f1;
+    background-color: #f1f1f1 !important;
   }
 
   code[class*='language-'],
@@ -193,114 +193,5 @@ export default styled(Preview)`
 
   .token.entity {
     cursor: help;
-  }
-
-  pre[data-line] {
-    position: relative;
-    padding: 1em 0 1em 3em;
-  }
-
-  .line-highlight {
-    position: absolute;
-    left: 0;
-    right: 0;
-    padding: inherit 0;
-    margin-top: 1em; /* Same as .prism’s padding-top */
-
-    background: hsla(24, 20%, 50%, 0.08);
-    background: linear-gradient(to right, hsla(24, 20%, 50%, 0.1) 70%, hsla(24, 20%, 50%, 0));
-
-    pointer-events: none;
-
-    line-height: inherit;
-    white-space: pre;
-  }
-
-  .line-highlight:before,
-  .line-highlight[data-end]:after {
-    content: attr(data-start);
-    position: absolute;
-    top: 0.4em;
-    left: 0.6em;
-    min-width: 1em;
-    padding: 0 0.5em;
-    background-color: hsla(24, 20%, 50%, 0.4);
-    color: hsl(24, 20%, 95%);
-    font: bold 65%/1.5 sans-serif;
-    text-align: center;
-    vertical-align: 0.3em;
-    border-radius: 999px;
-    text-shadow: none;
-    box-shadow: 0 1px white;
-  }
-
-  .line-highlight[data-end]:after {
-    content: attr(data-end);
-    top: auto;
-    bottom: 0.4em;
-  }
-
-  .line-numbers .line-highlight:before,
-  .line-numbers .line-highlight:after {
-    content: none;
-  }
-
-  div.code-toolbar {
-    position: relative;
-  }
-
-  div.code-toolbar > .toolbar {
-    position: absolute;
-    top: 0.3em;
-    right: 0.2em;
-    transition: opacity 0.3s ease-in-out;
-    opacity: 0;
-  }
-
-  div.code-toolbar:hover > .toolbar {
-    opacity: 1;
-  }
-
-  div.code-toolbar > .toolbar .toolbar-item {
-    display: inline-block;
-  }
-
-  div.code-toolbar > .toolbar a {
-    cursor: pointer;
-  }
-
-  div.code-toolbar > .toolbar button {
-    background: none;
-    border: 0;
-    color: inherit;
-    font: inherit;
-    line-height: normal;
-    overflow: visible;
-    padding: 0;
-    -webkit-user-select: none; /* for button */
-    -moz-user-select: none;
-    -ms-user-select: none;
-  }
-
-  div.code-toolbar > .toolbar a,
-  div.code-toolbar > .toolbar button,
-  div.code-toolbar > .toolbar span {
-    color: #bbb;
-    font-size: 0.8em;
-    padding: 0 0.5em;
-    background: #f5f2f0;
-    background: rgba(224, 224, 224, 0.2);
-    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2);
-    border-radius: 0.5em;
-  }
-
-  div.code-toolbar > .toolbar a:hover,
-  div.code-toolbar > .toolbar a:focus,
-  div.code-toolbar > .toolbar button:hover,
-  div.code-toolbar > .toolbar button:focus,
-  div.code-toolbar > .toolbar span:hover,
-  div.code-toolbar > .toolbar span:focus {
-    color: inherit;
-    text-decoration: none;
   }
 `;
