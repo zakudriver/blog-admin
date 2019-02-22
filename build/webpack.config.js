@@ -25,11 +25,17 @@ module.exports = {
     // alias: {
     //   mobx: resolve('node_modules/mobx/lib/mobx.es6.js')
     // },
+    // alias: {
+    //   prismjs: resolve('public/prismjs.js')
+    // },
     plugins: [
       new TsconfigPathsPlugin({
         configFile: resolve('tsconfig.webpack.json'),
         extensions: constants.FILE_EXTENSIONS
-      })
+      }),
+      // new webpack.ProvidePlugin({
+      //   prismjs: 'prismjs'
+      // })
     ]
   },
   module: {

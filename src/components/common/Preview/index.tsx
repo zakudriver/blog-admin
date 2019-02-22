@@ -4,6 +4,7 @@ import * as prism from 'prismjs';
 import styled from '@/styles';
 // import * as hljs from 'highlight.js';
 // import 'highlight.js/styles/monokai-sublime.css';
+// import 'prismjs/themes/prism.css';
 
 interface IPreviewProps extends IClassName {
   value: string;
@@ -18,7 +19,11 @@ marked.setOptions({
 });
 
 const Preview = ({ className, value }: IPreviewProps) => {
-  return <div className={className} id="preview" dangerouslySetInnerHTML={{ __html: marked(value) }} />;
+  return (
+    <pre className={className} id="preview">
+      <div dangerouslySetInnerHTML={{ __html: marked(value) }} />
+    </pre>
+  );
 };
 
 export default styled(Preview)`
