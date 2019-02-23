@@ -5,6 +5,7 @@ declare global {
 
   interface Window {
     less: LessStatic;
+    Prism: any;
   }
 
   interface IClassName {

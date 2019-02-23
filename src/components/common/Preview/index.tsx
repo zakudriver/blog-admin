@@ -1,30 +1,33 @@
 import * as React from 'react';
 import * as marked from 'marked';
-import * as prism from 'prismjs';
 import styled from '@/styles';
-// import * as hljs from 'highlight.js';
-// import 'highlight.js/styles/monokai-sublime.css';
-// import 'prismjs/themes/prism.css';
 
 interface IPreviewProps extends IClassName {
   value: string;
 }
 
-marked.setOptions({
-  highlight(code) {
-    // return hljs.highlightAuto(code).value;
-    return prism.highlight(code, prism.languages.clike);
-  },
-  breaks: true
-});
+class Preview extends React.Component<IPreviewProps> {
+  private _marked: typeof marked;
+  constructor(props: IPreviewProps) {
+    super(props);
+    this._marked = marked.setOptions({
+      breaks: true
+    });
+  }
 
-const Preview = ({ className, value }: IPreviewProps) => {
-  return (
-    <pre className={className} id="preview">
-      <div dangerouslySetInnerHTML={{ __html: marked(value) }} />
-    </pre>
-  );
-};
+  componentDidUpdate() {
+    window.Prism.highlightAll();
+  }
+
+  render() {
+    const { className, value } = this.props;
+    return (
+      <pre className={className} id="preview">
+        <div dangerouslySetInnerHTML={{ __html: this._marked(value) }} />
+      </pre>
+    );
+  }
+}
 
 export default styled(Preview)`
   height: 100%;
