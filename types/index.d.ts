@@ -1,11 +1,12 @@
 import { History, Location } from 'history';
+import * as Prism from 'prismjs';
 
 declare global {
   const APP_ENV: string;
 
   interface Window {
     less: LessStatic;
-    Prism: any;
+    Prism: typeof Prism;
   }
 
   interface IClassName {

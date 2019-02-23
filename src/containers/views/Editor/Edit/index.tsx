@@ -12,13 +12,11 @@ interface IEditState {
 }
 
 class Edit extends React.Component<IEditProps, IEditState> {
-  editRef: React.RefObject<HTMLTextAreaElement>;
-  editorRef: React.RefObject<HTMLDivElement>;
+  editRef: React.RefObject<HTMLTextAreaElement> = React.createRef();
 
   constructor(props: IEditProps) {
     super(props);
-    this.editRef = React.createRef();
-    this.editorRef = React.createRef();
+
     this.state = {
       lineNum: 1
     };
@@ -30,7 +28,7 @@ class Edit extends React.Component<IEditProps, IEditState> {
     }
   };
 
-  public onShort = (params: [string, string, string]) => {
+  public insert = (params: [string, string, string]) => {
     const [prefix, hint, subfix] = params;
     const ref = this.editRef.current!;
     const value = ref.value;
@@ -46,11 +44,7 @@ class Edit extends React.Component<IEditProps, IEditState> {
         ref.selectionEnd = end + prefix.length + hint.length;
       } else {
         ref.value =
-          value.substring(0, start) +
-          prefix +
-          value.substring(start, end) +
-          subfix +
-          value.substring(end, value.length);
+          value.substring(0, start) + prefix + value.substring(start, end) + subfix + value.substring(end, value.length);
         ref.selectionStart = start + prefix.length;
         ref.selectionEnd = end + prefix.length;
       }
@@ -60,6 +54,13 @@ class Edit extends React.Component<IEditProps, IEditState> {
         ref.scrollTop = restoreTop;
       }
       this.props.onChange(ref.value);
+    }
+  };
+
+  public onTab = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.keyCode === 9) {
+      e.preventDefault();
+      this.insert(['  ', '', '']);
     }
   };
 
@@ -94,16 +95,20 @@ class Edit extends React.Component<IEditProps, IEditState> {
 
     return (
       <div className={className}>
-        {/* <div className="editor" ref={this.editRef} contentEditable={'plaintext-only' as any} onInput={this.onChange} /> */}
         <div className="wrapper">
           {lineNumRen()}
-          <div className="editor" ref={this.editorRef}>
+          <div className="editor">
             <pre>{value} </pre>
-            <textarea ref={this.editRef} value={value} onChange={this.onChange} placeholder="// content..." />
+            <textarea
+              ref={this.editRef}
+              value={value}
+              onChange={this.onChange}
+              onKeyDown={this.onTab}
+              placeholder="// content..."
+            />
+            <Contextmenu parentRef={this.editRef} onShort={this.insert} />
           </div>
         </div>
-
-        <Contextmenu parentRef={this.editorRef} onShort={this.onShort} />
       </div>
     );
   }

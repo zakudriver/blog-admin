@@ -3,7 +3,7 @@ import styled from '@/styles';
 import { Icon } from 'antd';
 
 interface IContextmenuProps extends IClassName {
-  parentRef?: React.RefObject<HTMLDivElement>;
+  parentRef?: React.RefObject<HTMLTextAreaElement>;
   onShort: (value: [string, string, string]) => void;
 }
 
