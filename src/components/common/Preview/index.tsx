@@ -22,9 +22,9 @@ class Preview extends React.Component<IPreviewProps> {
   public render() {
     const { className, value } = this.props;
     return (
-      <pre className={className} id="preview">
+      <div className={className} id="preview">
         <div dangerouslySetInnerHTML={{ __html: this._marked(value) }} />
-      </pre>
+      </div>
     );
   }
 }
@@ -34,8 +34,8 @@ export default styled(Preview)`
   padding: 10px;
   overflow: auto;
   background-color: #fdf6e3;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  /* white-space: pre-wrap;
+  word-wrap: break-word; */
   img {
     max-width: 100%;
   }
