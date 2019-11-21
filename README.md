@@ -1,1 +1,1 @@
-# zyhua's admin
+# blog admin
